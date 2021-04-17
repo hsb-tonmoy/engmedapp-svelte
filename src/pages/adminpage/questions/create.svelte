@@ -3,7 +3,7 @@
   import Footer from "../_footer.svelte";
   import { onMount } from "svelte";
 
-  const API_URL = "http://localhost:8000/";
+  const API_URL = "https://engmedapp.herokuapp.com/";
 
   String.prototype.slugify = function (separator = "-") {
     return this.toString()

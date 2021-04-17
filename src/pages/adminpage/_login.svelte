@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  const API_URL = "http://localhost:8000/";
+  const API_URL = "https://engmedapp.herokuapp.com/";
   const dispatch = createEventDispatcher();
   const baseURL = API_URL + "api/";
   let email, password;

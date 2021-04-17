@@ -1,5 +1,5 @@
 <script>
-  const API_URL = "http://localhost:8000/";
+  const API_URL = "https://engmedapp.herokuapp.com/";
   import Header from "../_header.svelte";
   import Footer from "../_footer.svelte";
   import { onMount } from "svelte";

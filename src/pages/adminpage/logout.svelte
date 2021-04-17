@@ -1,5 +1,5 @@
 <script>
-  const API_URL = "http://localhost:8000/";
+  const API_URL = "https://engmedapp.herokuapp.com/";
 
   const baseURL = API_URL + "api/";
 
