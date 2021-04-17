@@ -18,8 +18,8 @@
 
   let new_board, new_level, new_paper, new_year, new_session;
   let new_title = "";
-  $: new_slug =
-    Math.floor(Math.random() * 1000000).toString() + "-" + new_title.slugify();
+  let slug_id = Math.floor(Math.random() * 1000000).toString() + "-";
+  $: new_slug = slug_id + new_title.slugify();
   let new_excerpt = "";
 
   let content_editorData = "";
