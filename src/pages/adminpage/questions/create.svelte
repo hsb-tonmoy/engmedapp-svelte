@@ -15,19 +15,13 @@
       .replace(/\s+/g, separator);
   };
 
+  let new_board, new_level, new_paper, new_year, new_session;
+  let new_title = "";
+  let new_excerpt = "";
+
   let content_editorData = "";
   let explanation_editorData = "";
-  let content_editor;
-  let explanation_editor;
-
-  let new_board;
-  let new_level;
-  let new_paper;
-  let new_year;
-  let new_session;
-  let new_title = "";
-  let new_excerpt;
-  // $: new_slug = new_title.slugify();
+  let content_editor, explanation_editor;
 
   let boards = [];
   let levels = [];
@@ -40,30 +34,35 @@
     const data = await res.json();
 
     boards = data;
+    new_board = boards[0].id;
   };
   const fetchLevels = async () => {
     const res = await fetch(API_URL + "questions/levels/");
     const data = await res.json();
 
     levels = data;
+    new_level = levels[0].id;
   };
   const fetchPapers = async () => {
     const res = await fetch(API_URL + "questions/papers/");
     const data = await res.json();
 
     papers = data;
+    new_paper = papers[0].id;
   };
   const fetchBYears = async () => {
     const res = await fetch(API_URL + "questions/years/");
     const data = await res.json();
 
     years = data;
+    new_year = years[0].id;
   };
   const fetchSessions = async () => {
     const res = await fetch(API_URL + "questions/sessions/");
     const data = await res.json();
 
     sessions = data;
+    new_session = sessions[0].id;
   };
 
   onMount(() => {
@@ -194,6 +193,7 @@
   const sendData = async () => {
     content_editorData = await content_editor.getData();
     explanation_editorData = await explanation_editor.getData();
+
     let new_slug = new_title.slugify();
 
     await fetch(API_URL + "questions/create/", {
@@ -217,6 +217,23 @@
     }).catch(function (error) {
       console.log("ERROR:", error);
     });
+
+    new_excerpt = "";
+    content_editor.setData("");
+    explanation_editor.setData("");
+
+    // console.log(
+    //   new_board +
+    //     new_level +
+    //     new_paper +
+    //     new_year +
+    //     new_session +
+    //     new_title +
+    //     new_excerpt +
+    //     content_editorData +
+    //     explanation_editorData +
+    //     new_slug
+    // );
   };
 </script>
 

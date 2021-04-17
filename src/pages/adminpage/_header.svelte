@@ -1,6 +1,6 @@
 <script>
   export let title;
-  import { prefetch } from "@roxi/routify";
+  import { url } from "@roxi/routify";
 </script>
 
 <nav id="navbar-main" class="navbar is-fixed-top">
@@ -99,7 +99,8 @@
       <li>
         <a
           href="/adminpage/dashboard"
-          class="is-active router-link-active has-icon"
+          class="has-icon"
+          class:is-active={$url() === "/adminpage/dashboard"}
         >
           <span class="icon"><i class="mdi mdi-desktop-mac" /></span>
           <span class="menu-item-label">Dashboard</span>
@@ -110,14 +111,22 @@
     <ul class="menu-list">
       <li>
         <!-- svelte-ignore a11y-missing-attribute -->
-        <a href="/adminpage/questions/" use:prefetch class="has-icon">
+        <a
+          href="/adminpage/questions/"
+          class="has-icon"
+          class:is-active={$url() === "/adminpage/questions"}
+        >
           <span class="icon has-update-mark"><i class="fas fa-th-list" /></span>
           <span class="menu-item-label">Question List</span>
         </a>
       </li>
       <li>
         <!-- svelte-ignore a11y-missing-attribute -->
-        <a href="/adminpage/questions/create" class="has-icon">
+        <a
+          href="/adminpage/questions/create"
+          class="has-icon"
+          class:is-active={$url() === "/adminpage/dashboard/create"}
+        >
           <span class="icon"><i class="fas fa-pen" /></span>
           <span class="menu-item-label">Add Question</span>
         </a>
