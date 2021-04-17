@@ -5,7 +5,20 @@
 
   const API_URL = "http://localhost:8000/";
 
-  let editorData = "";
+  String.prototype.slugify = function (separator = "-") {
+    return this.toString()
+      .normalize("NFD") // split an accented letter in the base letter and the acent
+      .replace(/[\u0300-\u036f]/g, "") // remove all previously split accents
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9 ]/g, "") // remove all chars not letters, numbers and spaces (to be replaced)
+      .replace(/\s+/g, separator);
+  };
+
+  let content_editorData = "";
+  let explanation_editorData = "";
+  let content_editor;
+  let explanation_editor;
 
   let new_board;
   let new_level;
@@ -14,7 +27,7 @@
   let new_session;
   let new_title = "";
   let new_excerpt;
-  $: new_slug = new_title.toLowerCase().replace(" ", "-");
+  // $: new_slug = new_title.slugify();
 
   let boards = [];
   let levels = [];
@@ -107,7 +120,66 @@
       licenseKey: "",
     })
       .then((editor) => {
-        window.editor = editor;
+        content_editor = editor;
+      })
+      .catch((error) => {
+        console.error("Oops, something went wrong!");
+        console.error(
+          "Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:"
+        );
+        console.warn("Build id: 1xw2btaf0pb-8ua758h0wkmd");
+        console.error(error);
+      });
+
+    ClassicEditor.create(document.querySelector(".explanation_editor"), {
+      toolbar: {
+        items: [
+          "heading",
+          "|",
+          "fontFamily",
+          "bold",
+          "italic",
+          "underline",
+          "strikethrough",
+          "superscript",
+          "subscript",
+          "link",
+          "fontSize",
+          "highlight",
+          "bulletedList",
+          "numberedList",
+          "|",
+          "outdent",
+          "indent",
+          "|",
+          "imageUpload",
+          "imageInsert",
+          "blockQuote",
+          "MathType",
+          "ChemType",
+          "insertTable",
+          "mediaEmbed",
+          "undo",
+          "redo",
+        ],
+      },
+      language: "en",
+      image: {
+        toolbar: ["imageTextAlternative", "imageStyle:full", "imageStyle:side"],
+      },
+      table: {
+        contentToolbar: [
+          "tableColumn",
+          "tableRow",
+          "mergeTableCells",
+          "tableCellProperties",
+          "tableProperties",
+        ],
+      },
+      licenseKey: "",
+    })
+      .then((editor) => {
+        explanation_editor = editor;
       })
       .catch((error) => {
         console.error("Oops, something went wrong!");
@@ -120,7 +192,9 @@
   });
 
   const sendData = async () => {
-    editorData = await editor.getData();
+    content_editorData = await content_editor.getData();
+    explanation_editorData = await explanation_editor.getData();
+    let new_slug = new_title.slugify();
 
     await fetch(API_URL + "questions/create/", {
       method: "POST",
@@ -136,7 +210,8 @@
         author: 1,
         title: new_title,
         excerpt: new_excerpt,
-        content: editorData,
+        content: content_editorData,
+        verified_explanation: explanation_editorData,
         slug: new_slug,
       }),
     }).catch(function (error) {
@@ -316,7 +391,22 @@
                     <div class="control">
                       <textarea
                         class="textarea content_editor"
-                        placeholder="Question Details"
+                        placeholder="Question Details...."
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Explanation</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <textarea
+                        class="textarea explanation_editor"
+                        placeholder="Write Your Explanation Here...."
                       />
                     </div>
                   </div>
