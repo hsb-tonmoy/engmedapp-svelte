@@ -1,5 +1,6 @@
 <script>
   export let title;
+  import { prefetch } from "@roxi/routify";
 </script>
 
 <nav id="navbar-main" class="navbar is-fixed-top">
@@ -109,7 +110,7 @@
     <ul class="menu-list">
       <li>
         <!-- svelte-ignore a11y-missing-attribute -->
-        <a href="/adminpage/questions/" rel="prefetch" class="has-icon">
+        <a href="/adminpage/questions/" use:prefetch class="has-icon">
           <span class="icon has-update-mark"><i class="fas fa-th-list" /></span>
           <span class="menu-item-label">Question List</span>
         </a>

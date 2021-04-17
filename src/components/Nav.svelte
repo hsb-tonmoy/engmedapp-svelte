@@ -7,7 +7,7 @@
   };
 </script>
 
-<nav class="navbar has-shadow is-white global-nav">
+<nav class="navbar has-shadow is-white">
   <div class="navbar-brand">
     <a href="/" class="navbar-item">
       <img src="/images/EMA-fullColor.png" alt="" /></a
