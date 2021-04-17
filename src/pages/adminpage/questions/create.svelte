@@ -17,6 +17,7 @@
 
   let new_board, new_level, new_paper, new_year, new_session;
   let new_title = "";
+  $: new_slug = new_title.slugify();
   let new_excerpt = "";
 
   let content_editorData = "";
@@ -194,8 +195,6 @@
     content_editorData = await content_editor.getData();
     explanation_editorData = await explanation_editor.getData();
 
-    let new_slug = new_title.slugify();
-
     await fetch(API_URL + "questions/create/", {
       method: "POST",
       headers: {
@@ -284,6 +283,24 @@
                         class="input"
                         type="text"
                         placeholder="Title"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Slug</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input
+                        bind:value={new_slug}
+                        class="input"
+                        type="text"
+                        placeholder="Slug"
                       />
                     </div>
                   </div>
