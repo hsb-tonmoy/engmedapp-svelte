@@ -12,12 +12,14 @@
       .toLowerCase()
       .trim()
       .replace(/[^a-z0-9 ]/g, "") // remove all chars not letters, numbers and spaces (to be replaced)
-      .replace(/\s+/g, separator);
+      .replace(/\s+/g, separator)
+      .substring(0, 30);
   };
 
   let new_board, new_level, new_paper, new_year, new_session;
   let new_title = "";
-  $: new_slug = new_title.slugify();
+  $: new_slug =
+    Math.floor(Math.random() * 1000000).toString() + "-" + new_title.slugify();
   let new_excerpt = "";
 
   let content_editorData = "";
