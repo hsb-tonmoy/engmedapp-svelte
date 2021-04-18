@@ -5,12 +5,29 @@
   import { onMount } from "svelte";
 
   let questions = [];
+  let deleteSuccess = true;
 
   const fetchQuestions = async () => {
     const res = await fetch(API_URL + "questions/list/");
     const data = await res.json();
 
     questions = data;
+  };
+
+  const deleteQuestion = async (slug) => {
+    const res = await fetch(`${API_URL}questions/question/${slug}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+    }).catch(function (error) {
+      console.log("ERROR:", error);
+    });
+
+    if (res.ok) {
+      deleteSuccess = false;
+      fetchQuestions();
+    }
   };
 
   onMount(() => {
@@ -31,6 +48,30 @@
       <Header title="Questions" />
       <section class="hero is-hero-bar">
         <div class="hero-body">
+          <div
+            class="notification is-success"
+            style={deleteSuccess ? "display: none" : ""}
+          >
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <div>
+                    <span class="icon"
+                      ><i class="mdi mdi-buffer default" /></span
+                    >
+                    <b>Successfully Deleted!</b>
+                  </div>
+                </div>
+              </div>
+              <div class="level-right">
+                <button
+                  type="button"
+                  class="button is-small is-white jb-notification-dismiss"
+                  >Dismiss</button
+                >
+              </div>
+            </div>
+          </div>
           <div class="notification is-info">
             <div class="level">
               <div class="level-left">
@@ -43,13 +84,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="level-right">
-                <button
-                  type="button"
-                  class="button is-small is-white jb-notification-dismiss"
-                  >Dismiss</button
-                >
-              </div> -->
             </div>
           </div>
 
@@ -92,8 +126,9 @@
 
                           <td data-label="ID"> {question.id}</td>
                           <td data-label="Title">
-                            <a href={`/questions/${question.slug}`}
-                              >{question.title}</a
+                            <a
+                              href={`/questions/${question.slug}`}
+                              target="_blank">{question.title}</a
                             >
                           </td>
                           <td data-label="Board">{question.board.name}</td>
@@ -113,23 +148,22 @@
                         </td> -->
                           <td class="is-actions-cell">
                             <div class="buttons is-right">
-                              <button
+                              <a
+                                href={`/adminpage/questions/${question.slug}`}
                                 class="button is-small is-primary"
-                                type="button"
                               >
                                 <span class="icon"
-                                  ><i class="mdi mdi-eye" /></span
+                                  ><i class="fas fa-pen" /></span
                                 >
-                              </button>
-                              <button
+                              </a>
+                              <a
                                 class="button is-small is-danger jb-modal"
-                                data-target="sample-modal"
-                                type="button"
+                                on:click={() => deleteQuestion(question.slug)}
                               >
                                 <span class="icon"
-                                  ><i class="mdi mdi-trash-can" /></span
+                                  ><i class="fas fa-trash" /></span
                                 >
-                              </button>
+                              </a>
                             </div>
                           </td>
                         </tr>

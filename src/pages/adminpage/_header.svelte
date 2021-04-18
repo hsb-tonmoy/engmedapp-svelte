@@ -125,7 +125,7 @@
         <a
           href="/adminpage/questions/create"
           class="has-icon"
-          class:is-active={$url() === "/adminpage/dashboard/create"}
+          class:is-active={$url() === "/adminpage/questions/create"}
         >
           <span class="icon"><i class="fas fa-pen" /></span>
           <span class="menu-item-label">Add Question</span>
