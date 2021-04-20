@@ -1,4 +1,5 @@
 <script>
+  import { authenticating, user } from "./Auth/store.js";
   const mobileMenuToggle = () => {
     let menu = document.querySelector("#nav-links");
     let burger = document.querySelector("#burger");
@@ -29,10 +30,15 @@
       <a href="/" class="navbar-item">Home</a>
 
       <a href="/questions" class="navbar-item">Questions</a>
+      <a href="/profile" class="navbar-item">Profile</a>
       <a href="/adminpage" class="navbar-item">Admin</a>
     </div>
     <div class="navbar-end">
-      <a href="/adminpage/logout" class="navbar-item">Logout</a>
+      {#if $user}
+        <a href="/logout" class="navbar-item">Logout</a>
+      {:else}
+        <a href="/login" class="navbar-item">Login</a>
+      {/if}
     </div>
   </div>
 </nav>

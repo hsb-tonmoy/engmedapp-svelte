@@ -1,8 +1,7 @@
 <script>
   export let title;
+  import { logout, user, authenticating } from "../../components/Auth/store.js";
   import { url } from "@roxi/routify";
-
-  import { isAuthenticated } from "../../components/auth/authStore.js";
 </script>
 
 <nav id="navbar-main" class="navbar is-fixed-top">
@@ -44,7 +43,7 @@
             />
           </div>
           <div class="is-user-name">
-            <span>{$isAuthenticated}</span>
+            <span>{$user ? $user.user_name : "Guest"}</span>
           </div>
           <span class="icon"><i class="mdi mdi-chevron-down" /></span>
         </a>
