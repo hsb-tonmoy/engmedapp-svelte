@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  const API_URL = "https://engmedapp.herokuapp.com/";
+  const API_URL = "https://api.engmedapp.com/";
   const convertDate = (string_date) => {
     let date = new Date(string_date);
     return date.toLocaleDateString();

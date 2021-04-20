@@ -3,7 +3,7 @@
   import Header from "./_header.svelte";
   import Footer from "./_footer.svelte";
 
-  const API_URL = "https://engmedapp.herokuapp.com/";
+  const API_URL = "https://api.engmedapp.com/";
 </script>
 
 <svelte:head>

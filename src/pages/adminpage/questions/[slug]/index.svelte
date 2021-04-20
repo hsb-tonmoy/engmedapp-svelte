@@ -4,7 +4,7 @@
   import { params } from "@roxi/routify";
   $: slug = $params.slug;
   import { onMount } from "svelte";
-  const API_URL = "https://engmedapp.herokuapp.com/";
+  const API_URL = "https://api.engmedapp.com/";
   export let scoped;
   $: question = scoped.question;
 
