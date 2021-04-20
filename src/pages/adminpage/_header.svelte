@@ -1,6 +1,8 @@
 <script>
   export let title;
   import { url } from "@roxi/routify";
+
+  import { isAuthenticated } from "../../components/auth/authStore.js";
 </script>
 
 <nav id="navbar-main" class="navbar is-fixed-top">
@@ -41,7 +43,9 @@
               alt="Username"
             />
           </div>
-          <div class="is-user-name"><span>SirDarknight</span></div>
+          <div class="is-user-name">
+            <span>{$isAuthenticated}</span>
+          </div>
           <span class="icon"><i class="mdi mdi-chevron-down" /></span>
         </a>
         <div class="navbar-dropdown">

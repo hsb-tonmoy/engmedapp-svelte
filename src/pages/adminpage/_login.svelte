@@ -1,29 +1,27 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { isAuthenticated } from "../../components/auth/authStore.js";
   const API_URL = "https://api.engmedapp.com/";
   const dispatch = createEventDispatcher();
-  const baseURL = API_URL + "api/";
   let email, password;
 
   async function login() {
     try {
-      const res = await fetch(baseURL + "token/", {
+      const res = await fetch(API_URL + "auth/jwt/create/", {
         method: "POST",
         body: JSON.stringify({
           email,
           password,
         }),
         headers: {
-          Authorization: localStorage.getItem("access_token")
-            ? "JWT " + localStorage.getItem("access_token")
-            : null,
           "Content-Type": "application/json",
         },
       });
       if (res.ok) {
         const data = await res.json();
-        localStorage.setItem("access_token", data.access);
-        localStorage.setItem("refresh_token", data.refresh);
+        localStorage.setItem("access", data.access);
+        localStorage.setItem("refresh", data.refresh);
+        isAuthenticated.set(true);
         dispatch("success");
       } else {
         error = "An error occurred";

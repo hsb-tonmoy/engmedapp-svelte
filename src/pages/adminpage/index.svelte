@@ -1,11 +1,12 @@
 <script>
+  import { goto } from "@roxi/routify";
   import Login from "./_login.svelte";
-
-  const redirectToDashboard = () => {
-    window.location.replace("/adminpage/dashboard");
-  };
 </script>
 
 <main>
-  <Login on:success={redirectToDashboard} />
+  <Login
+    on:success={() => {
+      $goto("/adminpage/dashboard/");
+    }}
+  />
 </main>
