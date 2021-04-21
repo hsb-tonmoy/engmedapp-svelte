@@ -8,8 +8,17 @@ if (localStorage.getItem("refresh") && localStorage.getItem("access")) {
   authenticate();
 }
 
-export const logout = () => {
+export const logout = async () => {
   user.set(null);
+  await fetch(API_URL + "accounts/logout/blacklist/", {
+    method: "POST",
+    body: JSON.stringify({
+      refresh: localStorage.getItem("refresh"),
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   localStorage.removeItem("user");
   localStorage.removeItem("access");
   localStorage.removeItem("refresh");
@@ -60,6 +69,30 @@ async function getCredentials() {
       const data = await res.json();
       localStorage.setItem("user", data);
       user.set(data);
+    } else if (!res.ok && res.status === 401) {
+      getNewAccess();
+    } else {
+      console.log(res.status + res.statusText);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function getNewAccess() {
+  try {
+    const res = await fetch(API_URL + "auth/jwt/refresh/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        refresh: localStorage.getItem("refresh"),
+      }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      localStorage.setItem("access", data.access);
     } else {
       console.log(res.status + res.statusText);
     }

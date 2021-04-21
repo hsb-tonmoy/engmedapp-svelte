@@ -49,7 +49,7 @@
         </a>
         <div class="navbar-dropdown">
           <!-- svelte-ignore a11y-missing-attribute -->
-          <a href="profile.html" class="navbar-item">
+          <a href="/profile" target="_blank" class="navbar-item">
             <span class="icon"><i class="mdi mdi-account" /></span>
             <span>My Profile</span>
           </a>
@@ -65,7 +65,7 @@
           </a>
           <hr class="navbar-divider" />
           <!-- svelte-ignore a11y-missing-attribute -->
-          <a class="navbar-item">
+          <a href={$url("/logout")} class="navbar-item">
             <span class="icon"><i class="mdi mdi-logout" /></span>
             <span>Log Out</span>
           </a>

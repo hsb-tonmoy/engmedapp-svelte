@@ -4,6 +4,7 @@
 
   if ($user) {
     logout();
+    $goto("/");
   } else {
     $goto("/login");
   }
