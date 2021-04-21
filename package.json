@@ -61,5 +61,8 @@
   },
   "ava": {
     "verbose": true
+  },
+  "dependencies": {
+    "jwt-decode": "^3.1.2"
   }
 }

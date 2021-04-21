@@ -69,6 +69,7 @@ async function getCredentials() {
       const data = await res.json();
       localStorage.setItem("user", data);
       user.set(data);
+      console.log(data);
     } else if (!res.ok && res.status === 401) {
       getNewAccess();
     } else {
