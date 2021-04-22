@@ -45,14 +45,16 @@ export const verifyAccess = async () => {
       console.log(res.status + res.statusText);
     }
   } catch (err) {
-    console.log(err);
+    console.log("Verifying");
   }
 };
 
-if (localStorage.getItem("refresh") && localStorage.getItem("access")) {
-  verifyAccess();
-  authenticate();
-}
+void (async function main() {
+  if (localStorage.getItem("refresh") && localStorage.getItem("access")) {
+    await verifyAccess();
+    await authenticate();
+  }
+})();
 
 export const logout = async () => {
   user.set(null);

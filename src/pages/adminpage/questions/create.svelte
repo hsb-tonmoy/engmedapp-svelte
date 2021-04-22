@@ -40,6 +40,8 @@
   let years = [];
   let sessions = [];
 
+  let addSuccess = true;
+
   const fetchBoards = async () => {
     const res = await fetch(API_URL + "questions/boards/");
     const data = await res.json();
@@ -234,6 +236,7 @@
           gen_slug_id();
           content_editor.setData("");
           explanation_editor.setData("");
+          addSuccess = false;
         }
       })
       .catch((error) => {
@@ -268,6 +271,30 @@
       <Header title="Add Questions" />
       <section class="hero is-hero-bar">
         <div class="hero-body">
+          <div
+            class="notification is-success"
+            style={addSuccess ? "display: none" : ""}
+          >
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <div>
+                    <span class="icon"
+                      ><i class="mdi mdi-buffer default" /></span
+                    >
+                    <b>Successfully Added!</b>
+                  </div>
+                </div>
+              </div>
+              <div class="level-right">
+                <button
+                  type="button"
+                  class="button is-small is-white jb-notification-dismiss"
+                  >Dismiss</button
+                >
+              </div>
+            </div>
+          </div>
           <div class="level">
             <div class="level-left">
               <div class="level-item">
