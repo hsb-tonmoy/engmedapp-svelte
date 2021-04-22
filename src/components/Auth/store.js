@@ -4,7 +4,55 @@ export const authenticating = writable(false);
 
 const API_URL = "https://api.engmedapp.com/";
 
+async function getNewAccess() {
+  try {
+    const res = await fetch(API_URL + "auth/jwt/refresh/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        refresh: localStorage.getItem("refresh"),
+      }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      localStorage.setItem("access", data.access);
+      console.log("Got new Access");
+    } else {
+      console.log(res.status + res.statusText);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const verifyAccess = async () => {
+  try {
+    const res = await fetch(API_URL + "auth/jwt/verify/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: localStorage.getItem("access"),
+      }),
+    });
+    if (res.ok) {
+      return true;
+    } else if (!res.ok && res.status === 401) {
+      console.log("Token expired.");
+      await getNewAccess();
+    } else {
+      console.log(res.status + res.statusText);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 if (localStorage.getItem("refresh") && localStorage.getItem("access")) {
+  verifyAccess();
   authenticate();
 }
 
@@ -69,31 +117,8 @@ async function getCredentials() {
       const data = await res.json();
       localStorage.setItem("user", data);
       user.set(data);
-      console.log(data);
     } else if (!res.ok && res.status === 401) {
       getNewAccess();
-    } else {
-      console.log(res.status + res.statusText);
-    }
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function getNewAccess() {
-  try {
-    const res = await fetch(API_URL + "auth/jwt/refresh/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        refresh: localStorage.getItem("refresh"),
-      }),
-    });
-    if (res.ok) {
-      const data = await res.json();
-      localStorage.setItem("access", data.access);
     } else {
       console.log(res.status + res.statusText);
     }

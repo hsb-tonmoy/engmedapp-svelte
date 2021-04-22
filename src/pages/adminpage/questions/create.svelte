@@ -3,6 +3,8 @@
   import Footer from "../_footer.svelte";
   import { onMount } from "svelte";
 
+  import { user, verifyAccess } from "../../../components/Auth/store.js";
+
   const API_URL = "https://api.engmedapp.com/";
 
   String.prototype.slugify = function (separator = "-") {
@@ -16,15 +18,21 @@
       .substring(0, 30);
   };
 
-  let new_board, new_level, new_paper, new_year, new_session;
+  let new_board, new_level, new_paper, new_year, new_session, slug_id;
   let new_title = "";
-  let slug_id = Math.floor(Math.random() * 1000000).toString() + "-";
+
+  const gen_slug_id = () => {
+    slug_id = Math.floor(Math.random() * 1000000).toString() + "-";
+  };
+  gen_slug_id();
   $: new_slug = slug_id + new_title.slugify();
   let new_excerpt = "";
 
   let content_editorData = "";
   let explanation_editorData = "";
   let content_editor, explanation_editor;
+
+  let user_id = $user.id;
 
   let boards = [];
   let levels = [];
@@ -194,6 +202,7 @@
   });
 
   const sendData = async () => {
+    await verifyAccess();
     content_editorData = await content_editor.getData();
     explanation_editorData = await explanation_editor.getData();
 
@@ -201,6 +210,9 @@
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        Authorization: localStorage.getItem("access")
+          ? "JWT " + localStorage.getItem("access")
+          : null,
       },
       body: JSON.stringify({
         board: new_board,
@@ -208,20 +220,25 @@
         paper: new_paper,
         year: new_year,
         session: new_session,
-        author: 1,
+        author: user_id,
         title: new_title,
         excerpt: new_excerpt,
         content: content_editorData,
         verified_explanation: explanation_editorData,
         slug: new_slug,
       }),
-    }).catch(function (error) {
-      console.log("ERROR:", error);
-    });
-
-    new_excerpt = "";
-    content_editor.setData("");
-    explanation_editor.setData("");
+    })
+      .then((res) => {
+        if (res.ok) {
+          (new_title = ""), (new_excerpt = "");
+          gen_slug_id();
+          content_editor.setData("");
+          explanation_editor.setData("");
+        }
+      })
+      .catch((error) => {
+        console.log("ERROR:", error);
+      });
 
     // console.log(
     //   new_board +
