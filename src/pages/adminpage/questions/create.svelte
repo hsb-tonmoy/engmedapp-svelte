@@ -328,6 +328,7 @@
                         bind:value={new_title}
                         class="input"
                         type="text"
+                        name="title"
                         placeholder="Title"
                       />
                     </div>
@@ -507,10 +508,11 @@
                       </div>
                       <!-- <div class="control">
                         <button
+                          on:click={() => createForm.validate()}
                           type="button"
                           class="button is-primary is-outlined"
                         >
-                          <span>Reset</span>
+                          <span>Validate</span>
                         </button>
                       </div> -->
                     </div>
