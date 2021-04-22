@@ -18,7 +18,6 @@ async function getNewAccess() {
     if (res.ok) {
       const data = await res.json();
       localStorage.setItem("access", data.access);
-      console.log("Got new Access");
     } else {
       console.log(res.status + res.statusText);
     }
@@ -41,7 +40,6 @@ export const verifyAccess = async () => {
     if (res.ok) {
       return true;
     } else if (!res.ok && res.status === 401) {
-      console.log("Token expired.");
       await getNewAccess();
     } else {
       console.log(res.status + res.statusText);

@@ -1,20 +1,93 @@
 <script>
-  import { login, authenticating, user } from './store.js'
-  let username = 'user@example.com'
-  let password = 'pass'
+  import { login, authenticating, user } from "./store.js";
 
-  const handleSubmit = () => login(username, password)
+  let email, password;
+
+  const handleSubmit = () => login(email, password);
 </script>
 
-<div class="container">
-  <h3>Login</h3>
-  <form on:submit|preventDefault={handleSubmit}>
-    <input type="text" bind:value={username} />
-    <input type="password" bind:value={password} />
-    {#if !$authenticating && !$user}
-      <input type="submit" />
-    {:else}
-      authenticating...
-    {/if}
-  </form>
-</div>
+<section class="container">
+  <div class="columns is-justify-content-center is-multiline">
+    <div class="column is-4 login">
+      <div class="columns">
+        <div class="column right has-text-centered">
+          <h1 class="title is-4">Login</h1>
+
+          <form on:submit|preventDefault={handleSubmit}>
+            <div class="field">
+              <div class="control">
+                <input
+                  class="input is-medium"
+                  id="email"
+                  type="email"
+                  name="email"
+                  title="email"
+                  placeholder="Email"
+                  required
+                  bind:value={email}
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <input
+                  class="input is-medium"
+                  id="password"
+                  type="password"
+                  name="password"
+                  title="password"
+                  placeholder="Password"
+                  required
+                  bind:value={password}
+                />
+              </div>
+            </div>
+            {#if !$authenticating && !$user}
+              <button
+                type="submit"
+                class="button is-block is-primary is-fullwidth is-medium"
+                >Login</button
+              >
+            {:else}
+              <button class="btn">Logging In</button>
+            {/if}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  :root {
+    --brandColor: hsl(166, 67%, 51%);
+    --background: rgb(247, 247, 247);
+    --textDark: hsla(0, 0%, 0%, 0.66);
+    --textLight: hsla(0, 0%, 0%, 0.33);
+  }
+
+  .field:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  .login {
+    margin-top: 10rem;
+    background: white;
+    border-radius: 10px;
+  }
+
+  .right .title {
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+
+  input {
+    font-size: 1rem;
+  }
+
+  input:focus {
+    border-color: var(--brandColor) !important;
+    box-shadow: 0 0 0 1px var(--brandColor) !important;
+  }
+</style>
