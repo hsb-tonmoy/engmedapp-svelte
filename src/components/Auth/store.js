@@ -1,6 +1,10 @@
 import { writable } from "svelte/store";
+
 export const user = writable(null);
+
 export const authenticating = writable(false);
+
+export const loginError = writable(null);
 
 const API_URL = "https://api.engmedapp.com/";
 
@@ -22,7 +26,7 @@ async function getNewAccess() {
       console.log(res.status + res.statusText);
     }
   } catch (err) {
-    console.log(err);
+    console.log("");
   }
 }
 
@@ -90,6 +94,7 @@ export const login = async (email, password) => {
       localStorage.setItem("access", data.access);
       localStorage.setItem("refresh", data.refresh);
       authenticate();
+    } else if (res.status === 401 && res.body) {
     } else {
       console.log(res.status + res.statusText);
       authenticating.set(false);

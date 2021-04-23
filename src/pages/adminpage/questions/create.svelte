@@ -2,11 +2,9 @@
   import Header from "../_header.svelte";
   import Footer from "../_footer.svelte";
   import { onMount } from "svelte";
-
-  import { user, verifyAccess } from "../../../components/Auth/store.js";
-
+  import { user } from "../../../components/Auth/store.js";
+  import authAxios from "../../../components/Auth/authAxios.js";
   const API_URL = "https://api.engmedapp.com/";
-
   String.prototype.slugify = function (separator = "-") {
     return this.toString()
       .normalize("NFD") // split an accented letter in the base letter and the acent
@@ -204,19 +202,11 @@
   });
 
   const sendData = async () => {
-    await verifyAccess();
     content_editorData = await content_editor.getData();
     explanation_editorData = await explanation_editor.getData();
 
-    await fetch(API_URL + "questions/create/", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: localStorage.getItem("access")
-          ? "JWT " + localStorage.getItem("access")
-          : null,
-      },
-      body: JSON.stringify({
+    await authAxios
+      .post("questions/create/", {
         board: new_board,
         level: new_level,
         paper: new_paper,
@@ -228,33 +218,16 @@
         content: content_editorData,
         verified_explanation: explanation_editorData,
         slug: new_slug,
-      }),
-    })
+      })
       .then((res) => {
-        if (res.ok) {
+        if (res.status === 201) {
           (new_title = ""), (new_excerpt = "");
           gen_slug_id();
           content_editor.setData("");
           explanation_editor.setData("");
           addSuccess = false;
         }
-      })
-      .catch((error) => {
-        console.log("ERROR:", error);
       });
-
-    // console.log(
-    //   new_board +
-    //     new_level +
-    //     new_paper +
-    //     new_year +
-    //     new_session +
-    //     new_title +
-    //     new_excerpt +
-    //     content_editorData +
-    //     explanation_editorData +
-    //     new_slug
-    // );
   };
 </script>
 
