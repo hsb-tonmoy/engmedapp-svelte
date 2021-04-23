@@ -6,7 +6,19 @@ export const authenticating = writable(false);
 
 export const loginError = writable(null);
 
+import axios from "axios";
+
 const API_URL = "https://api.engmedapp.com/";
+
+const authAxios = axios.create({
+  baseURL: API_URL,
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: localStorage.getItem("access_token")
+      ? "JWT " + localStorage.getItem("access_token")
+      : null,
+  },
+});
 
 async function getNewAccess() {
   try {
@@ -104,8 +116,8 @@ export const login = async (email, password) => {
   }
 };
 
-function authenticate() {
-  getCredentials();
+async function authenticate() {
+  await getCredentials();
   authenticating.set(false);
 }
 

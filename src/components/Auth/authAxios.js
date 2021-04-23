@@ -6,8 +6,8 @@ const authAxios = axios.create({
   baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
-    Authorization: localStorage.getItem("access_token")
-      ? "JWT " + localStorage.getItem("access_token")
+    Authorization: localStorage.getItem("access")
+      ? "JWT " + localStorage.getItem("access")
       : null,
   },
 });
@@ -30,18 +30,18 @@ authAxios.interceptors.response.use(
     }
 
     if (error.response.status === 401) {
-      return axiosInstance
-        .post("/token/refresh/", { refresh: refreshToken })
+      return authAxios
+        .post("auth/jwt/refresh/", { refresh: refreshToken })
         .then((response) => {
           if (response.status === 200) {
             localStorage.setItem("access", response.data.access);
 
-            axiosInstance.defaults.headers["Authorization"] =
+            authAxios.defaults.headers["Authorization"] =
               "JWT " + response.data.access;
             originalRequest.headers["Authorization"] =
               "JWT " + response.data.access;
 
-            return axiosInstance(originalRequest);
+            return authAxios(originalRequest);
           } else if (response.status === 401) {
             console.log("Refresh token is expired");
             window.location.href = "/login/";
