@@ -30,7 +30,7 @@ async function getNewAccess() {
   }
 }
 
-export const verifyAccess = async () => {
+const verifyAccess = async () => {
   try {
     const res = await fetch(API_URL + "auth/jwt/verify/", {
       method: "POST",
@@ -55,8 +55,15 @@ export const verifyAccess = async () => {
 
 void (async function main() {
   if (localStorage.getItem("refresh") && localStorage.getItem("access")) {
-    await verifyAccess();
-    await authenticate();
+    let access_token = localStorage.getItem("access");
+    const tokenParts = JSON.parse(atob(access_token.split(".")[1]));
+    const now = Date.now().valueOf() / 1000;
+
+    if (typeof tokenParts.exp !== "undefined" && tokenParts.exp < now) {
+      console.log("Token should be expired now");
+      await getNewAccess();
+      await authenticate();
+    }
   }
 })();
 
