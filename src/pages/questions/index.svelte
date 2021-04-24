@@ -1,11 +1,7 @@
 <script>
   import { onMount } from "svelte";
   const API_URL = "https://api.engmedapp.com/";
-  const convertDate = (string_date) => {
-    let date = new Date(string_date);
-    return date.toLocaleDateString();
-  };
-
+  import { convertDate } from "../../components/utils/convertDate.js";
   let questions = [];
   let boards = [];
   let levels = [];

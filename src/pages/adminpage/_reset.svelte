@@ -11,7 +11,7 @@
 </script>
 
 {#if $user}
-  {#if $user.account_type === 5}
+  {#if $user.account_type !== 1 || $user.account_type !== 2}
     <slot />
   {:else}
     <h1>Unauthorized</h1>

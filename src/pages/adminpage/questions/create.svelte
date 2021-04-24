@@ -4,7 +4,8 @@
   import { onMount } from "svelte";
   import { user } from "../../../components/Auth/store.js";
   import authAxios from "../../../components/Auth/authAxios.js";
-  const API_URL = "https://api.engmedapp.com/";
+  import { boards, levels, papers, years, sessions } from "../fetcherStore.js";
+
   String.prototype.slugify = function (separator = "-") {
     return this.toString()
       .normalize("NFD") // split an accented letter in the base letter and the acent
@@ -14,6 +15,26 @@
       .replace(/[^a-z0-9 ]/g, "") // remove all chars not letters, numbers and spaces (to be replaced)
       .replace(/\s+/g, separator)
       .substring(0, 30);
+  };
+
+  let boards_list = [],
+    levels_list = [],
+    papers_list = [],
+    years_list = [],
+    sessions_list = [];
+
+  const dataLoader = async () => {
+    (boards_list = await $boards),
+      (levels_list = await $levels),
+      (papers_list = await $papers),
+      (years_list = await $years),
+      (sessions_list = await $sessions);
+
+    new_board = boards_list[0].id;
+    new_level = levels_list[0].id;
+    new_paper = papers_list[0].id;
+    new_year = years_list[0].id;
+    new_session = sessions_list[0].id;
   };
 
   let new_board, new_level, new_paper, new_year, new_session, slug_id;
@@ -32,56 +53,11 @@
 
   let user_id = $user.id;
 
-  let boards = [];
-  let levels = [];
-  let papers = [];
-  let years = [];
-  let sessions = [];
-
   let addSuccess = true;
 
-  const fetchBoards = async () => {
-    const res = await fetch(API_URL + "questions/boards/");
-    const data = await res.json();
-
-    boards = data;
-    new_board = boards[0].id;
-  };
-  const fetchLevels = async () => {
-    const res = await fetch(API_URL + "questions/levels/");
-    const data = await res.json();
-
-    levels = data;
-    new_level = levels[0].id;
-  };
-  const fetchPapers = async () => {
-    const res = await fetch(API_URL + "questions/papers/");
-    const data = await res.json();
-
-    papers = data;
-    new_paper = papers[0].id;
-  };
-  const fetchBYears = async () => {
-    const res = await fetch(API_URL + "questions/years/");
-    const data = await res.json();
-
-    years = data;
-    new_year = years[0].id;
-  };
-  const fetchSessions = async () => {
-    const res = await fetch(API_URL + "questions/sessions/");
-    const data = await res.json();
-
-    sessions = data;
-    new_session = sessions[0].id;
-  };
-
   onMount(() => {
-    fetchBoards();
-    fetchLevels();
-    fetchPapers();
-    fetchBYears();
-    fetchSessions();
+    dataLoader();
+
     ClassicEditor.create(document.querySelector(".content_editor"), {
       toolbar: {
         items: [
@@ -232,7 +208,7 @@
 </script>
 
 <svelte:head>
-  <title>EngMedApp - Question Database</title>
+  <title>EngMedApp - Add a Question</title>
 </svelte:head>
 
 <html
@@ -336,7 +312,7 @@
                     <div class="control">
                       <div class="select is-fullwidth">
                         <select bind:value={new_board}>
-                          {#each boards as board}
+                          {#each boards_list as board}
                             <option value={board.id}>{board.name}</option>
                           {/each}
                         </select>
@@ -354,7 +330,7 @@
                     <div class="control">
                       <div class="select is-fullwidth">
                         <select bind:value={new_level}>
-                          {#each levels as level}
+                          {#each levels_list as level}
                             <option value={level.id}>{level.name}</option>
                           {/each}
                         </select>
@@ -372,7 +348,7 @@
                     <div class="control">
                       <div class="select is-fullwidth">
                         <select bind:value={new_paper}>
-                          {#each papers as paper}
+                          {#each papers_list as paper}
                             <option value={paper.id}>{paper.name}</option>
                           {/each}
                         </select>
@@ -390,7 +366,7 @@
                     <div class="control">
                       <div class="select is-fullwidth">
                         <select bind:value={new_year}>
-                          {#each years as year}
+                          {#each years_list as year}
                             <option value={year.id}>{year.name}</option>
                           {/each}
                         </select>
@@ -408,7 +384,7 @@
                     <div class="control">
                       <div class="select is-fullwidth">
                         <select bind:value={new_session}>
-                          {#each sessions as session}
+                          {#each sessions_list as session}
                             <option value={session.id}>{session.name}</option>
                           {/each}
                         </select>

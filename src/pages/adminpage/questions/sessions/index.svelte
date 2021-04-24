@@ -1,47 +1,43 @@
 <script>
-  const API_URL = "https://api.engmedapp.com/";
-  import Header from "../_header.svelte";
-  import Footer from "../_footer.svelte";
+  import Footer from "../../_footer.svelte";
+  import Header from "../../_header.svelte";
+  import { user } from "../../../../components/Auth/store.js";
+  import authAxios from "../../../../components/Auth/authAxios.js";
+  import { boards } from "../../fetcherStore.js";
   import { onMount } from "svelte";
-  import { convertDate } from "../../../components/utils/convertDate";
-
-  import { user } from "../../../components/Auth/store.js";
 
   let user_account_type = $user.account_type;
 
-  let questions = [];
-  let deleteSuccess = true;
+  let addSuccess = true;
 
-  const fetchQuestions = async () => {
-    const res = await fetch(API_URL + "questions/list/");
-    const data = await res.json();
+  let boards_list = [];
 
-    questions = data;
-  };
+  let new_name;
 
-  const deleteQuestion = async (slug) => {
-    const res = await fetch(`${API_URL}questions/question/${slug}`, {
-      method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-      },
-    }).catch(function (error) {
-      console.log("ERROR:", error);
-    });
-
-    if (res.ok) {
-      deleteSuccess = false;
-      fetchQuestions();
-    }
+  const dataLoader = async () => {
+    boards_list = await $boards;
   };
 
   onMount(() => {
-    fetchQuestions();
+    dataLoader();
   });
+
+  const sendData = async () => {
+    await authAxios
+      .post("questions/boards/", {
+        name: new_name,
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          new_name = "";
+          addSuccess = false;
+        }
+      });
+  };
 </script>
 
 <svelte:head>
-  <title>EngMedApp - Question Database</title>
+  <title>EngMedApp - Boards</title>
 </svelte:head>
 
 <html
@@ -55,7 +51,7 @@
         <div class="hero-body">
           <div
             class="notification is-success"
-            style={deleteSuccess ? "display: none" : ""}
+            style={addSuccess ? "display: none" : ""}
           >
             <div class="level">
               <div class="level-left">
@@ -64,7 +60,7 @@
                     <span class="icon"
                       ><i class="mdi mdi-buffer default" /></span
                     >
-                    <b>Successfully Deleted!</b>
+                    <b>Successfully Added!</b>
                   </div>
                 </div>
               </div>
@@ -85,7 +81,7 @@
                     <span class="icon"
                       ><i class="mdi mdi-buffer default" /></span
                     >
-                    <b>Questions List.</b> View, Edit, Delete Questions.
+                    <b>Boards List.</b>Add, View, Edit, Delete Boards.
                   </div>
                 </div>
               </div>
@@ -109,19 +105,12 @@
                         </th>
 
                         <th>ID</th>
-                        <th>Title</th>
-                        <th>Board</th>
-                        <th>Level</th>
-                        <th>Paper</th>
-                        <th>Year</th>
-                        <th>Session</th>
-                        <th>Status</th>
-                        <th>Created</th>
+                        <th>Name</th>
                         <th />
                       </tr>
                     </thead>
                     <tbody>
-                      {#each questions as question (question.slug)}
+                      {#each boards_list as board (board.id)}
                         <tr>
                           <td class="is-checkbox-cell">
                             <label class="b-checkbox checkbox">
@@ -130,44 +119,22 @@
                             </label>
                           </td>
 
-                          <td data-label="ID"> {question.id}</td>
-                          <td data-label="Title">
-                            <a
-                              href={`/questions/${question.slug}`}
-                              target="_blank">{question.title}</a
+                          <td data-label="ID"> {board.id}</td>
+                          <td data-label="Name">
+                            <a href={`/questions/`} target="_blank"
+                              >{board.name}</a
                             >
                           </td>
-                          <td data-label="Board">{question.board.name}</td>
-                          <td data-label="Level">{question.level.name}</td>
-                          <td data-label="Paper">{question.paper.name}</td>
-                          <td data-label="Year">{question.year.name}</td>
-                          <td data-label="Session">{question.session.name}</td>
-                          <td class="is-capitalized" data-label="Status"
-                            >{question.status}</td
-                          >
-                          <td data-label="Created"
-                            >{convertDate(question.published)}</td
-                          >
                           <td class="is-actions-cell">
                             <div class="buttons is-right">
                               <a
-                                href={`/adminpage/questions/${question.slug}`}
+                                href={`/adminpage/questions/`}
                                 class="button is-small is-primary"
                               >
                                 <span class="icon"
                                   ><i class="fas fa-pen" /></span
                                 >
                               </a>
-                              {#if user_account_type === 5}
-                                <a
-                                  class="button is-small is-danger jb-modal"
-                                  on:click={() => deleteQuestion(question.slug)}
-                                >
-                                  <span class="icon"
-                                    ><i class="fas fa-trash" /></span
-                                  >
-                                </a>
-                              {/if}
                             </div>
                           </td>
                         </tr>
@@ -197,6 +164,56 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section is-main-section">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">
+              <span class="icon"><i class="mdi mdi-ballot" /></span>
+              Add a Board
+            </p>
+          </header>
+          <div class="card-content">
+            <form on:submit|preventDefault={sendData}>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Name</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input
+                        bind:value={new_name}
+                        class="input"
+                        type="text"
+                        name="title"
+                        placeholder="Title"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <div class="field is-horizontal">
+                <div class="field-label">
+                  <!-- Left empty for spacing -->
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="field is-grouped">
+                      <div class="control">
+                        <button type="submit" class="button is-primary">
+                          <span>Submit</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </section>

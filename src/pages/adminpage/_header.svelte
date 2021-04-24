@@ -1,6 +1,6 @@
 <script>
   export let title;
-  import { logout, user, authenticating } from "../../components/Auth/store.js";
+  import { user } from "../../components/Auth/store.js";
   import { url } from "@roxi/routify";
 </script>
 
@@ -147,31 +147,31 @@
         <ul>
           <li>
             <!-- svelte-ignore a11y-missing-attribute -->
-            <a href="#void">
-              <span>Board</span>
+            <a href="/adminpage/questions/boards/">
+              <span>Boards</span>
             </a>
           </li>
           <li>
             <!-- svelte-ignore a11y-missing-attribute -->
-            <a href="#void">
+            <a href="/adminpage/questions/levels/">
               <span>Level</span>
             </a>
           </li>
           <li>
             <!-- svelte-ignore a11y-missing-attribute -->
-            <a href="#void">
+            <a href="/adminpage/questions/papers/">
               <span>Paper</span>
             </a>
           </li>
           <li>
             <!-- svelte-ignore a11y-missing-attribute -->
-            <a href="#void">
+            <a href="/adminpage/questions/years/">
               <span>Year</span>
             </a>
           </li>
           <li>
             <!-- svelte-ignore a11y-missing-attribute -->
-            <a href="#void">
+            <a href="/adminpage/questions/sessions/">
               <span>Session</span>
             </a>
           </li>
