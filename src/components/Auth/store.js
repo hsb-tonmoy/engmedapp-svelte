@@ -63,6 +63,8 @@ void (async function main() {
       console.log("Token should be expired now");
       await getNewAccess();
       await authenticate();
+    } else {
+      await authenticate();
     }
   }
 })();

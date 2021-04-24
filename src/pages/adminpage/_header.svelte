@@ -2,6 +2,18 @@
   export let title;
   import { user } from "../../components/Auth/store.js";
   import { url } from "@roxi/routify";
+
+  let toggle = false;
+
+  if (
+    $url().endsWith("/boards") ||
+    $url().endsWith("/levels") ||
+    $url().endsWith("/papers") ||
+    $url().endsWith("/years") ||
+    $url().endsWith("/sessions")
+  ) {
+    toggle = true;
+  }
 </script>
 
 <nav id="navbar-main" class="navbar is-fixed-top">
@@ -135,13 +147,19 @@
         </a>
       </li>
 
-      <li>
+      <li class:is-active={toggle}>
         <!-- svelte-ignore a11y-missing-attribute -->
         <a class="has-icon has-dropdown-icon">
           <span class="icon"><i class="fas fa-th" /></span>
           <span class="menu-item-label">Categories</span>
           <div class="dropdown-icon">
-            <span class="icon"><i class="mdi mdi-plus" /></span>
+            <span class="icon"
+              ><i
+                class="mdi"
+                class:mdi-plus={!toggle}
+                class:mdi-minus={toggle}
+              /></span
+            >
           </div>
         </a>
         <ul>
@@ -154,25 +172,25 @@
           <li>
             <!-- svelte-ignore a11y-missing-attribute -->
             <a href="/adminpage/questions/levels/">
-              <span>Level</span>
+              <span>Levels</span>
             </a>
           </li>
           <li>
             <!-- svelte-ignore a11y-missing-attribute -->
             <a href="/adminpage/questions/papers/">
-              <span>Paper</span>
+              <span>Papers</span>
             </a>
           </li>
           <li>
             <!-- svelte-ignore a11y-missing-attribute -->
             <a href="/adminpage/questions/years/">
-              <span>Year</span>
+              <span>Years</span>
             </a>
           </li>
           <li>
             <!-- svelte-ignore a11y-missing-attribute -->
             <a href="/adminpage/questions/sessions/">
-              <span>Session</span>
+              <span>Sessions</span>
             </a>
           </li>
         </ul>

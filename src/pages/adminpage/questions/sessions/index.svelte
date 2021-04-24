@@ -3,41 +3,78 @@
   import Header from "../../_header.svelte";
   import { user } from "../../../../components/Auth/store.js";
   import authAxios from "../../../../components/Auth/authAxios.js";
-  import { boards } from "../../fetcherStore.js";
+  import { sessions, triggerSessionsfetch } from "../../fetcherStore.js";
   import { onMount } from "svelte";
 
   let user_account_type = $user.account_type;
 
   let addSuccess = true;
 
-  let boards_list = [];
+  let sessions_list = [];
 
   let new_name;
 
+  let editing = false;
+
+  let session_id;
+
   const dataLoader = async () => {
-    boards_list = await $boards;
+    sessions_list = await $sessions;
   };
 
   onMount(() => {
     dataLoader();
   });
 
+  const updateSession = (data) => {
+    editing = true;
+    session_id = data[0];
+    new_name = data[1];
+  };
+
   const sendData = async () => {
-    await authAxios
-      .post("questions/boards/", {
-        name: new_name,
-      })
-      .then((res) => {
-        if (res.status === 201) {
-          new_name = "";
-          addSuccess = false;
-        }
-      });
+    if (!editing) {
+      await authAxios
+        .post("questions/sessions/", {
+          name: new_name,
+        })
+        .then((res) => {
+          if (res.status === 201) {
+            new_name = "";
+            addSuccess = false;
+            triggerSessionsfetch();
+            dataLoader();
+          }
+        });
+    } else {
+      await authAxios
+        .put(`questions/session/${session_id}`, {
+          name: new_name,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            new_name = "";
+            addSuccess = false;
+            editing = false;
+            triggerSessionsfetch();
+            dataLoader();
+          }
+        });
+    }
+  };
+
+  const deleteSession = async (id) => {
+    await authAxios.delete(`questions/session/${id}`).then((res) => {
+      if (res.status === 204) {
+        triggerSessionsfetch();
+        dataLoader();
+      }
+    });
   };
 </script>
 
 <svelte:head>
-  <title>EngMedApp - Boards</title>
+  <title>EngMedApp - Sessions</title>
 </svelte:head>
 
 <html
@@ -60,7 +97,11 @@
                     <span class="icon"
                       ><i class="mdi mdi-buffer default" /></span
                     >
-                    <b>Successfully Added!</b>
+                    <b
+                      >{editing
+                        ? "Successfully Updated!"
+                        : "Successfully Added!"}</b
+                    >
                   </div>
                 </div>
               </div>
@@ -81,7 +122,7 @@
                     <span class="icon"
                       ><i class="mdi mdi-buffer default" /></span
                     >
-                    <b>Boards List.</b>Add, View, Edit, Delete Boards.
+                    <b>Sessions List.</b> Add, View, Edit, Delete sessions.
                   </div>
                 </div>
               </div>
@@ -110,7 +151,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {#each boards_list as board (board.id)}
+                      {#each sessions_list as session (session.id)}
                         <tr>
                           <td class="is-checkbox-cell">
                             <label class="b-checkbox checkbox">
@@ -119,24 +160,37 @@
                             </label>
                           </td>
 
-                          <td data-label="ID"> {board.id}</td>
+                          <td data-label="ID"> {session.id}</td>
                           <td data-label="Name">
                             <a href={`/questions/`} target="_blank"
-                              >{board.name}</a
+                              >{session.name}</a
                             >
                           </td>
-                          <td class="is-actions-cell">
-                            <div class="buttons is-right">
-                              <a
-                                href={`/adminpage/questions/`}
-                                class="button is-small is-primary"
-                              >
-                                <span class="icon"
-                                  ><i class="fas fa-pen" /></span
+                          {#if user_account_type === 5 || user_account_type === 4}
+                            <td class="is-actions-cell">
+                              <div class="buttons is-right">
+                                <a
+                                  on:click={updateSession([
+                                    session.id,
+                                    session.name,
+                                  ])}
+                                  class="button is-small is-primary"
                                 >
-                              </a>
-                            </div>
-                          </td>
+                                  <span class="icon"
+                                    ><i class="fas fa-pen" /></span
+                                  >
+                                </a>
+                                <a
+                                  class="button is-small is-danger jb-modal"
+                                  on:click={() => deleteSession(session.id)}
+                                >
+                                  <span class="icon"
+                                    ><i class="fas fa-trash" /></span
+                                  >
+                                </a>
+                              </div>
+                            </td>
+                          {/if}
                         </tr>
                       {/each}
                     </tbody>
@@ -167,57 +221,70 @@
           </div>
         </div>
       </section>
-
-      <section class="section is-main-section">
-        <div class="card">
-          <header class="card-header">
-            <p class="card-header-title">
-              <span class="icon"><i class="mdi mdi-ballot" /></span>
-              Add a Board
-            </p>
-          </header>
-          <div class="card-content">
-            <form on:submit|preventDefault={sendData}>
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">Name</label>
-                </div>
-                <div class="field-body">
-                  <div class="field">
-                    <div class="control">
-                      <input
-                        bind:value={new_name}
-                        class="input"
-                        type="text"
-                        name="title"
-                        placeholder="Title"
-                      />
-                    </div>
+      {#if user_account_type === 5 || user_account_type === 4}
+        <section class="section is-main-section">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                <span class="icon"><i class="mdi mdi-ballot" /></span>
+                Add a session
+              </p>
+            </header>
+            <div class="card-content">
+              <form on:submit|preventDefault={sendData}>
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Name</label>
                   </div>
-                </div>
-              </div>
-              <hr />
-              <div class="field is-horizontal">
-                <div class="field-label">
-                  <!-- Left empty for spacing -->
-                </div>
-                <div class="field-body">
-                  <div class="field">
-                    <div class="field is-grouped">
+                  <div class="field-body">
+                    <div class="field">
                       <div class="control">
-                        <button type="submit" class="button is-primary">
-                          <span>Submit</span>
-                        </button>
+                        <input
+                          bind:value={new_name}
+                          class="input"
+                          type="text"
+                          name="title"
+                          placeholder="Title"
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </form>
+                <hr />
+                <div class="field is-horizontal">
+                  <div class="field-label">
+                    <!-- Left empty for spacing -->
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <div class="field is-grouped">
+                        <div class="control">
+                          <button type="submit" class="button is-primary">
+                            <span>{editing ? "Update" : "Submit"}</span>
+                          </button>
+                        </div>
+                        {#if editing}
+                          <div class="control">
+                            <button
+                              class="button is-primary is-outlined"
+                              on:click={() => {
+                                editing = false;
+                                new_name = "";
+                              }}
+                            >
+                              <span>Reset</span>
+                            </button>
+                          </div>
+                        {/if}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
-      </section>
-
+        </section>
+      {/if}
       <Footer />
 
       <div id="sample-modal" class="modal">

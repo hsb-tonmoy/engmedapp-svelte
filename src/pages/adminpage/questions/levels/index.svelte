@@ -3,7 +3,7 @@
   import Header from "../../_header.svelte";
   import { user } from "../../../../components/Auth/store.js";
   import authAxios from "../../../../components/Auth/authAxios.js";
-  import { levels } from "../../fetcherStore.js";
+  import { levels, triggerLevelsfetch } from "../../fetcherStore.js";
   import { onMount } from "svelte";
 
   let user_account_type = $user.account_type;
@@ -14,6 +14,10 @@
 
   let new_name;
 
+  let editing = false;
+
+  let level_id;
+
   const dataLoader = async () => {
     levels_list = await $levels;
   };
@@ -22,17 +26,50 @@
     dataLoader();
   });
 
+  const updateLevel = (data) => {
+    editing = true;
+    level_id = data[0];
+    new_name = data[1];
+  };
+
   const sendData = async () => {
-    await authAxios
-      .post("questions/levels/", {
-        name: new_name,
-      })
-      .then((res) => {
-        if (res.status === 201) {
-          new_name = "";
-          addSuccess = false;
-        }
-      });
+    if (!editing) {
+      await authAxios
+        .post("questions/levels/", {
+          name: new_name,
+        })
+        .then((res) => {
+          if (res.status === 201) {
+            new_name = "";
+            addSuccess = false;
+            triggerLevelsfetch();
+            dataLoader();
+          }
+        });
+    } else {
+      await authAxios
+        .put(`questions/level/${level_id}`, {
+          name: new_name,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            new_name = "";
+            addSuccess = false;
+            editing = false;
+            triggerLevelsfetch();
+            dataLoader();
+          }
+        });
+    }
+  };
+
+  const deleteLevel = async (id) => {
+    await authAxios.delete(`questions/level/${id}`).then((res) => {
+      if (res.status === 204) {
+        triggerLevelsfetch();
+        dataLoader();
+      }
+    });
   };
 </script>
 
@@ -60,7 +97,11 @@
                     <span class="icon"
                       ><i class="mdi mdi-buffer default" /></span
                     >
-                    <b>Successfully Added!</b>
+                    <b
+                      >{editing
+                        ? "Successfully Updated!"
+                        : "Successfully Added!"}</b
+                    >
                   </div>
                 </div>
               </div>
@@ -81,7 +122,7 @@
                     <span class="icon"
                       ><i class="mdi mdi-buffer default" /></span
                     >
-                    <b>levels List.</b>Add, View, Edit, Delete levels.
+                    <b>Levels List.</b> Add, View, Edit, Delete levels.
                   </div>
                 </div>
               </div>
@@ -121,20 +162,32 @@
 
                           <td data-label="ID"> {level.id}</td>
                           <td data-label="Name">
-                            {level.name}
+                            <a href={`/questions/`} target="_blank"
+                              >{level.name}</a
+                            >
                           </td>
-                          <td class="is-actions-cell">
-                            <div class="buttons is-right">
-                              <a
-                                href={`/adminpage/questions/`}
-                                class="button is-small is-primary"
-                              >
-                                <span class="icon"
-                                  ><i class="fas fa-pen" /></span
+                          {#if user_account_type === 5 || user_account_type === 4}
+                            <td class="is-actions-cell">
+                              <div class="buttons is-right">
+                                <a
+                                  on:click={updateLevel([level.id, level.name])}
+                                  class="button is-small is-primary"
                                 >
-                              </a>
-                            </div>
-                          </td>
+                                  <span class="icon"
+                                    ><i class="fas fa-pen" /></span
+                                  >
+                                </a>
+                                <a
+                                  class="button is-small is-danger jb-modal"
+                                  on:click={() => deleteLevel(level.id)}
+                                >
+                                  <span class="icon"
+                                    ><i class="fas fa-trash" /></span
+                                  >
+                                </a>
+                              </div>
+                            </td>
+                          {/if}
                         </tr>
                       {/each}
                     </tbody>
@@ -165,7 +218,7 @@
           </div>
         </div>
       </section>
-      {#if user_account_type === 4 || user_account_type === 5}
+      {#if user_account_type === 5 || user_account_type === 4}
         <section class="section is-main-section">
           <div class="card">
             <header class="card-header">
@@ -204,9 +257,22 @@
                       <div class="field is-grouped">
                         <div class="control">
                           <button type="submit" class="button is-primary">
-                            <span>Submit</span>
+                            <span>{editing ? "Update" : "Submit"}</span>
                           </button>
                         </div>
+                        {#if editing}
+                          <div class="control">
+                            <button
+                              class="button is-primary is-outlined"
+                              on:click={() => {
+                                editing = false;
+                                new_name = "";
+                              }}
+                            >
+                              <span>Reset</span>
+                            </button>
+                          </div>
+                        {/if}
                       </div>
                     </div>
                   </div>
