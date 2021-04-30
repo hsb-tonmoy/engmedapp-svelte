@@ -18,4 +18,5 @@
   <button on:click={logout}>Logout</button>
 {/if}
 
-<!-- routify:options index=false -->
+<!-- routify:options index=3 -->
+<!-- routify:options title="Profile" -->

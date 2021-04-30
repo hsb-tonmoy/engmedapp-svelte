@@ -10,6 +10,13 @@
   // $: if (!$authenticating && !$user) $ready()
 </script>
 
+<!-- routify:options index=3 -->
+<!-- routify:options title="Admin" -->
+
+<svelte:head>
+  <link rel="stylesheet" href="/adminpage/css/main.min.css" />
+</svelte:head>
+
 {#if $user}
   {#if $user.account_type !== 1 || $user.account_type !== 2}
     <slot />
