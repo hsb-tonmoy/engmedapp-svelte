@@ -1,10 +1,10 @@
-const { appConfig } = require('./package.json')
-const tailwind = require('tailwindcss')
-const postcssImport = require('postcss-import')
-const autoPreprocess = require('svelte-preprocess')
-const svelte = require('@sveltejs/vite-plugin-svelte')
-const { port } = appConfig
-const production = process.env.NODE_ENV === 'production'
+const { appConfig } = require("./package.json");
+const tailwind = require("tailwindcss");
+const postcssImport = require("postcss-import");
+const autoPreprocess = require("svelte-preprocess");
+const svelte = require("@sveltejs/vite-plugin-svelte");
+const { port } = appConfig;
+const production = process.env.NODE_ENV === "production";
 module.exports = {
   server: {
     port: port,
@@ -12,13 +12,13 @@ module.exports = {
   build: {
     polyfillDynamicImport: false,
     cssCodeSplit: false,
-    target: ['chrome61', 'edge18', 'es2019', 'firefox60', 'safari11'],
+    target: ["chrome61", "edge18", "es2019", "firefox60", "safari11"],
   },
   optimizeDeps: {
-    exclude: ['@roxi/routify'],
+    exclude: ["@roxi/routify"],
   },
   resolve: {
-    dedupe: ['@roxi/routify'],
+    dedupe: ["@roxi/routify"],
   },
   plugins: [
     svelte({
@@ -27,15 +27,22 @@ module.exports = {
           postcss: {
             plugins: [
               tailwind({
-                mode: 'jit',
-                darkMode: 'class',
+                mode: "jit",
+                darkMode: "class",
                 future: {
                   removeDeprecatedGapUtilities: true,
                   purgeLayersByDefault: true,
                 },
+                theme: {
+                  extend: {
+                    zIndex: {
+                      "-10": "-10",
+                    },
+                  },
+                },
                 plugins: [],
                 purge: {
-                  content: ['./src/**/*.svelte'],
+                  content: ["./src/**/*.svelte"],
                   enabled: production,
                 },
               }),
@@ -48,4 +55,4 @@ module.exports = {
       hot: !production,
     }),
   ],
-}
+};
