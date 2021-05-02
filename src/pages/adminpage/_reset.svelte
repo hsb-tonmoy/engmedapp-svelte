@@ -1,4 +1,5 @@
 <script>
+  import { metatags } from "@roxi/routify";
   import Login from "../../components/Auth/Login.svelte";
   import { authenticating, user } from "../../components/Auth/store.js";
 
@@ -8,6 +9,8 @@
    * Otherwise Routify will wait indefinitely for `<slot />` to load.
    * */
   // $: if (!$authenticating && !$user) $ready()
+
+  metatags.title = "EngMedApp - Admin";
 </script>
 
 <!-- routify:options index=3 -->

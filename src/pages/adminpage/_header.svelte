@@ -49,10 +49,7 @@
         <!-- svelte-ignore a11y-missing-attribute -->
         <a class="navbar-link is-arrowless">
           <div class="is-user-avatar">
-            <img
-              src="https://avatars.dicebear.com/api/initials/sd.svg?r=50&m=10"
-              alt="Username"
-            />
+            <img src={$user.profile_pic} alt="Username" />
           </div>
           <div class="is-user-name">
             <span>{$user ? $user.user_name : "Guest"}</span>

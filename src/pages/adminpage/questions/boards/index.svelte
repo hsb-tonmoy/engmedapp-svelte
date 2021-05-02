@@ -5,6 +5,9 @@
   import authAxios from "../../../../components/Auth/authAxios.js";
   import { boards, triggerBoardsfetch } from "../../fetcherStore.js";
   import { onMount } from "svelte";
+  import { metatags } from "@roxi/routify";
+
+  metatags.title = "EngMedApp - Boards";
 
   let user_account_type = $user.account_type;
 

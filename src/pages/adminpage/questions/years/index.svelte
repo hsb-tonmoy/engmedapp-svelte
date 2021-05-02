@@ -6,6 +6,10 @@
   import { years, triggerYearsfetch } from "../../fetcherStore.js";
   import { onMount } from "svelte";
 
+  import { metatags } from "@roxi/routify";
+
+  metatags.title = "EngMedApp - Years";
+
   let user_account_type = $user.account_type;
 
   let addSuccess = true;

@@ -2,19 +2,21 @@
   import Dropzone from "svelte-file-dropzone";
   import authAxios from "../../components/Auth/authAxios.js";
 
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
+
   let uploadSuccess = false;
 
   let returnedData = [];
 
   let files = {
     accepted: [],
-    rejected: [],
   };
 
   function handleFilesSelect(e) {
-    const { acceptedFiles, fileRejections } = e.detail;
+    const { acceptedFiles } = e.detail;
     files.accepted = [...files.accepted, ...acceptedFiles];
-    files.rejected = [...files.rejected, ...fileRejections];
   }
 
   export function handleFilesUpload() {
@@ -33,7 +35,7 @@
       .post("media_lib/images/", formData)
       .then((res) => {
         if (res.status === 200) {
-          returnedData = [res.data, ...returnedData];
+          returnedData.push(res.data);
           uploadSuccess = true;
           console.log(returnedData);
           files.accepted = [];
@@ -123,8 +125,8 @@
               <p class="p-1 size text-xs">
                 {image.size > 1024
                   ? image.size > 1048576
-                    ? Math.round(image.size / 1048576) + "mb"
-                    : Math.round(image.size / 1024) + "kb"
+                    ? Math.round(image.size / 1048576) + " MB"
+                    : Math.round(image.size / 1024) + " KB"
                   : image.size + "b"}
               </p>
               <button

@@ -4,10 +4,13 @@
   import Footer from "../_footer.svelte";
   import { onMount } from "svelte";
   import { convertDate } from "../../../components/utils/convertDate";
-
   import { user } from "../../../components/Auth/store.js";
 
   let user_account_type = $user.account_type;
+
+  import { metatags } from "@roxi/routify";
+
+  metatags.title = "EngMedApp - Questions";
 
   let questions = [];
   let deleteSuccess = true;

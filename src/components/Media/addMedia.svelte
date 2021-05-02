@@ -31,6 +31,9 @@
 {#if modalState}
   <!-- overlay -->
   <div
+    on:click|self={() => {
+      modalState = !modalState;
+    }}
     id="overlay"
     class="fixed top-0 left-0 w-full h-screen flex justify-center items-center"
   >

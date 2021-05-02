@@ -2,13 +2,12 @@
   import { onMount } from "svelte";
   import Header from "./_header.svelte";
   import Footer from "./_footer.svelte";
+  import { metatags } from "@roxi/routify";
+
+  metatags.title = "EngMedApp - Dashboard";
 
   const API_URL = "https://api.engmedapp.com/";
 </script>
-
-<svelte:head>
-  <title>EngMedApp - Admin</title>
-</svelte:head>
 
 <html
   lang="en"

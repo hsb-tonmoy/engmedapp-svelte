@@ -6,6 +6,9 @@
   import authAxios from "../../../components/Auth/authAxios.js";
   import { boards, levels, papers, years, sessions } from "../fetcherStore.js";
   import AddMedia from "../../../components/Media/addMedia.svelte";
+  import { metatags } from "@roxi/routify";
+
+  metatags.title = "EngMedApp - Add Question";
 
   String.prototype.slugify = function (separator = "-") {
     return this.toString()
@@ -177,6 +180,13 @@
         console.error(error);
       });
   });
+
+  function insertAtCursor() {
+    content_editor.setData(
+      content_editor.getData() +
+        "<img src='https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Zugpsitze_mountain.jpg'>"
+    );
+  }
 
   const sendData = async () => {
     content_editorData = await content_editor.getData();
@@ -421,6 +431,9 @@
                   <div class="field">
                     <AddMedia />
                     <div class="control">
+                      <button type="button" on:click={insertAtCursor}
+                        >Insert</button
+                      >
                       <textarea
                         class="textarea content_editor"
                         placeholder="Question Details...."

@@ -6,6 +6,10 @@
   import { papers, triggerPapersfetch } from "../../fetcherStore.js";
   import { onMount } from "svelte";
 
+  import { metatags } from "@roxi/routify";
+
+  metatags.title = "EngMedApp - Papers";
+
   let user_account_type = $user.account_type;
 
   let addSuccess = true;

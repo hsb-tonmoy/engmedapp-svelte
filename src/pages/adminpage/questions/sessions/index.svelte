@@ -6,6 +6,10 @@
   import { sessions, triggerSessionsfetch } from "../../fetcherStore.js";
   import { onMount } from "svelte";
 
+  import { metatags } from "@roxi/routify";
+
+  metatags.title = "EngMedApp - Sessions";
+
   let user_account_type = $user.account_type;
 
   let addSuccess = true;
