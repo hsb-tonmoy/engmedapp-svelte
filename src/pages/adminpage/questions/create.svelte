@@ -5,6 +5,7 @@
   import { user } from "../../../components/Auth/store.js";
   import authAxios from "../../../components/Auth/authAxios.js";
   import { boards, levels, papers, years, sessions } from "../fetcherStore.js";
+  import AddMedia from "../../../components/Media/addMedia.svelte";
 
   String.prototype.slugify = function (separator = "-") {
     return this.toString()
@@ -419,6 +420,7 @@
                 <div class="field-body">
                   <div class="field">
                     <div class="control">
+                      <AddMedia />
                       <textarea
                         class="textarea content_editor"
                         placeholder="Question Details...."
