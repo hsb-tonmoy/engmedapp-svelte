@@ -29,23 +29,17 @@
 </button>
 
 {#if modalState}
-  <!-- component -->
+  <!-- overlay -->
   <div
-    id="media_modal"
-    class="bg-gray-500 h-screen w-screen sm:px-8 md:px-16 sm:py-8"
+    id="overlay"
+    class="fixed top-0 left-0 w-full h-screen flex justify-center items-center"
   >
-    <main class="container mx-auto max-w-screen-lg h-full">
+    <main id="modal" class="container mx-auto max-w-screen-lg">
       <!-- file upload modal -->
       <article
         aria-label="File Upload Modal"
         class="relative h-full flex flex-col bg-white shadow-xl rounded-md"
       >
-        <!-- overlay -->
-        <div
-          id="overlay"
-          class="h-screen w-screen fixed top-0 left-0 pointer-events-none z-50 flex flex-col items-center justify-center rounded-md"
-        />
-
         <!-- scroll area -->
         <section class="h-full overflow-auto p-8 w-full h-full flex flex-col">
           <Upload bind:this={upload} />
@@ -81,11 +75,11 @@
 
 <style>
   #overlay {
-    top: 0%;
-    left: 0%;
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    z-index: 50;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000000;
+  }
+
+  #modal {
+    height: 95vh;
   }
 </style>
