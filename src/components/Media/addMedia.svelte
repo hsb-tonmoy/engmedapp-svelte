@@ -9,6 +9,7 @@
   on:click={() => {
     modalState = !modalState;
   }}
+  type="button"
   class="tracking-wider text-white inline-flex items-center space-x-2 rounded px-3 py-2 m-1 border-b-4 border-l-2 shadow-lg bg-blue-800 border-blue-900 text-white text-sm"
 >
   <span> Add Media </span>
@@ -29,7 +30,10 @@
 
 {#if modalState}
   <!-- component -->
-  <div class="bg-gray-500 h-screen w-screen sm:px-8 md:px-16 sm:py-8">
+  <div
+    id="media_modal"
+    class="bg-gray-500 h-screen w-screen sm:px-8 md:px-16 sm:py-8"
+  >
     <main class="container mx-auto max-w-screen-lg h-full">
       <!-- file upload modal -->
       <article
@@ -39,7 +43,7 @@
         <!-- overlay -->
         <div
           id="overlay"
-          class="w-full h-full absolute top-0 left-0 pointer-events-none z-50 flex flex-col items-center justify-center rounded-md"
+          class="h-screen w-screen fixed top-0 left-0 pointer-events-none z-50 flex flex-col items-center justify-center rounded-md"
         />
 
         <!-- scroll area -->
@@ -54,6 +58,7 @@
               upload.handleFilesUpload();
             }}
             id="submit"
+            type="button"
             class="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none"
           >
             Upload now
@@ -63,6 +68,7 @@
               modalState = !modalState;
             }}
             id="cancel"
+            type="button"
             class="ml-3 rounded-sm px-3 py-1 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
           >
             Cancel
@@ -72,3 +78,14 @@
     </main>
   </div>
 {/if}
+
+<style>
+  #overlay {
+    top: 0%;
+    left: 0%;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 50;
+  }
+</style>

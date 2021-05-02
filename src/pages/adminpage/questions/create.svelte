@@ -419,8 +419,8 @@
                 </div>
                 <div class="field-body">
                   <div class="field">
+                    <AddMedia />
                     <div class="control">
-                      <AddMedia />
                       <textarea
                         class="textarea content_editor"
                         placeholder="Question Details...."
