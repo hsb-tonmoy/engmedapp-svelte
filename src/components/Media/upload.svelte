@@ -10,29 +10,13 @@
 
   $: returnedData = [];
 
-  let testArray = [
-    {
-      alt_tag: "55 - dLBvfS8.jpg",
-      file_name: "55 - dLBvfS8.jpg",
-      id: 83,
-      image:
-        "https://engmedapp.s3.amazonaws.com/media/images/2021/05/03/55_-_dLBvfS8_70048530.jpg",
-      image_large:
-        "https://engmedapp.s3.amazonaws.com/media/images/2021/05/03/55_-_dLBvfS8_70048530_large.jpg",
-      image_med:
-        "https://engmedapp.s3.amazonaws.com/media/images/2021/05/03/55_-_dLBvfS8_70048530_med.jpg",
-      image_thumb:
-        "https://engmedapp.s3.amazonaws.com/media/images/2021/05/03/55_-_dLBvfS8_70048530_thumb.jpg",
-      uploaded: "2021-05-03T01:17:20.764530Z",
-    },
-  ];
-
   let files = {
     accepted: [],
   };
 
   let insertData = {
     size: "",
+    alt_tag: "",
   };
 
   function handleFilesSelect(e) {
@@ -56,7 +40,6 @@
       } finally {
         files.accepted = [];
         uploadSuccess = true;
-        console.log(returnedData);
         resolve();
       }
     });
@@ -67,7 +50,7 @@
       .post("media_lib/images/", formData)
       .then((res) => {
         if (res.status === 200) {
-          returnedData.push(res.data);
+          returnedData = [...returnedData, res.data];
         } else {
           console.log(res.status + " " + res.statusText);
         }
@@ -213,7 +196,7 @@
         </tr>
       </thead>
       <tbody class="bg-gray-200">
-        {#each testArray as image (image.id)}
+        {#each returnedData as image (image.id)}
           <tr class="bg-white border-4 border-gray-200">
             <td class="px-16 py-2 flex flex-row items-center">
               <img
@@ -226,13 +209,16 @@
               <span class="text-center font-semibold">{image.file_name}</span>
             </td>
             <td class="px-16 py-2">
-              <span class="text-center">{image.alt_tag}</span>
+              <input
+                type="text"
+                bind:value={insertData.alt_tag}
+                name="Alt Tag"
+                placeholder={image.alt_tag}
+                class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
+              />
             </td>
             <td class="px-16 py-2">
-              <select
-                bind:value={insertData.size}
-                on:blur={() => console.log(insertData.size)}
-              >
+              <select bind:value={insertData.size}>
                 <option value="large">Large</option>
                 <option value="med">Medium</option>
                 <option value="thumb">Thumbnail</option>
@@ -241,8 +227,9 @@
             </td>
 
             <td class="px-16 py-2">
-              <button class="bg-blue-300 text-sm text-white px-4 py-1"
-                >Insert</button
+              <button
+                type="button"
+                class="bg-blue-300 text-sm text-white px-4 py-1">Insert</button
               >
             </td>
           </tr>
