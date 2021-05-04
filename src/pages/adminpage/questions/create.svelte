@@ -4,6 +4,7 @@
   import { onMount } from "svelte";
   import { user } from "../../../components/Auth/store.js";
   import authAxios from "../../../components/Auth/authAxios.js";
+  import Libloader from "../../../components/utils/libloader.svelte";
   import { boards, levels, papers, years, sessions } from "../fetcherStore.js";
   import AddMedia from "../../../components/Media/addMedia.svelte";
   import { metatags } from "@roxi/routify";
@@ -51,9 +52,11 @@
   $: new_slug = slug_id + new_title.slugify();
   let new_excerpt = "";
 
-  let content_editorData = "";
+  let question_editor, explanation_editor;
+
+  let question_editorData = "";
+
   let explanation_editorData = "";
-  let content_editor, explanation_editor;
 
   let user_id = $user.id;
 
@@ -61,135 +64,23 @@
 
   onMount(() => {
     dataLoader();
-
-    ClassicEditor.create(document.querySelector(".content_editor"), {
-      toolbar: {
-        items: [
-          "heading",
-          "|",
-          "fontFamily",
-          "bold",
-          "italic",
-          "underline",
-          "strikethrough",
-          "superscript",
-          "subscript",
-          "link",
-          "fontSize",
-          "highlight",
-          "bulletedList",
-          "numberedList",
-          "|",
-          "outdent",
-          "indent",
-          "|",
-          "imageUpload",
-          "imageInsert",
-          "blockQuote",
-          "MathType",
-          "ChemType",
-          "insertTable",
-          "mediaEmbed",
-          "undo",
-          "redo",
-        ],
-      },
-      language: "en",
-      image: {
-        toolbar: ["imageTextAlternative", "imageStyle:full", "imageStyle:side"],
-      },
-      table: {
-        contentToolbar: [
-          "tableColumn",
-          "tableRow",
-          "mergeTableCells",
-          "tableCellProperties",
-          "tableProperties",
-        ],
-      },
-      licenseKey: "",
-    })
-      .then((editor) => {
-        content_editor = editor;
-      })
-      .catch((error) => {
-        console.error("Oops, something went wrong!");
-        console.error(
-          "Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:"
-        );
-        console.warn("Build id: 1xw2btaf0pb-8ua758h0wkmd");
-        console.error(error);
-      });
-
-    ClassicEditor.create(document.querySelector(".explanation_editor"), {
-      toolbar: {
-        items: [
-          "heading",
-          "|",
-          "fontFamily",
-          "bold",
-          "italic",
-          "underline",
-          "strikethrough",
-          "superscript",
-          "subscript",
-          "link",
-          "fontSize",
-          "highlight",
-          "bulletedList",
-          "numberedList",
-          "|",
-          "outdent",
-          "indent",
-          "|",
-          "imageUpload",
-          "imageInsert",
-          "blockQuote",
-          "MathType",
-          "ChemType",
-          "insertTable",
-          "mediaEmbed",
-          "undo",
-          "redo",
-        ],
-      },
-      language: "en",
-      image: {
-        toolbar: ["imageTextAlternative", "imageStyle:full", "imageStyle:side"],
-      },
-      table: {
-        contentToolbar: [
-          "tableColumn",
-          "tableRow",
-          "mergeTableCells",
-          "tableCellProperties",
-          "tableProperties",
-        ],
-      },
-      licenseKey: "",
-    })
-      .then((editor) => {
-        explanation_editor = editor;
-      })
-      .catch((error) => {
-        console.error("Oops, something went wrong!");
-        console.error(
-          "Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:"
-        );
-        console.warn("Build id: 1xw2btaf0pb-8ua758h0wkmd");
-        console.error(error);
-      });
+    // question_editor = CKEDITOR.replace("question_editor");
+    // explanation_editor = CKEDITOR.replace("explanation_editor");
   });
 
+  function onLoaded() {
+    question_editor = CKEDITOR.replace("question_editor");
+    explanation_editor = CKEDITOR.replace("explanation_editor");
+  }
+
   function insertAtCursor() {
-    content_editor.setData(
-      content_editor.getData() +
-        "<img src='https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Zugpsitze_mountain.jpg'>"
+    question_editor.insertHtml(
+      "<img src='https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Zugpsitze_mountain.jpg'>"
     );
   }
 
   const sendData = async () => {
-    content_editorData = await content_editor.getData();
+    question_editorData = await question_editor.getData();
     explanation_editorData = await explanation_editor.getData();
 
     await authAxios
@@ -202,7 +93,7 @@
         author: user_id,
         title: new_title,
         excerpt: new_excerpt,
-        content: content_editorData,
+        content: question_editorData,
         verified_explanation: explanation_editorData,
         slug: new_slug,
       })
@@ -210,13 +101,15 @@
         if (res.status === 201) {
           (new_title = ""), (new_excerpt = "");
           gen_slug_id();
-          content_editor.setData("");
+          question_editor.setData("");
           explanation_editor.setData("");
           addSuccess = false;
         }
       });
   };
 </script>
+
+<Libloader url="/ckeditor/ckeditor.js" on:loaded={onLoaded} />
 
 <svelte:head>
   <title>EngMedApp - Add a Question</title>
@@ -435,7 +328,8 @@
                         >Insert</button
                       >
                       <textarea
-                        class="textarea content_editor"
+                        id="question_editor"
+                        class="textarea"
                         placeholder="Question Details...."
                       />
                     </div>
@@ -450,7 +344,8 @@
                   <div class="field">
                     <div class="control">
                       <textarea
-                        class="textarea explanation_editor"
+                        id="explanation_editor"
+                        class="textarea"
                         placeholder="Write Your Explanation Here...."
                       />
                     </div>
