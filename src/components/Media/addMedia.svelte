@@ -1,7 +1,8 @@
 <script>
   import Upload from "./upload.svelte";
-  let upload;
 
+  export let editor_instance;
+  let upload;
   let modalState = false;
 </script>
 
@@ -45,7 +46,7 @@
       >
         <!-- scroll area -->
         <section class="h-full overflow-auto p-8 w-full h-full flex flex-col">
-          <Upload bind:this={upload} />
+          <Upload bind:this={upload} {editor_instance} />
         </section>
 
         <!-- sticky footer -->

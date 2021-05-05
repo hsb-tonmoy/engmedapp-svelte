@@ -64,8 +64,6 @@
 
   onMount(() => {
     dataLoader();
-    // question_editor = CKEDITOR.replace("question_editor");
-    // explanation_editor = CKEDITOR.replace("explanation_editor");
   });
 
   function onLoaded() {
@@ -322,7 +320,7 @@
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <AddMedia />
+                    <AddMedia editor_instance={question_editor} />
                     <div class="control">
                       <button type="button" on:click={insertAtCursor}
                         >Insert</button
@@ -342,6 +340,7 @@
                 </div>
                 <div class="field-body">
                   <div class="field">
+                    <AddMedia editor_instance={explanation_editor} />
                     <div class="control">
                       <textarea
                         id="explanation_editor"

@@ -2,7 +2,7 @@
   import Dropzone from "svelte-file-dropzone";
   import authAxios from "../../components/Auth/authAxios.js";
   import Uploaded from "./uploaded.svelte";
-
+  export let editor_instance;
   let uploadSuccess = false;
 
   let returnedData = [];
@@ -165,7 +165,7 @@
   </ul>
 {:else}
   <h1 class="pt-8 pb-3 font-semibold sm:text-lg text-gray-900">Uploaded</h1>
-  <Uploaded imageData={returnedData} />
+  <Uploaded imageData={returnedData} {editor_instance} />
 {/if}
 
 <style>
