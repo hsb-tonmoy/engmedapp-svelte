@@ -51,4 +51,7 @@ CKEDITOR.editorConfig = function (config) {
 
   config.embed_provider =
     "//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}";
+
+  config.filebrowserImageUploadUrl =
+    "https://api.engmedapp.com/media_lib/images/";
 };
