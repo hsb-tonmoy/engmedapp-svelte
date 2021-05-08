@@ -26,7 +26,7 @@ async function getNewAccess() {
       authenticate();
     } else {
       const data = await res.json();
-
+      console.log(data);
       if (data.code === "token_not_valid") {
         localStorage.removeItem("logged-in");
         window.location.href("/login");
@@ -62,6 +62,7 @@ export const login = async (email, password) => {
   try {
     const res = await fetch(API_URL + "accounts/auth/token/", {
       method: "POST",
+      credentials: "include",
       body: JSON.stringify({
         email,
         password,
