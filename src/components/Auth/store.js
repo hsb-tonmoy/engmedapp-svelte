@@ -13,7 +13,7 @@ const API_URL = "https://api.engmedapp.com/";
 
 async function getNewAccess() {
   try {
-    const res = await fetch(API_URL + "accounts/auth/token/refresh/", {
+    const res = await fetch(API_URL + "accounts/login/refresh/", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -45,7 +45,8 @@ void (async function main() {
 
 export const logout = async () => {
   user.set(null);
-  await fetch(API_URL + "accounts/logout/blacklist/", {
+  localStorage.removeItem("logged-in");
+  await fetch(API_URL + "accounts/logout/", {
     method: "POST",
     body: JSON.stringify({
       refresh: localStorage.getItem("refresh"),
@@ -54,13 +55,12 @@ export const logout = async () => {
       "Content-Type": "application/json",
     },
   });
-  localStorage.removeItem("logged-in");
 };
 
 export const login = async (email, password) => {
   authenticating.set(true);
   try {
-    const res = await fetch(API_URL + "accounts/auth/token/", {
+    const res = await fetch(API_URL + "accounts/login/", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({
