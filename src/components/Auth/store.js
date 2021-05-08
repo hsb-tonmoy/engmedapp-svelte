@@ -22,7 +22,7 @@ async function getNewAccess() {
     });
     if (res.ok) {
       const data = await res.json();
-      access_token.set("access", data.access);
+      access_token.set(data.access);
       authenticate();
     } else {
       const data = await res.json();
@@ -71,7 +71,7 @@ export const login = async (email, password) => {
     });
     if (res.ok) {
       const data = await res.json();
-      access_token.set("access", data.access);
+      access_token.set(data.access);
       authenticate();
     } else if (res.status === 401 && res.body) {
     } else {
