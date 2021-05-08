@@ -1,4 +1,7 @@
 import { writable } from "svelte/store";
+import { get } from "svelte/store";
+
+export const access_token = writable(null);
 
 export const user = writable(null);
 
@@ -10,62 +13,32 @@ const API_URL = "https://api.engmedapp.com/";
 
 async function getNewAccess() {
   try {
-    const res = await fetch(API_URL + "auth/jwt/refresh/", {
+    const res = await fetch(API_URL + "accounts/auth/token/refresh/", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        refresh: localStorage.getItem("refresh"),
-      }),
     });
     if (res.ok) {
       const data = await res.json();
-      localStorage.setItem("access", data.access);
+      access_token.set("access", data.access);
+      authenticate();
     } else {
-      console.log(res.status + res.statusText);
+      const data = await res.json();
+      if (data.code === "token_not_valid") {
+        // window.location.href("/login");
+        console.log(data);
+      }
     }
   } catch (err) {
     console.log("");
   }
 }
 
-const verifyAccess = async () => {
-  try {
-    const res = await fetch(API_URL + "auth/jwt/verify/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: localStorage.getItem("access"),
-      }),
-    });
-    if (res.ok) {
-      return true;
-    } else if (!res.ok && res.status === 401) {
-      await getNewAccess();
-    } else {
-      console.log(res.status + res.statusText);
-    }
-  } catch (err) {
-    console.log("Verifying");
-  }
-};
-
 void (async function main() {
-  if (localStorage.getItem("refresh") && localStorage.getItem("access")) {
-    let access_token = localStorage.getItem("access");
-    const tokenParts = JSON.parse(atob(access_token.split(".")[1]));
-    const now = Date.now().valueOf() / 1000;
-
-    if (typeof tokenParts.exp !== "undefined" && tokenParts.exp < now) {
-      console.log("Token should be expired now");
-      await getNewAccess();
-      await authenticate();
-    } else {
-      await authenticate();
-    }
+  if (localStorage.getItem("logged-in")) {
+    await getNewAccess();
   }
 })();
 
@@ -80,15 +53,13 @@ export const logout = async () => {
       "Content-Type": "application/json",
     },
   });
-  localStorage.removeItem("user");
-  localStorage.removeItem("access");
-  localStorage.removeItem("refresh");
+  localStorage.removeItem("logged-in");
 };
 
 export const login = async (email, password) => {
   authenticating.set(true);
   try {
-    const res = await fetch(API_URL + "auth/jwt/create/", {
+    const res = await fetch(API_URL + "accounts/auth/token/", {
       method: "POST",
       body: JSON.stringify({
         email,
@@ -100,8 +71,7 @@ export const login = async (email, password) => {
     });
     if (res.ok) {
       const data = await res.json();
-      localStorage.setItem("access", data.access);
-      localStorage.setItem("refresh", data.refresh);
+      access_token.set("access", data.access);
       authenticate();
     } else if (res.status === 401 && res.body) {
     } else {
@@ -116,6 +86,7 @@ export const login = async (email, password) => {
 async function authenticate() {
   await getCredentials();
   authenticating.set(false);
+  localStorage.setItem("logged-in", "true");
 }
 
 async function getCredentials() {
@@ -124,12 +95,11 @@ async function getCredentials() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "JWT " + localStorage.getItem("access"),
+        Authorization: "JWT " + get(access_token),
       },
     });
     if (res.ok) {
       const data = await res.json();
-      localStorage.setItem("user", data);
       user.set(data);
     } else if (!res.ok && res.status === 401) {
       getNewAccess();
