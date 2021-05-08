@@ -1,5 +1,4 @@
-import { writable } from "svelte/store";
-import { get } from "svelte/store";
+import { writable, get } from "svelte/store";
 
 export const access_token = writable(null);
 
@@ -48,9 +47,7 @@ export const logout = async () => {
   localStorage.removeItem("logged-in");
   await fetch(API_URL + "accounts/logout/", {
     method: "POST",
-    body: JSON.stringify({
-      refresh: localStorage.getItem("refresh"),
-    }),
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },

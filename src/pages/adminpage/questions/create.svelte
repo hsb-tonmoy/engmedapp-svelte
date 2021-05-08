@@ -71,12 +71,6 @@
     explanation_editor = CKEDITOR.replace("explanation_editor");
   }
 
-  function insertAtCursor() {
-    question_editor.insertHtml(
-      "<img src='https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Zugpsitze_mountain.jpg'>"
-    );
-  }
-
   const sendData = async () => {
     question_editorData = await question_editor.getData();
     explanation_editorData = await explanation_editor.getData();
@@ -322,9 +316,6 @@
                   <div class="field">
                     <AddMedia editor_instance={question_editor} />
                     <div class="control">
-                      <button type="button" on:click={insertAtCursor}
-                        >Insert</button
-                      >
                       <textarea
                         id="question_editor"
                         class="textarea"
