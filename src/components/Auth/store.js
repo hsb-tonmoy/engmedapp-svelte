@@ -26,9 +26,10 @@ async function getNewAccess() {
       authenticate();
     } else {
       const data = await res.json();
+
       if (data.code === "token_not_valid") {
-        // window.location.href("/login");
-        console.log(data);
+        localStorage.removeItem("logged-in");
+        window.location.href("/login");
       }
     }
   } catch (err) {
