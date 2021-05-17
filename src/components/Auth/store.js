@@ -73,6 +73,8 @@ export const login = async (email, password) => {
       access_token.set(data.access);
       authenticate();
     } else if (res.status === 401 && res.body) {
+      loginError.set("Incorrect E-mail or Password.");
+      authenticating.set(false);
     } else {
       console.log(res.status + res.statusText);
       authenticating.set(false);
@@ -84,8 +86,10 @@ export const login = async (email, password) => {
 
 async function authenticate() {
   await getCredentials();
-  authenticating.set(false);
+
   localStorage.setItem("logged-in", "true");
+
+  authenticating.set(false);
 }
 
 async function getCredentials() {
