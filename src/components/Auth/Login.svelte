@@ -1,5 +1,6 @@
 <script>
   import { login, authenticating, user } from "./store.js";
+  import { getAuthURL } from "./socialStore.js";
 
   let email, password;
 
@@ -48,6 +49,15 @@
                 type="submit"
                 class="button is-block is-primary is-fullwidth is-medium"
                 >Login</button
+              >
+              <button
+                on:click={() =>
+                  getAuthURL(
+                    "google-oauth2",
+                    "http://localhost:5000/auth/social/google"
+                  )}
+                class="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline"
+                type="button">Login with Google</button
               >
             {:else}
               <button class="btn">Logging In</button>

@@ -84,7 +84,7 @@ export const login = async (email, password) => {
   }
 };
 
-async function authenticate() {
+export async function authenticate() {
   await getCredentials();
 
   localStorage.setItem("logged-in", "true");

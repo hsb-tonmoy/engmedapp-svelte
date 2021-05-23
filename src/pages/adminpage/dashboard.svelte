@@ -78,7 +78,7 @@
                 <div class="level is-mobile">
                   <div class="level-item">
                     <div class="is-widget-label">
-                      <h3 class="subtitle is-spaced">Institutions</h3>
+                      <h3 class="subtitle is-spaced">Schools</h3>
                       <h1 class="title">110</h1>
                     </div>
                   </div>
