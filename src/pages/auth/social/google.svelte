@@ -11,11 +11,7 @@
 
   console.log(code);
 
-  // onMount(() => {
-  //   try {
-  //     socialLogin(provider, code);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // });
+  onMount(() => {
+    socialLogin(provider, code);
+  });
 </script>
