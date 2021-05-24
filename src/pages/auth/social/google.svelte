@@ -10,6 +10,12 @@
   let code = $params.code;
 
   onMount(() => {
-    socialLogin(provider, code);
+    try {
+      socialLogin(provider, code);
+    } catch (err) {
+      console.log(err);
+    }
+
+    console.log(provider + code);
   });
 </script>
