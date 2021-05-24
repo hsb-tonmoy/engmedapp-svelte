@@ -28,7 +28,7 @@ export async function socialLogin(provider, code) {
   authenticating.set(true);
   const res = await fetch(API_URL + "accounts/social/", {
     method: "POST",
-    credentials: "include",
+
     headers: {
       "Content-Type": "application/json",
     },
