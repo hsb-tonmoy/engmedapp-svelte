@@ -1,20 +1,26 @@
 import { authenticating, access_token, authenticate } from "./store.js";
 
-const API_URL = "https://api.engmedapp.com:8000/";
+const API_URL = "https://api.engmedapp.com/";
 
 export async function getAuthURL(provider, redirect_uri) {
-  const res = await fetch(
-    `${API_URL}accounts/o/${provider}/?redirect_uri=${redirect_uri}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  try {
+    const res = await fetch(
+      `${API_URL}accounts/o/${provider}/?redirect_uri=${redirect_uri}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (res.ok) {
+      const data = await res.json();
+      window.location.replace(data.authorization_url);
+    } else {
+      console.log(res.status + res.statusText);
     }
-  );
-  if (res.ok) {
-    const data = await res.json();
-    window.open(data.authorization_url);
+  } catch (err) {
+    console.log(err);
   }
 }
 

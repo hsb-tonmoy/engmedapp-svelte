@@ -54,7 +54,7 @@
                 on:click={() =>
                   getAuthURL(
                     "google-oauth2",
-                    "http://localhost:5000/auth/social/google"
+                    "https://engmedapp.com/auth/social/google"
                   )}
                 class="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline"
                 type="button">Login with Google</button
