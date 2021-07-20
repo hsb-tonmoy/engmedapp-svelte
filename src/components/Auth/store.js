@@ -85,11 +85,15 @@ export const login = async (email, password) => {
 };
 
 export async function authenticate() {
-  await getCredentials();
+  try {
+    await getCredentials();
 
-  localStorage.setItem("logged-in", "true");
+    localStorage.setItem("logged-in", "true");
 
-  authenticating.set(false);
+    authenticating.set(false);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function getCredentials() {
@@ -106,6 +110,9 @@ async function getCredentials() {
       user.set(data);
     } else if (!res.ok && res.status === 401) {
       getNewAccess();
+    } else if (res.code === "user_inactive") {
+      console.log("Inactive");
+      loginError.set("Account Inactive");
     } else {
       console.log(res.status + res.statusText);
     }

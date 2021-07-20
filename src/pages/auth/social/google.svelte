@@ -9,8 +9,6 @@
 
   let code = $params.code;
 
-  console.log(code);
-
   onMount(() => {
     socialLogin(provider, code);
   });
