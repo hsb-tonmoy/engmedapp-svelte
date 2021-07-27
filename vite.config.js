@@ -38,6 +38,15 @@ module.exports = {
                     zIndex: {
                       "-10": "-10",
                     },
+                    colors: {
+                      primary: "#43989D",
+                      secondary: "#F2FEFF",
+                      ematext: "#16355C",
+                    },
+                    fontFamily: {
+                      mulish: "'Mulish', sans-serif",
+                      poppins: "'Poppins', sans-serif",
+                    },
                   },
                 },
                 plugins: [],
