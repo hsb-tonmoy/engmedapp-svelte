@@ -46,9 +46,9 @@
     </form>
   </div>
 </div>
-<div class="flex flex-col justify-center items-center w-full py-40">
+<div class="flex flex-col justify-center items-center w-full py-28">
   <h2
-    class="font-poppins text-4xl leading-snug text-ematext text-center font-semibold"
+    class="font-poppins text-4xl leading-snug text-ematext text-center font-medium"
   >
     Find previous question papers with answers <br /> by Years and Sessions.
   </h2>
@@ -134,6 +134,25 @@
   >
 </div>
 
+<div
+  class="flex flex-col justify-center items-center w-full py-16 bg-secondary"
+>
+  <h2
+    class="font-poppins text-4xl leading-snug text-ematext text-center font-medium"
+  >
+    EMA tag cloud.
+  </h2>
+</div>
+
+<div class="flex justify-center items-center w-full py-10 home-stat">
+  <div class="flex flex-col stat">
+    <img src="/images/icons/A-level.svg" alt="a-level" />
+    <span class="text-white font-poppins font-medium text-base mt-2"
+      >24,5738 Set of A Level question</span
+    >
+  </div>
+</div>
+
 <style>
   .home-bg {
     background-color: #f1feff;
@@ -163,7 +182,16 @@
   .search-box button {
     height: 45px;
   }
+
   .year-button {
     height: 4rem;
+  }
+
+  .home-stat {
+    background-color: rgb(58, 201, 209);
+  }
+
+  .stat img {
+    height: 55px;
   }
 </style>
