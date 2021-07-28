@@ -9,9 +9,10 @@
   }
 </script>
 
+<!-- Nav Starts -->
 <nav class="bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-around h-16">
+    <div class="flex items-center justify-between lg:justify-around h-16">
       <div class="flex items-center">
         <div class="flex-shrink-0">
           <img class="h-8 w-8" src="/images/EMA-fullColor.png" alt="Workflow" />
@@ -20,7 +21,8 @@
           EMA EngMed App
         </p>
       </div>
-      <div class="flex justify-around items-center">
+      <!-- Full Menu -->
+      <div class="hidden lg:flex justify-around items-center">
         <a
           href="/questions"
           class="text-sm text-ematext hover:underline hover:text-primary font-mulish"
@@ -66,6 +68,21 @@
             />
           </svg></a
         >
+      </div>
+      <!-- Hamburger Menu -->
+      <div class="flex lg:hidden">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+            clip-rule="evenodd"
+          />
+        </svg>
       </div>
     </div>
   </div>

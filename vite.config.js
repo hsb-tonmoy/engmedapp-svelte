@@ -38,10 +38,18 @@ module.exports = {
                     zIndex: {
                       "-10": "-10",
                     },
+                    screens: {
+                      "3xl": "2200px",
+                    },
+                    width: {
+                      120: "40rem",
+                    },
                     colors: {
                       primary: "#43989D",
                       secondary: "#F2FEFF",
+                      secondaryLight: "#F1FEFF",
                       ematext: "#16355C",
+                      emaborder: "#80bfc2",
                     },
                     fontFamily: {
                       mulish: "'Mulish', sans-serif",
