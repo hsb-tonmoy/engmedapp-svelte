@@ -49,7 +49,9 @@ module.exports = {
                       secondary: "#F2FEFF",
                       secondaryLight: "#F1FEFF",
                       ematext: "#16355C",
+                      ematextgray: "#677D8D",
                       emaborder: "#80bfc2",
+                      footer: "#F9F9F9",
                     },
                     fontFamily: {
                       mulish: "'Mulish', sans-serif",

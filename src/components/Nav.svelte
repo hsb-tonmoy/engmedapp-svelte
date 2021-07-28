@@ -15,7 +15,11 @@
     <div class="flex items-center justify-between lg:justify-around h-16">
       <div class="flex items-center">
         <div class="flex-shrink-0">
-          <img class="h-8 w-8" src="/images/EMA-fullColor.png" alt="Workflow" />
+          <img
+            class="h-8 w-8"
+            src="/images/EMA-fullColor.png"
+            alt="EngMedApp"
+          />
         </div>
         <p class="font-mulish font-bold text-ematext text-base ml-4">
           EMA EngMed App
