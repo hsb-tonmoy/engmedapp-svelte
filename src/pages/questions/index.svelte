@@ -57,162 +57,143 @@
   });
 </script>
 
-<section class="section">
-  <div class="container">
-    <div class="columns">
-      <!-- Sidebar Start -->
-      <div class="column is-3 is-offset-1">
-        <!-- Search Panel -->
-        <nav class="panel">
-          <p class="panel-heading">Search</p>
-          <div class="panel-block">
-            <p class="control has-icons-left">
-              <input class="input" type="text" placeholder="Search" />
-              <span class="icon is-left">
-                <i class="fas fa-search" aria-hidden="true" />
-              </span>
-            </p>
-          </div>
-        </nav>
-        <!-- Boards Panel -->
-        <nav class="panel">
-          <p class="panel-heading">Boards</p>
-          <div
-            class="panel-block is-flex-direction-column is-align-items-flex-start"
+<section style="background-color: #E5E5E5">
+  <div
+    class="flex flex-col justify-center items-center w-full px-2 py-20 bg-secondaryLight"
+  >
+    <h2
+      class="font-mulish text-xl md:text-2xl lg:text-3xl leading-snug text-ematext text-center font-semibold"
+    >
+      Find question papers with answers <br /> Filter by Boards, Levels, Papers,
+      Years and Sessions.
+    </h2>
+    <form
+      class="flex flex-col gap-y-2 md:gap-0 md:flex-row md:flex-nowrap items-center mt-10 search-box"
+    >
+      <input
+        type="search"
+        name="search"
+        class="flex flex-grow w-full max-w-full h-14 md:w-96 px-8 text-base bg-secondaryLight border border-primary rounded-l"
+        placeholder="Write your question"
+      />
+      <button
+        class="max-w-full w-full md:w-auto font-mulish bg-primary text-xs text-white text-center sm:px-12 md:px-16 px-8 h-14 rounded-r"
+        type="submit">Search</button
+      >
+    </form>
+  </div>
+  <!-- Filter -->
+  <div class="flex justify-center">
+    <div
+      class="flex gap-x-4 w-auto px-6 py-4 -m-8 bg-white"
+      style="box-shadow: 0px 4px 10px rgba(67, 152, 157, 0.2);"
+    >
+      <button
+        class="flex items-center font-mulish text-sm font-normal bg-secondaryLight rounded-sm px-4 py-2"
+        >Board &nbsp; <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-3 w-3"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg></button
+      >
+      <button
+        class="flex items-center font-mulish text-sm font-normal bg-secondaryLight rounded-sm px-4 py-2"
+        >Level &nbsp; <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-3 w-3"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg></button
+      ><button
+        class="flex items-center font-mulish text-sm font-normal bg-secondaryLight rounded-sm px-4 py-2"
+        >Paper &nbsp; <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-3 w-3"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg></button
+      ><button
+        class="flex items-center font-mulish text-sm font-normal bg-secondaryLight rounded-sm px-4 py-2"
+        >Year &nbsp; <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-3 w-3"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg></button
+      ><button
+        class="flex items-center font-mulish text-sm font-normal bg-secondaryLight rounded-sm px-4 py-2"
+        >Session &nbsp; <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-3 w-3"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg></button
+      >
+      <button
+        class="font-mulish text-sm text-white font-normal bg-primary rounded-sm px-6 py-2"
+        >Apply Filter</button
+      >
+
+      <button
+        class="flex flex-col font-mulish font-medium ml-2 text-xs text-ematext"
+        ><span class="flex items-center mb-1" style="color: #677D8D"
+          >Sort By &nbsp; <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-3 w-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            {#each boards as board}
-              <div class="field">
-                <div class="control">
-                  <label class="checkbox">
-                    <input type="checkbox" />
-                    {board.name}
-                  </label>
-                </div>
-              </div>
-            {/each}
-          </div>
-        </nav>
-        <!-- Levels Panel -->
-        <nav class="panel">
-          <p class="panel-heading">Levels</p>
-          <div
-            class="panel-block is-flex-direction-column is-align-items-flex-start"
-          >
-            {#each levels as level}
-              <label class="checkbox">
-                <input type="checkbox" />
-                {level.name}
-              </label>
-            {/each}
-          </div>
-        </nav>
-        <!-- Papers Panel -->
-        <nav class="panel">
-          <p class="panel-heading">Papers</p>
-          <div
-            class="panel-block is-flex-direction-column is-align-items-flex-start"
-          >
-            {#each papers as paper}
-              <label class="checkbox">
-                <input type="checkbox" />
-                {paper.name}
-              </label>
-            {/each}
-          </div>
-        </nav>
-        <!-- Years Panel -->
-        <nav class="panel">
-          <p class="panel-heading">Years</p>
-          <div
-            class="panel-block is-flex-direction-column is-align-items-flex-start"
-          >
-            {#each years as year}
-              <label class="checkbox">
-                <input type="checkbox" />
-                {year.name}
-              </label>
-            {/each}
-          </div>
-        </nav>
-        <!-- Sessions Panel -->
-        <nav class="panel">
-          <p class="panel-heading">Sessions</p>
-          <div
-            class="panel-block is-flex-direction-column is-align-items-flex-start"
-          >
-            {#each sessions as session}
-              <label class="checkbox">
-                <input type="checkbox" />
-                {session.name}
-              </label>
-            {/each}
-          </div>
-        </nav>
-      </div>
-      <!-- Sidebar End -->
-      <div class="column is-9">
-        {#each questions as question (question.slug)}
-          <div class="card">
-            <div class="card-content">
-              <div class="content">
-                <div class="columns is-vcentered">
-                  <div class="column">
-                    <nav
-                      class="breadcrumb has-arrow-separator has-text-left"
-                      aria-label="breadcrumbs"
-                    >
-                      <ul>
-                        <li class="my-0">
-                          <!-- svelte-ignore a11y-missing-attribute -->
-                          <a href="#">{question.board.name}</a>
-                        </li>
-                        <li class="my-0">
-                          <!-- svelte-ignore a11y-missing-attribute -->
-                          <a href="#">{question.level.name}</a>
-                        </li>
-                        <li class="my-0">
-                          <!-- svelte-ignore a11y-missing-attribute -->
-                          <a href="#">{question.paper.name}</a>
-                        </li>
-                        <li class="my-0">
-                          <!-- svelte-ignore a11y-missing-attribute -->
-                          <a href="#">{question.year.name}</a>
-                        </li>
-                        <li class="my-0">
-                          <!-- svelte-ignore a11y-missing-attribute -->
-                          <a href="#">{question.session.name}</a>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
-                  <div class="column has-text-right">
-                    <span class="tag is-link is-light"
-                      >Published: {convertDate(question.published)}</span
-                    >
-                  </div>
-                </div>
-                <!-- svelte-ignore a11y-missing-attribute -->
-                <a href="/questions/{question.slug}">{question.title}</a>
-              </div>
-            </div>
-            <footer class="card-footer">
-              <!-- svelte-ignore a11y-missing-attribute -->
-              <a href="#" class="card-footer-item">Explanations (20)</a>
-              <!-- svelte-ignore a11y-missing-attribute -->
-              <a href="#" class="card-footer-item">Add Explanation</a>
-              <!-- svelte-ignore a11y-missing-attribute -->
-              <a href="#" class="card-footer-item"
-                ><span class="icon-text">
-                  <span class="icon">
-                    <i class="far fa-bookmark" />
-                  </span>
-                  <span>Bookmark</span>
-                </span></a
-              >
-            </footer>
-          </div>
-        {/each}
-      </div>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 15l7-7 7 7"
+            />
+          </svg></span
+        >Relevance</button
+      >
     </div>
   </div>
 </section>

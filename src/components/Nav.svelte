@@ -91,3 +91,9 @@
     </div>
   </div>
 </nav>
+
+<style>
+  nav {
+    box-shadow: 0px 4px 10px #d2f0f2;
+  }
+</style>
