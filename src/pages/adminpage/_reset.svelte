@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="/adminpage/css/main.min.css" />
 </svelte:head>
 
-{#if $user.account_type}
+{#if $user && $user.account_type}
   {#if $user.account_type !== 1 || $user.account_type !== 2}
     <slot />
   {:else}
