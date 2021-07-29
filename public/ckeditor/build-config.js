@@ -13,10 +13,10 @@
  * (1) https://ckeditor.com/cke4/builder
  *     Visit online builder to build CKEditor from scratch.
  *
- * (2) https://ckeditor.com/cke4/builder/c603e68de16ff2b7b96819fc5badc7db
+ * (2) https://ckeditor.com/cke4/builder/b2bf0a64484b5ec8222441cde409ea85
  *     Visit online builder to build CKEditor, starting with the same setup as before.
  *
- * (3) https://ckeditor.com/cke4/builder/download/c603e68de16ff2b7b96819fc5badc7db
+ * (3) https://ckeditor.com/cke4/builder/download/b2bf0a64484b5ec8222441cde409ea85
  *     Straight download link to the latest version of CKEditor (Optimized) with the same setup as before.
  *
  * NOTE:
@@ -25,7 +25,7 @@
  */
 
 var CKBUILDER_CONFIG = {
-	skin: 'n1theme',
+	skin: 'minimalist',
 	preset: 'standard',
 	ignore: [
 		'.DS_Store',

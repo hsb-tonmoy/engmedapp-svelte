@@ -29,11 +29,7 @@ CKEDITOR.editorConfig = function (config) {
     { name: "about" },
   ];
 
-  config.extraPlugins = "ckeditor_wiris, N1ED-editor";
-
-  config.apiKey = "3PCSDFLT";
-
-  config.skin = "n1theme";
+  config.extraPlugins = "ckeditor_wiris";
 
   config.allowedContent = true;
 
@@ -49,7 +45,7 @@ CKEDITOR.editorConfig = function (config) {
 
   // My configs
 
-  config.removePlugins = "image, iframe";
+  config.removePlugins = "image";
   config.mathJaxLib =
     "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML";
 
