@@ -196,4 +196,76 @@
       >
     </div>
   </div>
+
+  <!-- Questions -->
+  <div
+    class="flex flex-col flex-wrap gap-y-2 lg:flex-row lg:flex-nowrap lg:gap-y-0 lg:gap-x-2 justify-center py-20 mx-4 md:mx-8 lg:mx-16 2xl:mx-32"
+  >
+    <!-- Questions List -->
+    <article
+      class="flex flex-col w-full lg:w-3/4 bg-white rounded-lg py-8 pl-4 pr-4 md:pl-5 lg:pl-7 md:pr-12 lg:pr-20"
+    >
+      <span class="breadcrumbs font-mulish text-xs text-ematextgray mb-4"
+        >Edexcel > O > Computer Science > 2010 > February</span
+      >
+      <span
+        class="question-title font-mulish text-base md:text-lg text-black font-medium"
+        >Question 1: The net horizontal force on a box F as a function of the
+        horizontal position x is shown below.
+      </span>
+      <div class="question-details mt-4 ml-4">
+        <img src="/images/question-detail-test.png" alt="question-detail" />
+        <span class="font-mulish text-sm text-black mt-2">
+          What is the work done on the box from x = 0m to 2.0m? Round answer to
+          two significant digits.
+        </span>
+      </div>
+      <div
+        class="flex flex-col md:flex-row flex-wrap md:flex-nowrap justify-between items-center gap-x-1 mt-10"
+      >
+        <div class="tags">
+          <span class="font-mulish text-xs font-medium mr-2">Related Tags:</span
+          >
+          <button
+            class="px-3 py-1 text-primary text-xs rounded-full"
+            style="background-color: #E9FDFF">Edexcel</button
+          >
+          <button
+            class="px-3 py-1 text-primary text-xs rounded-full"
+            style="background-color: #E9FDFF">Computer Science</button
+          >
+          <button
+            class="px-3 py-1 text-primary text-xs rounded-full"
+            style="background-color: #E9FDFF">2010</button
+          >
+        </div>
+        <div class="builder">
+          <button
+            class="flex items-center px-3 py-2 text-white bg-primary text-xs rounded-full"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3 w-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              />
+            </svg>&nbsp; Add to builder</button
+          >
+        </div>
+      </div>
+      <hr class="mt-8 mb-16" style="border-color: #CCD9E9" />
+    </article>
+    <!-- Sidebar -->
+    <div
+      class="flex flex-col w-full lg:w-1/4 bg-white rounded-lg px-4 md:px-5 py-8 text-sm text-lg lg:text-base 2xl:text-lg font-semibold"
+    >
+      Most viewed questions
+    </div>
+  </div>
 </section>

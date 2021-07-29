@@ -145,7 +145,7 @@
 </div>
 
 <div
-  class="flex flex-wrap gap-y-2 md:flex-nowrap md:gap-0 justify-around items-center w-full lg:px-5 3xl:px-60 py-10 home-stat"
+  class="flex flex-wrap gap-y-2 md:flex-nowrap md:gap-0 justify-around items-center w-full lg:px-5 3xl:px-60 py-10 bg-cover home-stat"
 >
   <!-- A Level Stat -->
   <div class="flex flex-col w-full md:w-auto stat">
@@ -183,7 +183,7 @@
   }
 
   .home-stat {
-    background-color: rgb(58, 201, 209);
+    background: url("/images/stat-background.png");
   }
 
   .stat img {
