@@ -54,4 +54,6 @@ CKEDITOR.editorConfig = function (config) {
 
   config.filebrowserImageUploadUrl =
     "https://api.engmedapp.com/media_lib/images/";
+
+  config.apiKey = "3PCSDFLT";
 };
