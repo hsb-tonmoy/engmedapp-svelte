@@ -199,7 +199,7 @@
 
   <!-- Questions Body -->
   <div
-    class="flex flex-col flex-wrap gap-y-2 xl:flex-row xl:flex-nowrap xl:gap-y-0 xl:gap-x-4 justify-center py-20 mx-4 md:mx-8 xl:mx-16 2xl:mx-32"
+    class="flex flex-col flex-wrap gap-y-2 xl:flex-row xl:flex-nowrap xl:gap-y-0 xl:gap-x-4 justify-center py-20 mx-4 md:mx-8 xl:mx-16 2xl:mx-32 3xl:mx-48"
   >
     <!-- Questions List -->
     <article
