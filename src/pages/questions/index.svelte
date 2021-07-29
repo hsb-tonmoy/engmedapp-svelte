@@ -331,6 +331,9 @@
         </div>
         <hr class="my-4 w-full" style="border-color: #CCD9E9" />
       </div>
+      <div class="ads w-full">
+        <img class="w-16 h-16" src="/images/ad.png" alt="ad" />
+      </div>
     </aside>
   </div>
 </section>

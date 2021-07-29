@@ -1,4 +1,4 @@
-<footer class="bg-footer py-16 px-4 md:px-12 lg:px-16 2xl:px-60">
+<footer class="bg-footer pt-16 px-4 md:px-12 lg:px-16 2xl:px-60">
   <div class="flex flex-col gap-y-6 md:flex-row md:gap-0">
     <div class="flex flex-col md:w-1/4 w-full">
       <div class="flex content-center">
@@ -175,6 +175,12 @@
         >
       </form>
     </div>
+  </div>
+  <hr class="w-full mt-4" style="border-color: #CCD9E9" />
+  <div
+    class="flex justify-center items-center w-full py-4 text-xs font-poppins"
+  >
+    © Copyrights 2021
   </div>
 </footer>
 
