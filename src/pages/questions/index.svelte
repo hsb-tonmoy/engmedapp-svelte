@@ -57,7 +57,7 @@
   });
 </script>
 
-<section style="background-color: #E5E5E5">
+<section style="background-color: #F0F0F0">
   <div
     class="flex flex-col justify-center items-center w-full px-2 py-20 bg-secondaryLight"
   >
@@ -197,13 +197,13 @@
     </div>
   </div>
 
-  <!-- Questions -->
+  <!-- Questions Body -->
   <div
-    class="flex flex-col flex-wrap gap-y-2 lg:flex-row lg:flex-nowrap lg:gap-y-0 lg:gap-x-2 justify-center py-20 mx-4 md:mx-8 lg:mx-16 2xl:mx-32"
+    class="flex flex-col flex-wrap gap-y-2 xl:flex-row xl:flex-nowrap xl:gap-y-0 xl:gap-x-4 justify-center py-20 mx-4 md:mx-8 xl:mx-16 2xl:mx-32"
   >
     <!-- Questions List -->
     <article
-      class="flex flex-col w-full lg:w-3/4 bg-white rounded-lg py-8 pl-4 pr-4 md:pl-5 lg:pl-7 md:pr-12 lg:pr-20"
+      class="flex flex-col w-full xl:w-3/4 bg-white rounded-lg py-8 pl-4 pr-4 md:pl-5 xl:pl-7 md:pr-12 xl:pr-20"
     >
       <span class="breadcrumbs font-mulish text-xs text-ematextgray mb-4"
         >Edexcel > O > Computer Science > 2010 > February</span
@@ -262,10 +262,81 @@
       <hr class="mt-8 mb-16" style="border-color: #CCD9E9" />
     </article>
     <!-- Sidebar -->
-    <div
-      class="flex flex-col w-full lg:w-1/4 bg-white rounded-lg px-4 md:px-5 py-8 text-sm text-lg lg:text-base 2xl:text-lg font-semibold"
-    >
-      Most viewed questions
-    </div>
+    <aside class="flex flex-col items-start w-full xl:w-1/4">
+      <div
+        class="viewed-questions flex flex-col w-full items-start bg-white rounded-lg px-4 md:px-7 pt-8"
+      >
+        <h3 class="text-sm text-lg lg:text-base 2xl:text-lg font-semibold">
+          Most viewed questions
+        </h3>
+        <ul class="list-none mt-5">
+          <li class="font-mulish text-sm" style="color: #274C67">
+            How do I prove conservation of momentum from Newton’s Laws?
+            <hr class="my-4" style="border-color: #CCD9E9" />
+          </li>
+          <li class="font-mulish text-sm" style="color: #274C67">
+            How do I prove conservation?
+            <hr class="my-4" style="border-color: #CCD9E9" />
+          </li>
+          <li class="font-mulish text-sm" style="color: #274C67">
+            How do I prove conservation of momentum from Newton’s Laws?
+            <hr class="my-4" style="border-color: #CCD9E9" />
+          </li>
+          <li class="font-mulish text-sm" style="color: #274C67">
+            How do I prove conservation of momentum from Newton’s Laws?
+            <hr class="my-4" style="border-color: #CCD9E9" />
+          </li>
+          <li class="font-mulish text-sm" style="color: #274C67">
+            How do I prove conservation?
+            <hr class="my-4" style="border-color: #CCD9E9" />
+          </li>
+        </ul>
+      </div>
+      <div
+        class="teachers flex flex-col items-start bg-white w-full rounded-lg px-4 mt-4 md:px-7 pt-8"
+      >
+        <h3 class="text-sm text-lg lg:text-base 2xl:text-lg font-semibold">
+          Recommended Teachers
+        </h3>
+        <hr class="mt-3 mb-7 border-2 w-16" style="border-color: #80BFC2" />
+        <!-- Teachers -->
+        <div class="flex items-center gap-x-4 w-full">
+          <img src="/images/Ellipse 5.png" class="w-10 h-10" alt="andrey" />
+          <span class="flex flex-col w-full">
+            <p class="text-ematextblue text-sm font-mulish">Andrey Popov</p>
+            <p class="text-ematextblue text-xs font-light font-mulish">
+              School name
+            </p>
+          </span>
+        </div>
+        <hr class="my-4 w-full" style="border-color: #CCD9E9" />
+        <div class="flex items-center gap-x-4 w-full">
+          <img src="/images/Ellipse 6.png" class="w-10 h-10" alt="andrey" />
+          <span class="flex flex-col w-full">
+            <p class="text-ematextblue text-sm font-mulish">Andrey Popov</p>
+            <p class="text-ematextblue text-xs font-light font-mulish">
+              School name
+            </p>
+          </span>
+        </div>
+        <hr class="my-4 w-full" style="border-color: #CCD9E9" />
+        <div class="flex items-center gap-x-4 w-full">
+          <img src="/images/Ellipse 7.png" class="w-10 h-10" alt="andrey" />
+          <span class="flex flex-col w-full">
+            <p class="text-ematextblue text-sm font-mulish">Andrey Popov</p>
+            <p class="text-ematextblue text-xs font-light font-mulish">
+              School name
+            </p>
+          </span>
+        </div>
+        <hr class="my-4 w-full" style="border-color: #CCD9E9" />
+      </div>
+    </aside>
   </div>
 </section>
+
+<style>
+  .viewed-questions > ul > li:last-of-type > hr {
+    display: hidden;
+  }
+</style>

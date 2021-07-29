@@ -50,6 +50,7 @@ module.exports = {
                       secondaryLight: "#F1FEFF",
                       ematext: "#16355C",
                       ematextgray: "#677D8D",
+                      ematextblue: "#274C67",
                       emaborder: "#80bfc2",
                       footer: "#F9F9F9",
                     },
