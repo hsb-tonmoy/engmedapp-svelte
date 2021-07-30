@@ -4,6 +4,7 @@
   import { params } from "@roxi/routify";
   $: slug = $params.slug;
   import { onMount } from "svelte";
+  import Libloader from "../../../../components/utils/libloader.svelte";
   const API_URL = "https://api.engmedapp.com/";
   export let scoped;
   $: question = scoped.question;
@@ -62,124 +63,12 @@
     fetchBYears();
     fetchSessions();
     populateform();
-    ClassicEditor.create(document.querySelector(".content_editor"), {
-      toolbar: {
-        items: [
-          "heading",
-          "|",
-          "fontFamily",
-          "bold",
-          "italic",
-          "underline",
-          "strikethrough",
-          "superscript",
-          "subscript",
-          "link",
-          "fontSize",
-          "highlight",
-          "bulletedList",
-          "numberedList",
-          "|",
-          "outdent",
-          "indent",
-          "|",
-          "imageUpload",
-          "imageInsert",
-          "blockQuote",
-          "MathType",
-          "ChemType",
-          "insertTable",
-          "mediaEmbed",
-          "undo",
-          "redo",
-        ],
-      },
-      language: "en",
-      image: {
-        toolbar: ["imageTextAlternative", "imageStyle:full", "imageStyle:side"],
-      },
-      table: {
-        contentToolbar: [
-          "tableColumn",
-          "tableRow",
-          "mergeTableCells",
-          "tableCellProperties",
-          "tableProperties",
-        ],
-      },
-      licenseKey: "",
-    })
-      .then((editor) => {
-        content_editor = editor;
-      })
-      .catch((error) => {
-        console.error("Oops, something went wrong!");
-        console.error(
-          "Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:"
-        );
-        console.warn("Build id: 1xw2btaf0pb-8ua758h0wkmd");
-        console.error(error);
-      });
-
-    ClassicEditor.create(document.querySelector(".explanation_editor"), {
-      toolbar: {
-        items: [
-          "heading",
-          "|",
-          "fontFamily",
-          "bold",
-          "italic",
-          "underline",
-          "strikethrough",
-          "superscript",
-          "subscript",
-          "link",
-          "fontSize",
-          "highlight",
-          "bulletedList",
-          "numberedList",
-          "|",
-          "outdent",
-          "indent",
-          "|",
-          "imageUpload",
-          "imageInsert",
-          "blockQuote",
-          "MathType",
-          "ChemType",
-          "insertTable",
-          "mediaEmbed",
-          "undo",
-          "redo",
-        ],
-      },
-      language: "en",
-      image: {
-        toolbar: ["imageTextAlternative", "imageStyle:full", "imageStyle:side"],
-      },
-      table: {
-        contentToolbar: [
-          "tableColumn",
-          "tableRow",
-          "mergeTableCells",
-          "tableCellProperties",
-          "tableProperties",
-        ],
-      },
-      licenseKey: "",
-    })
-      .then((editor) => {
-        explanation_editor = editor;
-      })
-      .catch((error) => {
-        console.error("Oops, something went wrong!");
-        console.error(
-          "Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:"
-        );
-        console.warn("Build id: 1xw2btaf0pb-8ua758h0wkmd");
-        console.error(error);
-      });
   });
+
+  function onLoaded() {
+    content_editor = CKEDITOR.replace("content_editor");
+    explanation_editor = CKEDITOR.replace("explanation_editor");
+  }
 
   $: new_board = 1;
   $: new_level = 1;
@@ -248,6 +137,8 @@
     // );
   };
 </script>
+
+<Libloader url="/ckeditor/ckeditor.js" on:loaded={onLoaded} />
 
 <svelte:head>
   <title>EngMedApp - Question Database</title>
@@ -459,7 +350,8 @@
                   <div class="field">
                     <div class="control">
                       <textarea
-                        class="textarea content_editor"
+                        id="content_editor"
+                        class="textarea"
                         placeholder="Question Details...."
                       >
                         {question.content}
@@ -476,7 +368,8 @@
                   <div class="field">
                     <div class="control">
                       <textarea
-                        class="textarea explanation_editor"
+                        id="explanation_editor"
+                        class="textarea"
                         placeholder="Write Your Explanation Here...."
                         >{question.verified_explanation}
                       </textarea>

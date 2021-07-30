@@ -13,66 +13,80 @@
   <div
     class="flex flex-col flex-wrap gap-y-2 xl:flex-row xl:flex-nowrap xl:gap-y-0 xl:gap-x-4 px-4 md:px-12 lg:px-20 xl:px-52 3xl:px-64 py-4 xl:py-8"
   >
-    <!-- Questions Details -->
     <article
-      class="flex flex-col w-full xl:w-8/12 bg-white rounded-lg py-8 pl-4 pr-4 md:pl-5 xl:pl-7 md:pr-12 xl:pr-20"
+      class="flex flex-col w-full xl:w-3/4 bg-white py-8 pl-4 pr-4 md:pl-5 xl:pl-7 md:pr-12 xl:pr-16"
     >
-      <span class="breadcrumbs font-mulish text-xs text-ematextgray mb-4"
-        >{question.board.name} > {question.level.name} > {question.paper.name}
-        > {question.year.name} > {question.session.name}</span
-      >
-      <span
-        class="question-title font-mulish text-base md:text-lg text-black font-medium"
-        >{question.title}
-      </span>
-      <div class="question-details mt-4 ml-4">
-        <span class="font-mulish text-sm text-black leading-relaxed mt-2">
-          {@html question.content}
+      <!-- Questions Details -->
+      <div class="flex flex-col pl-4">
+        <span class="breadcrumbs font-mulish text-xs text-ematextgray mb-4"
+          >{question.board.name} > {question.level.name} > {question.paper.name}
+          > {question.year.name} > {question.session.name}</span
+        >
+        <span
+          class="question-title font-mulish text-lg md:text-xl text-black font-semibold"
+          >{question.title}
         </span>
-      </div>
-      <div
-        class="flex flex-col md:flex-row flex-wrap md:flex-nowrap justify-between items-center gap-x-1 mt-10"
-      >
-        <div class="tags">
-          <span class="font-mulish text-xs font-medium mr-2">Related Tags:</span
-          >
-          <button
-            class="px-3 py-1 text-primary text-xs rounded-full"
-            style="background-color: #E9FDFF">Edexcel</button
-          >
-          <button
-            class="px-3 py-1 text-primary text-xs rounded-full"
-            style="background-color: #E9FDFF">Computer Science</button
-          >
-          <button
-            class="px-3 py-1 text-primary text-xs rounded-full"
-            style="background-color: #E9FDFF">2010</button
-          >
+        <div class="question-details mt-4 ml-4">
+          <span class="font-mulish text-sm text-black leading-relaxed mt-2">
+            {@html question.content}
+          </span>
         </div>
-        <div class="builder">
-          <button
-            class="flex items-center px-3 py-2 text-white bg-primary text-xs rounded-full"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-3 w-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        <div
+          class="flex flex-col md:flex-row flex-wrap md:flex-nowrap justify-between items-center gap-x-1 mt-10"
+        >
+          <div class="tags">
+            <span class="font-mulish text-xs font-medium mr-2"
+              >Related Tags:</span
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              />
-            </svg>&nbsp; Add to builder</button
-          >
+            <button
+              class="px-3 py-1 text-primary text-xs rounded-full"
+              style="background-color: #E9FDFF">Edexcel</button
+            >
+            <button
+              class="px-3 py-1 text-primary text-xs rounded-full"
+              style="background-color: #E9FDFF">Computer Science</button
+            >
+            <button
+              class="px-3 py-1 text-primary text-xs rounded-full"
+              style="background-color: #E9FDFF">2010</button
+            >
+          </div>
+          <div class="builder">
+            <button
+              class="flex items-center px-3 py-2 text-white bg-primary text-xs rounded-full"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3 w-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>&nbsp; Add to builder</button
+            >
+          </div>
         </div>
       </div>
-      <hr class="mt-8 mb-16" style="border-color: #CCD9E9" />
+      <!-- Explanations -->
+      <div class="flex flex-col mt-12">
+        <span class="font-mulish text-base font-bold">2 Answers</span>
+        <!-- Verifid Explanation -->
+        <div class="flex flex-col" style="background-color: #F9F9F9">
+          <span class="font-mulish text-sm text-black leading-relaxed"
+            >Work is the area of the curve for the F vs x graph. The area from x
+            = 0m to x=2.0 m can be divided into two areas that sum up to the
+            total work W, a rectangle A1 and a triangle A2.
+          </span>
+        </div>
+      </div>
     </article>
     <!-- Sidebar -->
-    <aside class="flex flex-col items-start w-full xl:w-4/12">
+    <aside class="flex flex-col items-start w-full xl:w-1/4">
       <div
         class="viewed-questions flex flex-col w-full items-start bg-white rounded-lg px-4 md:px-7 pt-8 pb-6"
       >
