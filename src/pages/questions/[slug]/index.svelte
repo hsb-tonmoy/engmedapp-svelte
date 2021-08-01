@@ -11,7 +11,7 @@
 <section>
   <!-- Questions Body -->
   <div
-    class="flex flex-col flex-wrap gap-y-2 xl:flex-row xl:flex-nowrap xl:gap-y-0 xl:gap-x-4 px-4 md:px-12 lg:px-20 xl:px-52 3xl:px-64 py-4 xl:py-8"
+    class="flex flex-col flex-wrap gap-y-2 xl:flex-row xl:flex-nowrap xl:gap-y-0 xl:gap-x-4 px-4 md:px-12 lg:px-20 xl:px-64 3xl:px-100 py-4 xl:py-8"
   >
     <article
       class="flex flex-col w-full xl:w-3/4 bg-white py-8 pl-4 pr-4 md:pl-5 xl:pl-7 md:pr-12 xl:pr-16"
@@ -76,7 +76,7 @@
       <div class="flex flex-col mt-12">
         <span class="font-mulish text-base font-bold">2 Answers</span>
         <!-- Verifid Explanation -->
-        <div class="flex flex-col" style="background-color: #F9F9F9">
+        <div class="flex flex-col mt-8" style="background-color: #F9F9F9">
           <span class="font-mulish text-sm text-black leading-relaxed"
             >Work is the area of the curve for the F vs x graph. The area from x
             = 0m to x=2.0 m can be divided into two areas that sum up to the

@@ -37,6 +37,7 @@ async function getNewAccess() {
 }
 
 void (async function main() {
+  console.log(user);
   if (localStorage.getItem("logged-in")) {
     await getNewAccess();
   }
@@ -107,6 +108,7 @@ async function getCredentials() {
     });
     if (res.ok) {
       const data = await res.json();
+      localStorage.setItem("data", data);
       user.set(data);
     } else if (!res.ok && res.status === 401) {
       getNewAccess();

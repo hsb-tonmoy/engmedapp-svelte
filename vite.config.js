@@ -44,6 +44,9 @@ module.exports = {
                     width: {
                       120: "40rem",
                     },
+                    padding: {
+                      100: "30rem",
+                    },
                     colors: {
                       primary: "#43989D",
                       secondary: "#F2FEFF",

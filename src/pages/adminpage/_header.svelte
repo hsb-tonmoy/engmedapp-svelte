@@ -52,7 +52,7 @@
             <img src={$user.profile_pic} alt="Username" />
           </div>
           <div class="is-user-name">
-            <span>{$user ? $user.user_name : "Guest"}</span>
+            <span>{$user ? $user.username : "Guest"}</span>
           </div>
           <span class="icon"><i class="mdi mdi-chevron-down" /></span>
         </a>
