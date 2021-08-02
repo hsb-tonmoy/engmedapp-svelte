@@ -21,10 +21,10 @@
 </svelte:head>
 
 {#if $user && $user.account_type}
-  {#if $user.account_type !== 1 || $user.account_type !== 2}
-    <slot />
-  {:else}
+  {#if $user.account_type == 1 || $user.account_type == 2}
     <h1>Unauthorized</h1>
+  {:else}
+    <slot />
   {/if}
 {:else if $authenticating}
   <h2>authenticating...</h2>

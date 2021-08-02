@@ -1,66 +1,92 @@
-import { writable, get } from "svelte/store";
-
-export const access_token = writable(null);
+import { writable } from "svelte/store";
 
 export const user = writable(null);
 
 export const authenticating = writable(false);
 
-export const loginError = writable(null);
-
 const API_URL = "https://api.engmedapp.com/";
 
 async function getNewAccess() {
   try {
-    const res = await fetch(API_URL + "accounts/login/refresh/", {
+    const res = await fetch(API_URL + "auth/jwt/refresh/", {
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        refresh: localStorage.getItem("refresh"),
+      }),
     });
     if (res.ok) {
       const data = await res.json();
-      access_token.set(data.access);
-      authenticate();
+      localStorage.setItem("access", data.access);
     } else {
-      const data = await res.json();
-      console.log(data);
-      if (data.code === "token_not_valid") {
-        localStorage.removeItem("logged-in");
-        window.location.href("/login");
-      }
+      console.log(res.status + res.statusText);
     }
   } catch (err) {
     console.log("");
   }
 }
 
+const verifyAccess = async () => {
+  try {
+    const res = await fetch(API_URL + "auth/jwt/verify/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: localStorage.getItem("access"),
+      }),
+    });
+    if (res.ok) {
+      return true;
+    } else if (!res.ok && res.status === 401) {
+      await getNewAccess();
+    } else {
+      console.log(res.status + res.statusText);
+    }
+  } catch (err) {
+    console.log("Verifying");
+  }
+};
+
 void (async function main() {
-  console.log(user);
-  if (localStorage.getItem("logged-in")) {
-    await getNewAccess();
+  if (localStorage.getItem("refresh") && localStorage.getItem("access")) {
+    await authenticate();
+    let access_token = localStorage.getItem("access");
+    const tokenParts = JSON.parse(atob(access_token.split(".")[1]));
+    const now = Date.now().valueOf() / 1000;
+
+    if (typeof tokenParts.exp !== "undefined" && tokenParts.exp < now) {
+      console.log("Token should be expired now");
+      await getNewAccess();
+      await authenticate();
+    }
   }
 })();
 
 export const logout = async () => {
   user.set(null);
-  localStorage.removeItem("logged-in");
   await fetch(API_URL + "accounts/logout/", {
     method: "POST",
-    credentials: "include",
+    body: JSON.stringify({
+      refresh: localStorage.getItem("refresh"),
+    }),
     headers: {
       "Content-Type": "application/json",
     },
   });
+  localStorage.removeItem("user");
+  localStorage.removeItem("access");
+  localStorage.removeItem("refresh");
 };
 
 export const login = async (email, password) => {
   authenticating.set(true);
   try {
-    const res = await fetch(API_URL + "accounts/login/", {
+    const res = await fetch(API_URL + "auth/jwt/create/", {
       method: "POST",
-      credentials: "include",
       body: JSON.stringify({
         email,
         password,
@@ -71,11 +97,10 @@ export const login = async (email, password) => {
     });
     if (res.ok) {
       const data = await res.json();
-      access_token.set(data.access);
+      localStorage.setItem("access", data.access);
+      localStorage.setItem("refresh", data.refresh);
       authenticate();
     } else if (res.status === 401 && res.body) {
-      loginError.set("Incorrect E-mail or Password.");
-      authenticating.set(false);
     } else {
       console.log(res.status + res.statusText);
       authenticating.set(false);
@@ -86,15 +111,8 @@ export const login = async (email, password) => {
 };
 
 export async function authenticate() {
-  try {
-    await getCredentials();
-
-    localStorage.setItem("logged-in", "true");
-
-    authenticating.set(false);
-  } catch (err) {
-    console.log(err);
-  }
+  await getCredentials();
+  authenticating.set(false);
 }
 
 async function getCredentials() {
@@ -103,18 +121,15 @@ async function getCredentials() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "JWT " + get(access_token),
+        Authorization: "JWT " + localStorage.getItem("access"),
       },
     });
     if (res.ok) {
       const data = await res.json();
-      localStorage.setItem("data", data);
+      localStorage.setItem("user", data);
       user.set(data);
     } else if (!res.ok && res.status === 401) {
       getNewAccess();
-    } else if (res.code === "user_inactive") {
-      console.log("Inactive");
-      loginError.set("Account Inactive");
     } else {
       console.log(res.status + res.statusText);
     }

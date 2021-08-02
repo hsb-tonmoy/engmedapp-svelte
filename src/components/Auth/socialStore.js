@@ -1,4 +1,4 @@
-import { authenticating, access_token, authenticate } from "./store.js";
+import { authenticating, authenticate } from "./store.js";
 
 const API_URL = "https://api.engmedapp.com/";
 
