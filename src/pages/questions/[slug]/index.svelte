@@ -38,22 +38,16 @@
             <span class="font-mulish text-xs font-medium mr-2"
               >Related Tags:</span
             >
-            <button
-              class="px-3 py-1 text-primary text-xs rounded-full"
-              style="background-color: #E9FDFF">Edexcel</button
-            >
-            <button
-              class="px-3 py-1 text-primary text-xs rounded-full"
-              style="background-color: #E9FDFF">Computer Science</button
-            >
-            <button
-              class="px-3 py-1 text-primary text-xs rounded-full"
-              style="background-color: #E9FDFF">2010</button
-            >
+            {#each question.tags as tag}
+              <button
+                class="px-3 py-1 text-primary text-xs rounded-full"
+                style="background-color: #E9FDFF">{tag}</button
+              >
+            {/each}
           </div>
           <div class="builder">
             <button
-              class="flex items-center px-3 py-2 text-white bg-primary text-xs rounded-full"
+              class="flex items-center px-3 py-2 text-prmary hover:text-white bg-white hover:bg-primary duration-300 border border-primary text-xs rounded-full"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-3 w-3"
@@ -77,7 +71,7 @@
         <span class="font-mulish text-base font-bold">2 Answers</span>
         <!-- Verified Explanation -->
         <div
-          class="flex flex-col mt-4 py-4 md:py-8 px-3 md:px-12 rounded-lg font-medium"
+          class="flex flex-col mt-4 py-4 md:py-8 px-3 md:px-8 rounded-lg font-medium"
           style="background-color: #F9F9F9"
         >
           <span class="font-mulish text-sm text-black leading-relaxed"
