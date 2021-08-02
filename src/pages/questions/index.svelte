@@ -273,23 +273,23 @@
         <ul class="list-none mt-5">
           <li class="font-mulish text-sm" style="color: #274C67">
             How do I prove conservation of momentum from Newton’s Laws?
-            <hr class="my-4" style="border-color: #CCD9E9" />
+            <hr class="my-4 w-full" style="border-color: #CCD9E9" />
           </li>
           <li class="font-mulish text-sm" style="color: #274C67">
             How do I prove conservation?
-            <hr class="my-4" style="border-color: #CCD9E9" />
+            <hr class="my-4 w-full" style="border-color: #CCD9E9" />
           </li>
           <li class="font-mulish text-sm" style="color: #274C67">
             How do I prove conservation of momentum from Newton’s Laws?
-            <hr class="my-4" style="border-color: #CCD9E9" />
+            <hr class="my-4 w-full" style="border-color: #CCD9E9" />
           </li>
           <li class="font-mulish text-sm" style="color: #274C67">
             How do I prove conservation of momentum from Newton’s Laws?
-            <hr class="my-4" style="border-color: #CCD9E9" />
+            <hr class="my-4 w-full" style="border-color: #CCD9E9" />
           </li>
           <li class="font-mulish text-sm" style="color: #274C67">
             How do I prove conservation?
-            <hr class="my-4" style="border-color: #CCD9E9" />
+            <hr class="my-4 w-full" style="border-color: #CCD9E9" />
           </li>
         </ul>
       </div>
