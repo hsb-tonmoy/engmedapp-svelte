@@ -52,8 +52,11 @@ const verifyAccess = async () => {
 };
 
 void (async function main() {
-  if (localStorage.getItem("refresh") && localStorage.getItem("access")) {
-    await authenticate();
+  if (
+    localStorage.getItem("refresh") &&
+    localStorage.getItem("access") &&
+    localStorage.getItem("user")
+  ) {
     let access_token = localStorage.getItem("access");
     const tokenParts = JSON.parse(atob(access_token.split(".")[1]));
     const now = Date.now().valueOf() / 1000;
@@ -62,11 +65,17 @@ void (async function main() {
       console.log("Token should be expired now");
       await getNewAccess();
       await authenticate();
+    } else {
+      await authenticate();
+      console.log("You're logged back in.");
     }
+  } else {
+    localStorage.clear();
   }
 })();
 
 export const logout = async () => {
+  localStorage.removeItem("user");
   user.set(null);
   await fetch(API_URL + "accounts/logout/", {
     method: "POST",
@@ -77,7 +86,6 @@ export const logout = async () => {
       "Content-Type": "application/json",
     },
   });
-  localStorage.removeItem("user");
   localStorage.removeItem("access");
   localStorage.removeItem("refresh");
 };
