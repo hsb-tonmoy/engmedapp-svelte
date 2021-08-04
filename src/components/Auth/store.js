@@ -4,6 +4,8 @@ export const user = writable(null);
 
 export const authenticating = writable(false);
 
+export const register_status = writable(null);
+
 const API_URL = "https://api.engmedapp.com/";
 
 async function getNewAccess() {
@@ -112,6 +114,48 @@ export const login = async (email, password) => {
     } else {
       console.log(res.status + res.statusText);
       authenticating.set(false);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const register = async (email, first_name, password, re_password) => {
+  try {
+    const res = await fetch(API_URL + "auth/users/", {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        first_name,
+        password,
+        re_password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    if (res.ok) {
+      register_status.set("success");
+    } else if (res.status === 400) {
+      if (
+        data.email &&
+        data.email[0] === "Account with this Email Address already exists."
+      ) {
+        register_status.set("email_exists");
+      } else if (
+        data.password &&
+        data.password[0] === "The two password fields didn't match."
+      ) {
+        register_status.set("password_mismatch");
+      } else if (
+        data.password &&
+        data.password[0] === "The password is too similar to the Email Address."
+      ) {
+        register_status.set("password_similar");
+      }
+    } else {
+      console.log(res.status + res.statusText);
     }
   } catch (err) {
     console.log(err);
