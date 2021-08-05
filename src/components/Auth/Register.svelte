@@ -1,16 +1,42 @@
 <script>
   import { register, register_status } from "./store.js";
   import { getAuthURL } from "./socialStore.js";
-  let email, name, password, re_password;
-  const handleSubmit = () => register(email, name, password, re_password);
+  import { form } from "svelte-forms";
+
+  const fields = { email: "", name: "", password: "", re_password: "" };
+
+  const registerForm = form(
+    () => ({
+      name: {
+        value: fields.name,
+        validators: ["required", "min:3"],
+      },
+      email: { value: fields.email, validators: ["required", "email"] },
+      password: { value: fields.password, validators: ["required", "min:8"] },
+      re_password: {
+        value: fields.re_password,
+        validators: ["required", "min:8"],
+      },
+    }),
+    {
+      initCheck: false,
+      validateOnChange: false,
+      stopAtFirstError: false,
+      stopAtFirstFieldError: false,
+    }
+  );
 
   export let signin = false;
 
+  const handleSubmit = () => {
+    registerForm.validate();
+    if ($registerForm.valid) {
+      register(fields.email, fields.name, fields.password, fields.re_password);
+    }
+  };
+
   $: if ($register_status === "success") {
-    email = "";
-    name = "";
-    password = "";
-    re_password = "";
+    registerForm.reset();
   }
 </script>
 
@@ -55,6 +81,21 @@
         >Your password is too similar to your name/e-mail. Please choose a
         different password and try again.</span
       >
+    {:else if $register_status === "password_short"}
+      <span class="font-mulish bg-red-600 bg-r px-3 py-2 text-white text-sm"
+        >Your password must be at least 8 characters. Please choose a longer
+        password and try again.</span
+      >
+    {:else if $register_status === "password_common"}
+      <span class="font-mulish bg-red-600 bg-r px-3 py-2 text-white text-sm"
+        >Your password is too common. Please choose a different password and try
+        again.</span
+      >
+    {:else if $register_status === "password_numeric"}
+      <span class="font-mulish bg-red-600 bg-r px-3 py-2 text-white text-sm"
+        >Your password is entirely numeric. Please choose a different password
+        and try again.</span
+      >
     {/if}
   </div>
 {/if}
@@ -84,11 +125,20 @@
     <input
       class="border rounded-md pl-8 py-2 w-11/12 xl:w-2/5 mt-2 outline-none"
       placeholder="yourmail@email.com"
-      bind:value={email}
+      bind:value={fields.email}
       name="email"
       type="email"
     />
   </div>
+  {#if $registerForm.fields.email.errors.includes("required")}
+    <p class="text-red-600 font-poppins font-medium text-xs mt-2">
+      E-mail is required
+    </p>
+  {:else if $registerForm.fields.email.errors.includes("email")}
+    <p class="text-red-600 font-poppins font-medium text-xs mt-2">
+      Invalid e-mail
+    </p>
+  {/if}
   <label class="font-mulish text-ematext text-xs font-base mt-4" for="name"
     >First name</label
   >
@@ -111,11 +161,16 @@
     <input
       class="border rounded-md pl-8 py-2 w-11/12 xl:w-2/5 mt-2 outline-none"
       placeholder="Your name"
-      bind:value={name}
+      bind:value={fields.name}
       name="name"
       type="text"
     />
   </div>
+  {#if $registerForm.fields.name.errors.includes("required")}
+    <p class="text-red-600 font-poppins font-medium text-xs mt-2">
+      First name is required
+    </p>
+  {/if}
   <label class="font-mulish text-ematext text-xs font-base mt-4" for="password"
     >Password</label
   >
@@ -136,11 +191,20 @@
     <input
       class="border rounded-md pl-8 py-2 w-11/12 xl:w-2/5 mt-2 outline-none"
       placeholder="********"
-      bind:value={password}
+      bind:value={fields.password}
       name="password"
       type="password"
     />
   </div>
+  {#if $registerForm.fields.password.errors.includes("required")}
+    <p class="text-red-600 font-poppins font-medium text-xs mt-2">
+      Password is required
+    </p>
+  {:else if $registerForm.fields.password.errors.includes("min")}
+    <p class="text-red-600 font-poppins font-medium text-xs mt-2">
+      Password must be at least 8 characters
+    </p>
+  {/if}
   <label class="font-mulish text-ematext text-xs font-base mt-4" for="password"
     >Confirm password</label
   >
@@ -161,11 +225,16 @@
     <input
       class="border rounded-md pl-8 py-2 w-11/12 xl:w-2/5 mt-2 outline-none"
       placeholder="********"
-      bind:value={re_password}
+      bind:value={fields.re_password}
       name="password"
       type="password"
     />
   </div>
+  {#if fields.password !== fields.re_password}
+    <p class="text-red-600 font-poppins font-medium text-xs mt-2">
+      Passwords must match
+    </p>
+  {/if}
   <span class="flex justify-end mt-2 w-11/12 xl:w-2/5">
     <a
       href="/"
@@ -176,9 +245,23 @@
   <span class="flex mt-6 w-11/12 xl:w-2/5">
     <button
       type="submit"
-      class="bg-primary hover:bg-opacity-80 w-full py-4 text-white text-xs rounded"
-      >Sign Up</button
-    ></span
+      class="flex justify-center items-center gap-x-2 bg-primary hover:bg-opacity-80 w-full py-4 text-white text-xs rounded"
+      >Sign Up
+      {#if $register_status === "registering"}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="spinner h-3 w-3 text-white"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      {/if}
+    </button></span
   >
 </form>
 
@@ -199,5 +282,19 @@
 
   .sign-in svg {
     top: 1.35rem;
+  }
+
+  .spinner {
+    animation: transform 1s infinite;
+    transform: rotate(180deg);
+  }
+
+  @keyframes transform {
+    0% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(-180deg);
+    }
   }
 </style>

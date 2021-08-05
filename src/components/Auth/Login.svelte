@@ -1,8 +1,30 @@
 <script>
-  import { login, authenticating, user } from "./store.js";
+  import { login, authenticating, user, login_error } from "./store.js";
   import { getAuthURL } from "./socialStore.js";
-  let email, password;
-  const handleSubmit = () => login(email, password);
+
+  import { form } from "svelte-forms";
+
+  const fields = { email: "", password: "" };
+
+  const loginForm = form(
+    () => ({
+      email: { value: fields.email, validators: ["required", "email"] },
+      password: { value: fields.password, validators: ["required"] },
+    }),
+    {
+      initCheck: false,
+      validateOnChange: false,
+      stopAtFirstError: false,
+      stopAtFirstFieldError: false,
+    }
+  );
+
+  const handleSubmit = () => {
+    loginForm.validate();
+    if ($loginForm.valid) {
+      login(fields.email, fields.password);
+    }
+  };
 
   export let signin = false;
 </script>
@@ -22,6 +44,16 @@
     style="color: #26C3E5">Sign up</a
   ></span
 >
+
+{#if login_error}
+  <div class="message flex items-center mt-6 w-11/12 md:w-auto">
+    {#if $login_error === "incorrect"}
+      <span class="font-mulish bg-red-600 bg-r px-3 py-2 text-white text-sm"
+        >Your e-mail and/or password is incorrect. Please try again.</span
+      >
+    {/if}
+  </div>
+{/if}
 
 <form
   on:submit|preventDefault={handleSubmit}
@@ -49,11 +81,20 @@
     <input
       class="border rounded-md pl-8 py-2 w-11/12 xl:w-2/5 mt-2 outline-none"
       placeholder="yourmail@email.com"
-      bind:value={email}
+      bind:value={fields.email}
       name="email"
       type="email"
     />
   </div>
+  {#if $loginForm.fields.email.errors.includes("required")}
+    <p class="text-red-600 font-poppins font-medium text-xs mt-2">
+      E-mail is required
+    </p>
+  {:else if $loginForm.fields.email.errors.includes("email")}
+    <p class="text-red-600 font-poppins font-medium text-xs mt-2">
+      Invalid e-mail
+    </p>
+  {/if}
   <label class="font-mulish text-ematext text-xs font-base mt-4" for="password"
     >Password</label
   >
@@ -74,11 +115,16 @@
     <input
       class="border rounded-md pl-8 py-2 w-11/12 xl:w-2/5 mt-2 outline-none"
       placeholder="********"
-      bind:value={password}
+      bind:value={fields.password}
       name="password"
       type="password"
     />
   </div>
+  {#if $loginForm.fields.password.errors.includes("required")}
+    <p class="text-red-600 font-poppins font-medium text-xs mt-2">
+      Password is required
+    </p>
+  {/if}
   <span class="flex justify-end mt-2 w-11/12 xl:w-2/5">
     <a
       href="/"
@@ -89,8 +135,21 @@
   <span class="flex mt-6 w-11/12 xl:w-2/5">
     <button
       type="submit"
-      class="bg-primary hover:bg-opacity-80 w-full py-4 text-white text-xs rounded"
-      >Sign In</button
+      class="flex justify-center items-center gap-x-2 bg-primary hover:bg-opacity-80 w-full py-4 text-white text-xs rounded"
+      >Sign In{#if $authenticating}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="spinner h-3 w-3 text-white"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      {/if}</button
     ></span
   >
 </form>

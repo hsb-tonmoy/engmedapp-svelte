@@ -4,6 +4,8 @@ export const user = writable(null);
 
 export const authenticating = writable(false);
 
+export const login_error = writable(false);
+
 export const register_status = writable(null);
 
 const API_URL = "https://api.engmedapp.com/";
@@ -105,12 +107,17 @@ export const login = async (email, password) => {
         "Content-Type": "application/json",
       },
     });
+    const data = await res.json();
     if (res.ok) {
-      const data = await res.json();
       localStorage.setItem("access", data.access);
       localStorage.setItem("refresh", data.refresh);
       authenticate();
-    } else if (res.status === 401 && res.body) {
+    } else if (
+      res.status === 401 &&
+      data.detail === "No active account found with the given credentials"
+    ) {
+      login_error.set("incorrect");
+      authenticating.set(false);
     } else {
       console.log(res.status + res.statusText);
       authenticating.set(false);
@@ -121,6 +128,7 @@ export const login = async (email, password) => {
 };
 
 export const register = async (email, first_name, password, re_password) => {
+  register_status.set("registering");
   try {
     const res = await fetch(API_URL + "auth/users/", {
       method: "POST",
@@ -138,6 +146,7 @@ export const register = async (email, first_name, password, re_password) => {
     if (res.ok) {
       register_status.set("success");
     } else if (res.status === 400) {
+      console.log(data);
       if (
         data.email &&
         data.email[0] === "Account with this Email Address already exists."
@@ -153,6 +162,22 @@ export const register = async (email, first_name, password, re_password) => {
         data.password[0] === "The password is too similar to the Email Address."
       ) {
         register_status.set("password_similar");
+      } else if (
+        data.password &&
+        data.password[0] ===
+          "This password is too short. It must contain at least 8 characters."
+      ) {
+        register_status.set("password_short");
+      } else if (
+        data.password &&
+        data.password[0] === "This password is too common."
+      ) {
+        register_status.set("password_common");
+      } else if (
+        data.password &&
+        data.password[0] === "This password is entirely numeric."
+      ) {
+        register_status.set("password_numeric");
       }
     } else {
       console.log(res.status + res.statusText);
