@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { params } from "@roxi/routify";
+  import { goto } from "@roxi/routify";
 
   const API_URL = "https://api.engmedapp.com/";
 
@@ -9,7 +10,7 @@
 
   let status;
 
-  export const activate = async (uid, token) => {
+  const activate = async (uid, token) => {
     try {
       const res = await fetch(API_URL + "auth/users/activation/", {
         method: "POST",
@@ -32,15 +33,18 @@
       console.log(err);
     }
   };
+  function redirect() {
+    $goto("/login");
+  }
 
   onMount(() => {
     activate(uid, token);
   });
 </script>
 
-<div class="flex justify-content items-center w-full py-8">
+<div class="flex justify-center items-center w-full py-8">
   {#if status === "success"}
-    <span class="font-mulish bg-green-500 px-3 py-2 text-white text-sm"
+    <span class="font-mulish bg-green-500 px-3 py-2 text-white text-xl"
       >Activation Successful! <a class="text-ematext" href="/login"
         >Click here</a
       >to sign-in.</span
