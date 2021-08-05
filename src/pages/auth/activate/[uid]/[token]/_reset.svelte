@@ -40,12 +40,14 @@
     $goto(path);
   }
 
+  $: if (status === "success" || status === "forbidden") {
+    setTimeout(() => {
+      redirect("/login");
+    }, 5000);
+  }
+
   onMount(() => {
     activate(uid, token);
-
-    if (status === "success" || status === "forbidden") {
-      setTimeout(redirect("/login"), 5000);
-    }
   });
 </script>
 
@@ -73,8 +75,9 @@
         <span class="font-poppins text-black text-sm md:text-md"
           >Activation Successful! Redirecting you to the sign-in page. <a
             class="text-primary"
-            href="/login">Click here</a
-          >if you're not redirected automatically.</span
+            href="/login"
+            >Click here
+          </a>if you're not redirected automatically.</span
         >
       {:else if status === "invalid"}
         <span class="font-poppins text-black text-sm md:text-md"
@@ -85,7 +88,7 @@
       {:else if status === "forbidden"}
         <span class="font-poppins text-black text-sm md:text-md"
           >Your account is already activated. Redirecting you to the sign-in
-          page. <a class="text-primary" href="/login">Click here</a>if you're
+          page. <a class="text-primary" href="/login">Click here </a>if you're
           not redirected automatically.</span
         >
       {/if}

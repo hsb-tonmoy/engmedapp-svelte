@@ -37,7 +37,7 @@
         autofocus
         type="search"
         name="search"
-        class="flex flex-grow sm:w-full w-10/12 max-w-full h-20 md:w-96 lg:w-120 pl-14 pr-12 text-base bg-secondaryLight border border-primary rounded-l"
+        class="flex flex-grow sm:w-full w-10/12 max-w-full h-20 md:w-96 lg:w-120 pl-14 pr-12 text-base bg-secondaryLight border border-primary rounded-l outline-none"
         placeholder="Write your question"
       />
       <button
