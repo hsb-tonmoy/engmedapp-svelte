@@ -3,6 +3,8 @@
   import { params } from "@roxi/routify";
   import { goto } from "@roxi/routify";
 
+  import Nav from "../../../../../components/Nav.svelte";
+
   const API_URL = "https://api.engmedapp.com/";
 
   let uid = $params.uid;
@@ -33,31 +35,60 @@
       console.log(err);
     }
   };
-  function redirect() {
-    $goto("/login");
+
+  function redirect(path) {
+    $goto(path);
   }
 
   onMount(() => {
     activate(uid, token);
+
+    if (status === "success" || status === "forbidden") {
+      setTimeout(redirect("/login"), 5000);
+    }
   });
 </script>
 
-<div class="flex justify-center items-center w-full py-8">
-  {#if status === "success"}
-    <span class="font-mulish bg-green-500 px-3 py-2 text-white text-xl"
-      >Activation Successful! <a class="text-ematext" href="/login"
-        >Click here</a
-      >to sign-in.</span
+<Nav />
+
+<section
+  class="flex justify-center items-center w-full mt-12 xl:mt-0 xl:h-screen"
+>
+  <div
+    class="flex flex-col justify-center shadow-md bg-white py-12 md:py-24 px-6 md:px-12"
+  >
+    <span
+      class={status === "success"
+        ? "border-green-500 w-auto border-l-4"
+        : "border-red-600 w-auto border-l-4"}
     >
-  {:else if status === "invalid"}
-    <span class="font-mulish bg-red-600 bg-r px-3 py-2 text-white text-sm"
-      >Invalid activation URL. <a class="text-ematext" href="/login"
-        >Click here</a
-      > to re-send the activation URL.</span
-    >
-  {:else if status === "forbidden"}
-    <span class="font-mulish bg-red-600 bg-r px-3 py-2 text-white text-sm"
-      >Your account is already activated.</span
-    >
-  {/if}
-</div>
+      <h1
+        class="font-mulish font-semibold text-ematext text-xl md:text-3xl uppercase ml-2"
+      >
+        Account Activation
+      </h1>
+    </span>
+    <div class="mt-5 self-center">
+      {#if status === "success"}
+        <span class="font-poppins text-black text-sm md:text-md"
+          >Activation Successful! Redirecting you to the sign-in page. <a
+            class="text-primary"
+            href="/login">Click here</a
+          >if you're not redirected automatically.</span
+        >
+      {:else if status === "invalid"}
+        <span class="font-poppins text-black text-sm md:text-md"
+          >Invalid activation URL! <a class="text-primary" href="/login"
+            >Click here</a
+          > to re-send the activation URL.</span
+        >
+      {:else if status === "forbidden"}
+        <span class="font-poppins text-black text-sm md:text-md"
+          >Your account is already activated. Redirecting you to the sign-in
+          page. <a class="text-primary" href="/login">Click here</a>if you're
+          not redirected automatically.</span
+        >
+      {/if}
+    </div>
+  </div>
+</section>
