@@ -31,6 +31,7 @@
     "autoprefixer": "^10.2.3",
     "cross-env": "^7.0.3",
     "cssnano": "^4.1.10",
+    "date-differ": "^1.0.0",
     "fkill": "^7.1.0",
     "npm-run-all": "^4.1.5",
     "playwright": "^1.8.0",

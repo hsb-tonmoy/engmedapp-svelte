@@ -132,7 +132,7 @@
         {:else}
           <div class="flex ml-8 gap-x-6 items-center">
             <a
-              href="/login"
+              href="/login?register=true"
               class="text-sm text-ematext hover:underline hover:text-primary font-mulish"
               >Sign up</a
             ><a
@@ -270,7 +270,7 @@
       {:else}
         <div class="flex gap-x-6 items-center">
           <a
-            href="/login"
+            href="/login?register=true"
             class="text-sm text-ematext hover:underline hover:text-primary font-mulish"
             >Sign up</a
           ><a
