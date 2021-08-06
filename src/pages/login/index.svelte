@@ -2,11 +2,10 @@
   import { user } from "../../components/Auth/store.js";
   import Login from "../../components/Auth/Login.svelte";
   import Register from "../../components/Auth/Register.svelte";
+  import { params } from "@roxi/routify";
   import { goto } from "@roxi/routify";
-  // if user is already logged in, we don't want them on the login page
-  $: if ($user) $goto("/");
 
-  let signin = false;
+  $: if ($user) $goto("/");
 </script>
 
 <!-- routify:options index=false -->
@@ -34,10 +33,10 @@
   <div
     class="flex flex-col justify-center pl-6 md:pl-12 xl:pl-24 w-full md:w-1/2 xl:w-3/5"
   >
-    {#if !signin}
-      <Login bind:signin />
+    {#if $params.register === "true"}
+      <Register />
     {:else}
-      <Register bind:signin />
+      <Login />
     {/if}
   </div>
 </section>

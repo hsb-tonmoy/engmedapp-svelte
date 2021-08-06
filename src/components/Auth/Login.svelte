@@ -25,8 +25,6 @@
       login(fields.email, fields.password);
     }
   };
-
-  export let signin = false;
 </script>
 
 <h1
@@ -36,10 +34,7 @@
 </h1>
 <span class="font-mulish text-ematext text-sm font-normal"
   >Don’t have account? <a
-    on:click={() => {
-      signin = true;
-    }}
-    href="#"
+    href="/login?register=true"
     class="font-semibold"
     style="color: #26C3E5">Sign up</a
   ></span

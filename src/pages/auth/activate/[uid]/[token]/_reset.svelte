@@ -36,13 +36,9 @@
     }
   };
 
-  function redirect(path) {
-    $goto(path);
-  }
-
   $: if (status === "success" || status === "forbidden") {
     setTimeout(() => {
-      redirect("/login");
+      $goto("/login");
     }, 5000);
   }
 

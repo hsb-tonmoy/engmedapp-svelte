@@ -3,15 +3,25 @@
   import { getAuthURL } from "./socialStore.js";
   import { form } from "svelte-forms";
 
-  const fields = { email: "", name: "", password: "", re_password: "" };
+  const fields = {
+    email: "",
+    first_name: "",
+    last_name: "",
+    password: "",
+    re_password: "",
+  };
 
   const registerForm = form(
     () => ({
-      name: {
-        value: fields.name,
+      email: { value: fields.email, validators: ["required", "email"] },
+      first_name: {
+        value: fields.first_name,
         validators: ["required", "min:3"],
       },
-      email: { value: fields.email, validators: ["required", "email"] },
+      last_name: {
+        value: fields.last_name,
+        validators: ["required", "min:3"],
+      },
       password: { value: fields.password, validators: ["required", "min:8"] },
       re_password: {
         value: fields.re_password,
@@ -26,12 +36,16 @@
     }
   );
 
-  export let signin = false;
-
   const handleSubmit = () => {
     registerForm.validate();
     if ($registerForm.valid) {
-      register(fields.email, fields.name, fields.password, fields.re_password);
+      register(
+        fields.email,
+        fields.first_name,
+        fields.last_name,
+        fields.password,
+        fields.re_password
+      );
     }
   };
 
@@ -47,10 +61,7 @@
 </h1>
 <span class="font-mulish text-ematext text-sm font-normal"
   >Already have an account? <a
-    on:click={() => {
-      signin = false;
-    }}
-    href="#"
+    href="/login"
     class="font-semibold"
     style="color: #26C3E5">Sign in</a
   ></span
@@ -139,8 +150,9 @@
       Invalid e-mail
     </p>
   {/if}
-  <label class="font-mulish text-ematext text-xs font-base mt-4" for="name"
-    >First name</label
+  <label
+    class="font-mulish text-ematext text-xs font-base mt-4"
+    for="first_name">First name</label
   >
 
   <div class="relative">
@@ -155,20 +167,53 @@
         stroke-linecap="round"
         stroke-linejoin="round"
         stroke-width="2"
-        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+        d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
       />
     </svg>
     <input
       class="border rounded-md pl-8 py-2 w-11/12 xl:w-2/5 mt-2 outline-none"
-      placeholder="Your name"
-      bind:value={fields.name}
-      name="name"
+      placeholder="Your first name"
+      bind:value={fields.first_name}
+      name="first_name"
       type="text"
     />
   </div>
-  {#if $registerForm.fields.name.errors.includes("required")}
+  {#if $registerForm.fields.first_name.errors.includes("required")}
     <p class="text-red-600 font-poppins font-medium text-xs mt-2">
       First name is required
+    </p>
+  {/if}
+  <label
+    class="font-mulish text-ematext text-xs font-base mt-4"
+    for="first_name">Last name</label
+  >
+
+  <div class="relative">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 absolute ml-2 text-primary"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+    <input
+      class="border rounded-md pl-8 py-2 w-11/12 xl:w-2/5 mt-2 outline-none"
+      placeholder="Your last name"
+      bind:value={fields.last_name}
+      name="last_name"
+      type="text"
+    />
+  </div>
+  {#if $registerForm.fields.last_name.errors.includes("required")}
+    <p class="text-red-600 font-poppins font-medium text-xs mt-2">
+      Last name is required
     </p>
   {/if}
   <label class="font-mulish text-ematext text-xs font-base mt-4" for="password"

@@ -127,7 +127,13 @@ export const login = async (email, password) => {
   }
 };
 
-export const register = async (email, first_name, password, re_password) => {
+export const register = async (
+  email,
+  first_name,
+  last_name,
+  password,
+  re_password
+) => {
   register_status.set("registering");
   try {
     const res = await fetch(API_URL + "auth/users/", {
@@ -135,6 +141,7 @@ export const register = async (email, first_name, password, re_password) => {
       body: JSON.stringify({
         email,
         first_name,
+        last_name,
         password,
         re_password,
       }),
