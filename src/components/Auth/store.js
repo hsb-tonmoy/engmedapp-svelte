@@ -199,7 +199,7 @@ export async function authenticate() {
   authenticating.set(false);
 }
 
-async function getCredentials() {
+export async function getCredentials() {
   try {
     const res = await fetch(API_URL + "auth/users/me/", {
       method: "GET",
