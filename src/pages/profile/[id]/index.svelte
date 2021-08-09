@@ -5,6 +5,8 @@
 
   $: profile = scoped.profile;
 
+  console.log(scoped.profile);
+
   const user_roles = {
     1: "Student",
     2: "Teacher",
@@ -38,7 +40,7 @@
       style="background-color: #F9F9F9"
     >
       <div class="info flex flex-col">
-        <div class="flex items-center gap-x-20">
+        <div class="flex justify-between items-center gap-x-20">
           <div class="flex flex-col justify-start gap-y-2">
             <h2 class="font-bold text-xl text-ematext">
               {profile.user.first_name}
@@ -68,7 +70,7 @@
           >{genders[profile.gender]}</span
         >
         <span class="mt-2 text-ematextgray font-medium text-sm"
-          >{profile.city}, {profile.city}, {profile.country}</span
+          >{profile.city}, {profile.state}, {profile.country}</span
         >
       </div>
     </div>
@@ -99,14 +101,19 @@
         </span>
         <span class="text-primary font-semibold">16 profile views</span>
         <span class="text-ematextgray font-semibold"
-          >Last seen 7 minutes ago</span
+          >Last seen {dateDiffer({
+            from: profile.last_login,
+            to: Date.now(),
+          })} ago</span
         >
       </div>
     </div>
   </div>
   <hr class="my-8 w-11/12" style="border-color: #CCD9E9" />
   <div class="flex w-full items-center gap-x-6 font-mulish">
-    <div class="flex w-1/5 justify-start">17 Reputations</div>
+    <div class="flex w-1/5 justify-start font-bold text-base">
+      {profile.user_rep} Reputations
+    </div>
     <div class="flex w-2/4 justify-start">17 Reputations</div>
     <div class="flex justify-start" style="width: 30%">17 Reputations</div>
   </div>
