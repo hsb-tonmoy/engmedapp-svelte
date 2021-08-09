@@ -43,6 +43,7 @@ module.exports = {
                     },
                     width: {
                       120: "40rem",
+                      "30p": "30%",
                     },
                     padding: {
                       100: "30rem",
