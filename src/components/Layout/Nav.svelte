@@ -1,5 +1,5 @@
 <script>
-  import { user } from "./Auth/store.js";
+  import { user } from "../Auth/store.js";
   import { isActive, url, layout } from "@roxi/routify";
   import { fade } from "svelte/transition";
   let profileDropdown = true;
@@ -98,8 +98,9 @@
                 class:hidden={profileDropdown}
                 class="absolute flex flex-col gap-y-2 top-12 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none font-mulish text-xs text-ematext"
               >
-                <a href="#" class="px-4 py-3 hover:bg-gray-100 duration-300"
-                  >Profile</a
+                <a
+                  href="/profile"
+                  class="px-4 py-3 hover:bg-gray-100 duration-300">Profile</a
                 >
                 <a href="#" class="px-4 py-3 hover:bg-gray-100 duration-300"
                   >Bookmarks</a
@@ -259,7 +260,9 @@
         </div>
         <hr class="w-full mt-2" style="border-color: #F3F4F6" />
         <div class="flex gap-x-4 w-full">
-          <a href="#" class="py-3 hover:bg-gray-100 duration-300">Profile</a>
+          <a href="/profile" class="py-3 hover:bg-gray-100 duration-300"
+            >Profile</a
+          >
           <a href="#" class="py-3 hover:bg-gray-100 duration-300">Bookmarks</a>
           <a
             href="/logout"

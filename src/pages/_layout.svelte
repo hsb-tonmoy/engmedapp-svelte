@@ -1,6 +1,6 @@
 <script>
-  import Nav from "../components/Nav.svelte";
-  import Footer from "../components/Footer.svelte";
+  import Nav from "../components/Layout/Nav.svelte";
+  import Footer from "../components/Layout/Footer.svelte";
   import Username from "../components/Auth/Username.svelte";
   import { user } from "../components/Auth/store.js";
 </script>
