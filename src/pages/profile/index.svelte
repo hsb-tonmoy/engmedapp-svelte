@@ -3,7 +3,7 @@
   import { goto } from "@roxi/routify";
 
   if ($user && $user.id) {
-    $goto(`/profile/${$user.profile}`);
+    $goto(`/profile/${$user.username}`);
   } else {
     $goto(`/login`);
   }

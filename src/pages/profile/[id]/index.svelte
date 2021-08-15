@@ -1,4 +1,6 @@
 <script>
+  import { user } from "../../../components/Auth/store.js";
+
   import dateDiffer from "date-differ";
 
   export let scoped;
@@ -64,10 +66,12 @@
               class="border border-primary bg-opacity-0 px-3 py-1 rounded text-ematext text-xs"
               >{profile.is_public ? "Public" : "Private"}</span
             >
-            <button
-              class="border border-primary bg-primary px-3 py-1 rounded text-white text-xs"
-              >Edit</button
-            >
+            {#if $user.id === profile.id}
+              <button
+                class="border border-primary bg-primary px-3 py-1 rounded text-white text-xs"
+                >Edit</button
+              >
+            {/if}
           </div>
         </div>
         <span

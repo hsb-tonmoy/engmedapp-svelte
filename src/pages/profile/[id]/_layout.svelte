@@ -1,14 +1,18 @@
 <script>
   const API_URL = "https://api.engmedapp.com/";
+
   import { params } from "@roxi/routify";
+
+  import authAxios from "../../../components/Auth/authAxios.js";
 
   let id = $params.id;
 
   let profile;
 
   async function fetchprofile(id) {
-    const response = await fetch(`${API_URL}accounts/profile/${id}`);
-    profile = await response.json();
+    await authAxios.get(`${API_URL}accounts/profile/${id}`).then((res) => {
+      profile = res.data;
+    });
   }
   $: if (id) fetchprofile(id);
 </script>
