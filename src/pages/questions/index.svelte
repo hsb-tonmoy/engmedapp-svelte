@@ -1,15 +1,12 @@
 <script>
   import { onMount } from "svelte";
+
   const API_URL = "https://api.engmedapp.com/";
 
+  import Filters from "../../components/Questions/Filters.svelte";
   import Posts from "../../components/Questions/Posts.svelte";
 
   let questions = [];
-  let boards = [];
-  let levels = [];
-  let papers = [];
-  let years = [];
-  let sessions = [];
 
   const fetchQuestions = async () => {
     const res = await fetch(API_URL + "questions/list/");
@@ -18,44 +15,8 @@
     questions = data;
   };
 
-  const fetchBoards = async () => {
-    const res = await fetch(API_URL + "questions/boards/");
-    const data = await res.json();
-
-    boards = data;
-  };
-  const fetchLevels = async () => {
-    const res = await fetch(API_URL + "questions/levels/");
-    const data = await res.json();
-
-    levels = data;
-  };
-  const fetchPapers = async () => {
-    const res = await fetch(API_URL + "questions/papers/");
-    const data = await res.json();
-
-    papers = data;
-  };
-  const fetchBYears = async () => {
-    const res = await fetch(API_URL + "questions/years/");
-    const data = await res.json();
-
-    years = data;
-  };
-  const fetchSessions = async () => {
-    const res = await fetch(API_URL + "questions/sessions/");
-    const data = await res.json();
-
-    sessions = data;
-  };
-
   onMount(() => {
     fetchQuestions();
-    fetchBoards();
-    fetchLevels();
-    fetchPapers();
-    fetchBYears();
-    fetchSessions();
   });
 </script>
 
@@ -86,118 +47,7 @@
   </div>
   <!-- Filter -->
   <div class="flex justify-center">
-    <div
-      class="flex flex-wrap justify-center gap-y-2 md:gap-y-0 md:flex-nowrap gap-x-4 md:gap-x-2 w-full lg:w-11/12 lg:w-auto px-6 py-4 -m-8 bg-white"
-      style="box-shadow: 0px 4px 10px rgba(67, 152, 157, 0.2);"
-    >
-      <button
-        class="flex items-center justify-between font-mulish text-sm font-normal bg-secondaryLight rounded-sm w-2/5 md:w-auto px-4 py-2"
-        >Board &nbsp; <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-3 w-3"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg></button
-      >
-
-      <button
-        class="flex items-center justify-between font-mulish text-sm font-normal bg-secondaryLight rounded-sm w-2/5 md:w-auto px-4 py-2"
-        >Level &nbsp; <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-3 w-3"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg></button
-      ><button
-        class="flex items-center justify-between font-mulish text-sm font-normal bg-secondaryLight rounded-sm w-2/5 md:w-auto px-4 py-2"
-        >Paper &nbsp; <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-3 w-3"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg></button
-      ><button
-        class="flex items-center justify-between font-mulish text-sm font-normal bg-secondaryLight rounded-sm w-2/5 md:w-auto px-4 py-2"
-        >Year &nbsp; <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-3 w-3"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg></button
-      ><button
-        class="flex items-center justify-between font-mulish text-sm font-normal bg-secondaryLight rounded-sm w-2/5 md:w-auto px-4 py-2"
-        >Session &nbsp; <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-3 w-3"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg></button
-      >
-      <button
-        class="font-mulish text-sm text-white font-normal bg-primary rounded-sm w-2/5 md:w-auto px-4 md:px-6 py-2"
-        >Apply Filter</button
-      >
-
-      <button
-        class="flex flex-col font-mulish font-medium mt-2 ml-1 md:ml-0 md:mt-0 md:ml-2 text-xs text-ematext"
-        ><span class="flex items-center mb-1" style="color: #677D8D"
-          >Sort By &nbsp; <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-3 w-3"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 15l7-7 7 7"
-            />
-          </svg></span
-        >Relevance</button
-      >
-    </div>
+    <Filters />
   </div>
 
   <!-- Questions Body -->
