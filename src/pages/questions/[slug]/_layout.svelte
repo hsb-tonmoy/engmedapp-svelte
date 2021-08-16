@@ -5,8 +5,12 @@
 
   let question;
   async function fetchquestion(slug) {
-    const response = await fetch(`${API_URL}questions/question/${slug}`);
-    question = await response.json();
+    try {
+      const response = await fetch(`${API_URL}questions/question/${slug}`);
+      question = await response.json();
+    } catch (err) {
+      console.log(err);
+    }
   }
   $: if (slug) fetchquestion(slug);
 </script>
