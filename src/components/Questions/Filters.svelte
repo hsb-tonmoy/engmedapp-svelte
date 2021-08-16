@@ -100,7 +100,7 @@
 </script>
 
 <div
-  class="flex flex-wrap justify-center gap-y-2 md:gap-y-0 md:flex-nowrap gap-x-4 md:gap-x-2 w-full lg:w-auto px-6 md:px-2 py-4 -m-8 bg-white font-mulish text-sm font-normal"
+  class="flex flex-wrap justify-center gap-y-2 md:gap-y-0 md:flex-nowrap gap-x-4 md:gap-x-2 w-full lg:w-auto px-6 lg:px-6 md:px-2 py-4 -m-8 bg-white font-mulish text-sm font-normal"
   style="box-shadow: 0px 4px 10px rgba(67, 152, 157, 0.2);"
 >
   <span class="select-filter">
@@ -201,9 +201,5 @@
   .select-filter :global(svg) {
     height: 70%;
     @apply text-ematext;
-  }
-
-  .select-filter :global(.listContainer) {
-    width: 20rem !important;
   }
 </style>

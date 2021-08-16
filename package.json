@@ -22,7 +22,8 @@
     "dev:vite": "vite",
     "build:vite": "vite build",
     "serve:vite": "vite preview",
-    "build:static": "spank"
+    "build:static": "spank",
+    "postinstall": "npx patch-package"
   },
   "devDependencies": {
     "@ava/cooperate": "^0.1.0",
@@ -66,6 +67,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "patch-package": "^6.4.7",
     "svelte-file-dropzone": "0.0.15"
   }
 }
