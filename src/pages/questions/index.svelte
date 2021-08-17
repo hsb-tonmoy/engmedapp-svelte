@@ -1,15 +1,30 @@
 <script>
   import { onMount } from "svelte";
+  import Filters from "../../components/Questions/Filters.svelte";
+  import Posts from "../../components/Questions/Posts.svelte";
 
   const API_URL = "https://api.engmedapp.com/";
 
-  import Filters from "../../components/Questions/Filters.svelte";
-  import Posts from "../../components/Questions/Posts.svelte";
+  let filters = {
+    boards: "",
+    levels: "",
+    papers: "",
+    years: "",
+    sessions: "",
+  };
+
+  $: questions_url = `questions/list?&board__name__in=${
+    filters.boards ? filters.boards.name : ""
+  }&level__name__in=${
+    filters.boards ? filters.levels.name : ""
+  }&paper__name__in=${encodeURIComponent(filters.papers.name)}&year__name__in=${
+    filters.years.name
+  }&session__name__in=${encodeURIComponent(filters.sessions.name)}`;
 
   let questions = [];
 
   const fetchQuestions = async () => {
-    const res = await fetch(API_URL + "questions/list/");
+    const res = await fetch(API_URL + questions_url);
     const data = await res.json();
 
     questions = data;

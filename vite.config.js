@@ -45,6 +45,9 @@ module.exports = {
                       120: "40rem",
                       "30p": "30%",
                     },
+                    minWidth: {
+                      25: "6.5rem",
+                    },
                     padding: {
                       100: "30rem",
                     },

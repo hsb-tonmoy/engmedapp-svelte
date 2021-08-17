@@ -6,11 +6,11 @@
   const API_URL = "https://api.engmedapp.com/";
 
   let filters = {
-    boards: [],
-    levels: [],
-    papers: [],
-    years: [],
-    sessions: [],
+    boards: "",
+    levels: "",
+    papers: "",
+    years: "",
+    sessions: "",
   };
 
   let boards = [];
@@ -61,7 +61,7 @@
       };
     });
   };
-  const fetchBYears = async () => {
+  const fetchYears = async () => {
     const res = await fetch(API_URL + "questions/year/");
     const data = await res.json();
 
@@ -94,7 +94,7 @@
     fetchBoards();
     fetchLevels();
     fetchPapers();
-    fetchBYears();
+    fetchYears();
     fetchSessions();
   });
 </script>
@@ -107,10 +107,13 @@
     <Select
       items={boards}
       placeholder="Boards"
-      containerClasses="w-24 flex items-center"
+      containerClasses="min-w-25 flex items-center"
       showChevron={true}
       on:select={(event) => {
         filters["boards"] = event.detail;
+      }}
+      on:clear={() => {
+        filters["boards"] = null;
       }}
     />
   </span>
@@ -118,10 +121,13 @@
     <Select
       items={levels}
       placeholder="Levels"
-      containerClasses="w-24 flex items-center"
+      containerClasses="min-w-25 flex items-center"
       showChevron={true}
       on:select={(event) => {
         filters["levels"] = event.detail;
+      }}
+      on:clear={() => {
+        filters["levels"] = null;
       }}
     />
   </span>
@@ -129,10 +135,13 @@
     <Select
       items={papers}
       placeholder="Papers"
-      containerClasses="w-24 flex items-center"
+      containerClasses="min-w-25 flex items-center"
       showChevron={true}
       on:select={(event) => {
         filters["papers"] = event.detail;
+      }}
+      on:clear={() => {
+        filters["papers"] = null;
       }}
     />
   </span>
@@ -140,10 +149,13 @@
     <Select
       items={years}
       placeholder="Years"
-      containerClasses="w-24 flex items-center"
+      containerClasses="min-w-25 flex items-center"
       showChevron={true}
       on:select={(event) => {
-        filters["yars"] = event.detail;
+        filters["years"] = event.detail;
+      }}
+      on:clear={() => {
+        filters["years"] = null;
       }}
     />
   </span>
@@ -151,10 +163,13 @@
     <Select
       items={sessions}
       placeholder="Sessions"
-      containerClasses="w-28 flex items-center"
+      containerClasses="min-w-25 flex items-center"
       showChevron={true}
       on:select={(event) => {
         filters["sessions"] = event.detail;
+      }}
+      on:clear={() => {
+        filters["sessions"] = null;
       }}
     />
   </span>
