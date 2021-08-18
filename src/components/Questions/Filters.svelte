@@ -1,17 +1,12 @@
 <script>
   import { onMount } from "svelte";
-
+  import { createEventDispatcher } from "svelte";
   import Select from "svelte-select";
+  import { filters } from "./store.js";
 
   const API_URL = "https://api.engmedapp.com/";
 
-  let filters = {
-    boards: "",
-    levels: "",
-    papers: "",
-    years: "",
-    sessions: "",
-  };
+  const dispatch = createEventDispatcher();
 
   let boards = [];
   let levels = [];
@@ -110,10 +105,10 @@
       containerClasses="min-w-25 flex items-center"
       showChevron={true}
       on:select={(event) => {
-        filters["boards"] = event.detail;
+        $filters["boards"] = event.detail;
       }}
       on:clear={() => {
-        filters["boards"] = null;
+        $filters["boards"] = null;
       }}
     />
   </span>
@@ -124,10 +119,10 @@
       containerClasses="min-w-25 flex items-center"
       showChevron={true}
       on:select={(event) => {
-        filters["levels"] = event.detail;
+        $filters["levels"] = event.detail;
       }}
       on:clear={() => {
-        filters["levels"] = null;
+        $filters["levels"] = null;
       }}
     />
   </span>
@@ -138,10 +133,10 @@
       containerClasses="min-w-25 flex items-center"
       showChevron={true}
       on:select={(event) => {
-        filters["papers"] = event.detail;
+        $filters["papers"] = event.detail;
       }}
       on:clear={() => {
-        filters["papers"] = null;
+        $filters["papers"] = null;
       }}
     />
   </span>
@@ -152,10 +147,10 @@
       containerClasses="min-w-25 flex items-center"
       showChevron={true}
       on:select={(event) => {
-        filters["years"] = event.detail;
+        $filters["years"] = event.detail;
       }}
       on:clear={() => {
-        filters["years"] = null;
+        $filters["years"] = null;
       }}
     />
   </span>
@@ -166,14 +161,15 @@
       containerClasses="min-w-25 flex items-center"
       showChevron={true}
       on:select={(event) => {
-        filters["sessions"] = event.detail;
+        $filters["sessions"] = event.detail;
       }}
       on:clear={() => {
-        filters["sessions"] = null;
+        $filters["sessions"] = null;
       }}
     />
   </span>
   <button
+    on:click={() => dispatch("filter")}
     class="text-white bg-primary rounded-sm w-2/5 md:w-auto md:text-xs px-4 md:px-6 py-2"
     >Apply Filter</button
   >

@@ -1,25 +1,22 @@
 <script>
   import { onMount } from "svelte";
   import Filters from "../../components/Questions/Filters.svelte";
+  import { filters } from "../../components/Questions/store.js";
   import Posts from "../../components/Questions/Posts.svelte";
 
   const API_URL = "https://api.engmedapp.com/";
 
-  let filters = {
-    boards: "",
-    levels: "",
-    papers: "",
-    years: "",
-    sessions: "",
-  };
-
   $: questions_url = `questions/list?&board__name__in=${
-    filters.boards ? filters.boards.name : ""
+    $filters.boards ? $filters.boards.name : ""
   }&level__name__in=${
-    filters.boards ? filters.levels.name : ""
-  }&paper__name__in=${encodeURIComponent(filters.papers.name)}&year__name__in=${
-    filters.years.name
-  }&session__name__in=${encodeURIComponent(filters.sessions.name)}`;
+    $filters.levels ? $filters.levels.name : ""
+  }&paper__name__in=${
+    $filters.papers ? encodeURIComponent($filters.papers.name) : ""
+  }&year__name__in=${
+    $filters.years ? $filters.years.name : ""
+  }&session__name__in=${
+    $filters.sessions ? encodeURIComponent($filters.sessions.name) : ""
+  }`;
 
   let questions = [];
 
@@ -29,6 +26,8 @@
 
     questions = data;
   };
+
+  const handleFilter = () => fetchQuestions();
 
   onMount(() => {
     fetchQuestions();
@@ -62,7 +61,7 @@
   </div>
   <!-- Filter -->
   <div class="flex justify-center">
-    <Filters />
+    <Filters on:filter={handleFilter} />
   </div>
 
   <!-- Questions Body -->
