@@ -154,7 +154,7 @@
 <style>
   .viewed-questions > ul > li:last-of-type > hr,
   .teachers > hr:last-of-type,
-  article > hr:last-of-type {
+  article > :global(hr:last-of-type) {
     display: none;
   }
 </style>
