@@ -68,6 +68,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "patch-package": "^6.4.7",
-    "svelte-file-dropzone": "0.0.15"
+    "svelte-file-dropzone": "0.0.15",
+    "svelte-pagination": "0.0.1"
   }
 }

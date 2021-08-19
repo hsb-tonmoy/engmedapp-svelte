@@ -1,0 +1,175 @@
+diff --git a/node_modules/svelte-pagination/src/components/Pagination.svelte b/node_modules/svelte-pagination/src/components/Pagination.svelte
+index 10a9b02..bbbd3cd 100644
+--- a/node_modules/svelte-pagination/src/components/Pagination.svelte
++++ b/node_modules/svelte-pagination/src/components/Pagination.svelte
+@@ -41,7 +41,7 @@
+   }
+ 
+   let state = {
+-    selected: initialSelected
++    selected: initialSelected,
+   };
+ 
+   function handlePreviousPage(evt) {
+@@ -70,7 +70,7 @@
+     // Call the callback with the new selected item:
+     dispatch("change", {
+       selected,
+-      event
++      event,
+     });
+   }
+ 
+@@ -167,7 +167,7 @@
+       for (let index = startPageIndex; index < pageCount; index++) {
+         items.push({
+           itemIndex: index,
+-          type: "PageView"
++          type: "PageView",
+         });
+       }
+     } else {
+@@ -200,7 +200,7 @@
+           //items.push(createPageView(index));
+           items.push({
+             itemIndex: index,
+-            type: "PageView"
++            type: "PageView",
+           });
+           continue;
+         }
+@@ -212,7 +212,7 @@
+           //items.push(createPageView(index));
+           items.push({
+             itemIndex: index,
+-            type: "PageView"
++            type: "PageView",
+           });
+           continue;
+         }
+@@ -225,7 +225,7 @@
+           //items.push(createPageView(index));
+           items.push({
+             itemIndex: index,
+-            type: "PageView"
++            type: "PageView",
+           });
+           continue;
+         }
+@@ -245,7 +245,7 @@
+             // />
+             items.push({
+               itemIndex: index,
+-              type: "BreakView"
++              type: "BreakView",
+             });
+           items.push(breakView);
+         }
+@@ -256,17 +256,6 @@
+   }
+ </script>
+ 
+-<style>
+-  ul {
+-    display: inline-block;
+-    padding-left: 15px;
+-    padding-right: 15px;
+-  }
+-  li {
+-    display: inline-block;
+-  }
+-</style>
+-
+ <ul class={containerClassName}>
+   <li class={previousClasses}>
+     <a
+@@ -276,17 +265,30 @@
+       tabIndex="0"
+       role="button"
+       on:keypress={handlePreviousPage}
+-      aria-disabled={previousAriaDisabled}>
+-      {previousLabel}
++      aria-disabled={previousAriaDisabled}
++    >
++      <svg
++        xmlns="http://www.w3.org/2000/svg"
++        class="h-3 w-3"
++        fill="none"
++        viewBox="0 0 24 24"
++        stroke="currentColor"
++        ><path
++          stroke-linecap="round"
++          stroke-linejoin="round"
++          stroke-width="2"
++          d="M15 19l-7-7 7-7"
++        /></svg
++      >
+     </a>
+   </li>
+ 
+   {#each state.items as { itemIndex, type }, i}
+-    {#if type === 'PageView'}
++    {#if type === "PageView"}
+       <svelte:component
+         this={PageView}
+         key={itemIndex}
+-        on:click={e => handlePageSelected(itemIndex, e)}
++        on:click={(e) => handlePageSelected(itemIndex, e)}
+         selected={state.selected === itemIndex}
+         {pageClassName}
+         {pageLinkClassName}
+@@ -295,7 +297,8 @@
+         {extraAriaContext}
+         href={hrefBuilderMain(itemIndex)}
+         ariaLabel={ariaLabelBuilderMain(itemIndex)}
+-        page={itemIndex} />
++        page={itemIndex}
++      />
+     {:else}
+       <svelte:component
+         this={BreakView}
+@@ -303,7 +306,8 @@
+         {breakLabel}
+         {breakClassName}
+         {breakLinkClassName}
+-        on:click={e => handleBreakClick(itemIndex, e)} />
++        on:click={(e) => handleBreakClick(itemIndex, e)}
++      />
+     {/if}
+   {/each}
+ 
+@@ -315,8 +319,32 @@
+       tabIndex="0"
+       role="button"
+       on:keypress={handleNextPage}
+-      aria-disabled={nextAriaDisabled}>
+-      {nextLabel}
++      aria-disabled={nextAriaDisabled}
++    >
++      <svg
++        xmlns="http://www.w3.org/2000/svg"
++        class="h-3 w-3"
++        fill="none"
++        viewBox="0 0 24 24"
++        stroke="currentColor"
++        ><path
++          stroke-linecap="round"
++          stroke-linejoin="round"
++          stroke-width="2"
++          d="M9 5l7 7-7 7"
++        /></svg
++      >
+     </a>
+   </li>
+ </ul>
++
++<style>
++  ul {
++    display: inline-block;
++    padding-left: 15px;
++    padding-right: 15px;
++  }
++  li {
++    display: inline-block;
++  }
++</style>

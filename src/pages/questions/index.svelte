@@ -4,6 +4,7 @@
   import Filters from "../../components/Questions/Filters.svelte";
   import { filters } from "../../components/Questions/store.js";
   import Posts from "../../components/Questions/Posts.svelte";
+  import Pagination from "svelte-pagination";
   import Spinner from "../../components/Spinner.svelte";
 
   const API_URL = "https://api.engmedapp.com/";
@@ -24,9 +25,9 @@
 
   let questions = [];
 
-  const fetchQuestions = async () => {
+  const fetchQuestions = async (page = 1) => {
     await authAxios
-      .get(API_URL + questions_url)
+      .get(API_URL + questions_url + `&page=${page}`)
       .then((res) => {
         questions = res.data;
       })
@@ -35,6 +36,14 @@
   };
 
   const handleFilter = () => fetchQuestions();
+
+  let checkedValue = 1;
+
+  function handlePagination(e) {
+    const { selected } = e.detail;
+    checkedValue = selected;
+    fetchQuestions(checkedValue);
+  }
 
   onMount(() => {
     fetchQuestions();
@@ -73,17 +82,34 @@
 
   <!-- Questions Body -->
   <div
-    class="flex flex-col flex-wrap gap-y-2 xl:flex-row xl:flex-nowrap xl:gap-y-0 xl:gap-x-4 justify-center py-20 mx-4 md:mx-8 xl:mx-16 2xl:mx-32 3xl:mx-48"
+    class="flex flex-col items-start flex-wrap gap-y-2 xl:flex-row xl:flex-nowrap xl:gap-y-0 xl:gap-x-4 justify-center py-20 mx-4 md:mx-8 xl:mx-16 2xl:mx-32 3xl:mx-48"
   >
     <!-- Questions List -->
     <article
       class:centered={loading}
-      class="flex flex-col w-full xl:w-3/4 bg-white rounded-lg py-8 pl-4 pr-4 md:pl-5 xl:pl-7 md:pr-12 xl:pr-20"
+      class="flex flex-col w-full xl:w-3/4 bg-white rounded-lg pt-8 pb-6 pl-4 pr-4 md:pl-5 xl:pl-7 md:pr-12 xl:pr-20"
     >
       {#if loading}
         <Spinner />
       {:else}
         <Posts {questions} />
+        <Pagination
+          pageCount={questions.total_pages + 1}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={2}
+          on:change={handlePagination}
+          containerClassName={"pagination-container"}
+          pageClassName={"page-class"}
+          pageLinkClassName={"page-link-class"}
+          activeClassName={"page-active-class"}
+          activeLinkClassName={"page-active-link-class"}
+          previousClassName={"previous-class"}
+          previousLinkClassName={"previous-link-class"}
+          nextClassName={"next-class"}
+          nextLinkClassName={"next-link-class"}
+          breakClassName={"break-class"}
+          breakLinkClassName={"break-link-class"}
+        />
       {/if}
     </article>
     <!-- Sidebar -->
@@ -172,5 +198,37 @@
 
   .centered {
     @apply justify-center items-center;
+  }
+
+  :global(.pagination-container) {
+    display: flex !important;
+    @apply self-end items-center gap-x-2 mt-16;
+  }
+
+  :global(.page-class, .break-class) {
+    @apply border px-3 pb-1 rounded-md;
+    border-color: #dfe3e8;
+  }
+
+  :global(.page-class:hover, .break-class:hover) {
+    @apply border-primary px-3 pb-1 rounded-md;
+  }
+
+  :global(.page-link-class, .previous-link-class, .next-link-class, .break-link-class) {
+    @apply font-mulish text-xs text-ematextgray font-extrabold;
+  }
+
+  :global(.page-active-class) {
+    @apply border-primary bg-primary;
+  }
+
+  :global(.page-active-link-class) {
+    @apply text-white;
+  }
+
+  :global(.previous-class, .next-class) {
+    background-color: #caf4f8;
+    border-color: #caf4f8;
+    @apply border p-2 rounded-md;
   }
 </style>

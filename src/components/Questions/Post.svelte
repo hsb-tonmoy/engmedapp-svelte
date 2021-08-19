@@ -29,7 +29,7 @@
   </div>
   <div class="builder">
     <button
-      class="flex items-center px-3 py-2 text-prmary hover:text-white bg-white hover:bg-primary duration-300 border border-primary text-xs rounded-full"
+      class="flex items-center px-3 py-2 mt-4 md:mt-0 text-prmary hover:text-white bg-white hover:bg-primary duration-300 border border-primary text-xs rounded-full"
       ><svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-3 w-3"
