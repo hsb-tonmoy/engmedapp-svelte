@@ -10,9 +10,12 @@
   let profile;
 
   async function fetchprofile(id) {
-    await authAxios.get(`${API_URL}accounts/profile/${id}`).then((res) => {
-      profile = res.data;
-    });
+    await authAxios
+      .get(`${API_URL}accounts/profile/${id}`)
+      .then((res) => {
+        profile = res.data;
+      })
+      .catch((err) => console.log(err));
   }
   $: if (id) fetchprofile(id);
 </script>

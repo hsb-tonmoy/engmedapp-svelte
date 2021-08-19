@@ -1,10 +1,14 @@
 <script>
   import { onMount } from "svelte";
+  import authAxios from "../../components/Auth/authAxios";
   import Filters from "../../components/Questions/Filters.svelte";
   import { filters } from "../../components/Questions/store.js";
   import Posts from "../../components/Questions/Posts.svelte";
+  import Spinner from "../../components/Spinner.svelte";
 
   const API_URL = "https://api.engmedapp.com/";
+
+  let loading = true;
 
   $: questions_url = `questions/list?&board__name__in=${
     $filters.boards ? $filters.boards.name : ""
@@ -21,10 +25,13 @@
   let questions = [];
 
   const fetchQuestions = async () => {
-    const res = await fetch(API_URL + questions_url);
-    const data = await res.json();
-
-    questions = data;
+    await authAxios
+      .get(API_URL + questions_url)
+      .then((res) => {
+        questions = res.data;
+      })
+      .catch((err) => console.log(err))
+      .finally(() => (loading = false));
   };
 
   const handleFilter = () => fetchQuestions();
@@ -70,9 +77,14 @@
   >
     <!-- Questions List -->
     <article
+      class:centered={loading}
       class="flex flex-col w-full xl:w-3/4 bg-white rounded-lg py-8 pl-4 pr-4 md:pl-5 xl:pl-7 md:pr-12 xl:pr-20"
     >
-      <Posts {questions} />
+      {#if loading}
+        <Spinner />
+      {:else}
+        <Posts {questions} />
+      {/if}
     </article>
     <!-- Sidebar -->
     <aside class="flex flex-col items-start w-full xl:w-1/4">
@@ -151,10 +163,14 @@
   </div>
 </section>
 
-<style>
+<style lang="postcss">
   .viewed-questions > ul > li:last-of-type > hr,
   .teachers > hr:last-of-type,
   article > :global(hr:last-of-type) {
     display: none;
+  }
+
+  .centered {
+    @apply justify-center items-center;
   }
 </style>
