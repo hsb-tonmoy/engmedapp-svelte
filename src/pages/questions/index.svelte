@@ -6,6 +6,7 @@
   import Posts from "../../components/Questions/Posts.svelte";
   import Pagination from "svelte-pagination";
   import Spinner from "../../components/Spinner.svelte";
+  import NotFound from "../../components/NotFound.svelte";
 
   const API_URL = "https://api.engmedapp.com/";
 
@@ -86,17 +87,17 @@
   >
     <!-- Questions List -->
     <article
-      class:centered={loading}
+      class:centered={loading || questions.count === 0}
       class="flex flex-col w-full xl:w-3/4 bg-white rounded-lg pt-8 pb-6 pl-4 pr-4 md:pl-5 xl:pl-7 md:pr-12 xl:pr-20"
     >
       {#if loading}
         <Spinner />
-      {:else}
+      {:else if questions.count > 0}
         <Posts {questions} />
         <Pagination
           pageCount={questions.total_pages + 1}
           marginPagesDisplayed={2}
-          pageRangeDisplayed={2}
+          pageRangeDisplayed={3}
           on:change={handlePagination}
           containerClassName={"pagination-container"}
           pageClassName={"page-class"}
@@ -110,6 +111,11 @@
           breakClassName={"break-class"}
           breakLinkClassName={"break-link-class"}
         />
+      {:else if questions.count === 0}
+        <NotFound />
+        <p class="font-mulish text-sm mt-4">
+          Sorry, but it looks like we couldn't find what you're looking for!
+        </p>
       {/if}
     </article>
     <!-- Sidebar -->
@@ -202,6 +208,7 @@
 
   :global(.pagination-container) {
     display: flex !important;
+    padding: 0 !important;
     @apply self-end items-center gap-x-2 mt-16;
   }
 
