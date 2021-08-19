@@ -19,7 +19,7 @@
     const res = await fetch(API_URL + "questions/list/");
     const data = await res.json();
 
-    questions = data;
+    questions = data.results;
   };
 
   const deleteQuestion = async (slug) => {

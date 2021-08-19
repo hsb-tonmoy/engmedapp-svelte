@@ -39,7 +39,7 @@
   const sendData = async () => {
     if (!editing) {
       await authAxios
-        .post("questions/sessions/", {
+        .post("questions/session/", {
           name: new_name,
         })
         .then((res) => {
