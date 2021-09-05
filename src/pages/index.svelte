@@ -13,7 +13,7 @@
   <h2
     class="font-mulish text-3xl md:text-5xl lg:text-6xl 3xl:text-7xl leading-snug text-ematext text-center font-extrabold"
   >
-    Get the richest question bank <br /> with all the answers.
+    Get the richest question banks <br /> with all the answers.
   </h2>
 
   <div class="px-4 md:p-0">
