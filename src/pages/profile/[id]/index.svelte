@@ -1,4 +1,6 @@
 <script>
+  import { metatags } from "@roxi/routify";
+
   import { user } from "../../../components/Auth/store.js";
 
   import dateDiffer from "date-differ";
@@ -7,7 +9,7 @@
 
   $: profile = scoped.profile;
 
-  console.log(scoped.profile);
+  metatags.title = `EngMedApp - ${scoped.profile.user.username}`;
 
   const user_roles = {
     1: "Student",

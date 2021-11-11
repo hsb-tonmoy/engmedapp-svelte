@@ -1,4 +1,5 @@
 <script>
+  import { metatags } from "@roxi/routify";
   import { convertDate } from "../../../components/utils/convertDate.js";
   export let scoped;
   $: question = scoped.question;
@@ -16,6 +17,9 @@
     4: "Manager",
     5: "Admin",
   };
+
+  metatags.title = `EngMedApp - ${scoped.question.title}`;
+  metatags.description = scoped.question.excerpt;
 </script>
 
 <svelte:head>

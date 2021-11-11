@@ -1,4 +1,8 @@
+<!-- routify:options title="Questions" -->
 <script>
+  import { metatags } from "@roxi/routify";
+  metatags.title = "EngMedApp - Questions";
+
   import { onMount } from "svelte";
   import authAxios from "../../components/Auth/authAxios";
   import Filters from "../../components/Questions/Filters.svelte";
@@ -50,6 +54,9 @@
     fetchQuestions();
   });
 </script>
+
+<!-- routify:options index=2 -->
+
 
 <section style="background-color: #F0F0F0">
   <div

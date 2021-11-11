@@ -1,4 +1,7 @@
 <script>
+  import { metatags } from "@roxi/routify";
+  metatags.title = "EngMedApp - Login";
+
   import { user } from "../../components/Auth/store.js";
   import Login from "../../components/Auth/Login.svelte";
   import Register from "../../components/Auth/Register.svelte";
