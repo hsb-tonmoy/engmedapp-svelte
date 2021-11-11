@@ -7,3 +7,5 @@ export const filters = writable({
   years: null,
   sessions: null,
 });
+
+export const sort = writable();

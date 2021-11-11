@@ -13,6 +13,18 @@
   let papers = [];
   let years = [];
   let sessions = [];
+  let sort;
+  let sorts = [
+    "Date Added: Newest",
+    "Date Added: Oldest",
+    "A-Z",
+    "Z-A",
+    "By Board",
+    "By Level",
+    "By Paper",
+    "By Year",
+    "By Session",
+  ];
 
   const fetchBoards = async () => {
     const res = await fetch(API_URL + "questions/board/");
@@ -191,8 +203,18 @@
           d="M5 15l7-7 7 7"
         />
       </svg></span
-    >Relevance</button
-  >
+    ><select
+      class="-ml-1"
+      bind:value={sort}
+      on:change={() => console.log(sort)}
+    >
+      {#each sorts as sort}
+        <option value={sort}>
+          {sort}
+        </option>
+      {/each}
+    </select>
+  </button>
 </div>
 
 <style lang="postcss">

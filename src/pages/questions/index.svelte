@@ -53,10 +53,11 @@
   onMount(() => {
     fetchQuestions();
   });
+
+  $: console.log(questions);
 </script>
 
 <!-- routify:options index=2 -->
-
 
 <section style="background-color: #F0F0F0">
   <div
