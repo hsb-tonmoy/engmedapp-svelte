@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { createEventDispatcher } from "svelte";
   import Select from "svelte-select";
-  import { filters } from "./store.js";
+  import { filters, sort } from "./store.js";
 
   const API_URL = "https://api.engmedapp.com/";
 
@@ -13,19 +13,18 @@
   let papers = [];
   let years = [];
   let sessions = [];
-  let sort;
-  let sorts = [
-    "Date Added: Newest",
-    "Date Added: Oldest",
-    "A-Z",
-    "Z-A",
-    "By Board",
-    "By Level",
-    "By Paper",
-    "By Year",
-    "By Session",
-  ];
 
+  let sorting = [
+    { label: "Date Added: Newest", value: "published" },
+    { label: "Date Added: Oldest", value: "-published" },
+    { label: "A-Z", value: "title" },
+    { label: "Z-A", value: "-title" },
+    { label: "By Board", value: "board" },
+    { label: "By Level", value: "level" },
+    { label: "By Paper", value: "paper" },
+    { label: "By Year", value: "year" },
+    { label: "By Session", value: "session" },
+  ];
   const fetchBoards = async () => {
     const res = await fetch(API_URL + "questions/board/");
     const data = await res.json();
@@ -210,12 +209,12 @@
       </svg></span
     ><select
       class="-ml-1"
-      bind:value={sort}
-      on:change={() => console.log(sort)}
+      bind:value={$sort}
+      on:change={() => dispatch("filter")}
     >
-      {#each sorts as sort}
-        <option value={sort}>
-          {sort}
+      {#each sorting as sorts, index (index)}
+        <option value={sorts.value}>
+          {sorts.label}
         </option>
       {/each}
     </select>
