@@ -6,7 +6,7 @@
   import { onMount } from "svelte";
   import authAxios from "../../components/Auth/authAxios";
   import Filters from "../../components/Questions/Filters.svelte";
-  import { filters } from "../../components/Questions/store.js";
+  import { filters, sort } from "../../components/Questions/store.js";
   import Posts from "../../components/Questions/Posts.svelte";
   import Pagination from "svelte-pagination";
   import Spinner from "../../components/Spinner.svelte";
@@ -26,7 +26,7 @@
     $filters.years ? $filters.years.name : ""
   }&session__name__in=${
     $filters.sessions ? encodeURIComponent($filters.sessions.name) : ""
-  }`;
+  }&ordering=${$sort ? $sort : ""}`;
 
   let questions = [];
 
@@ -53,8 +53,6 @@
   onMount(() => {
     fetchQuestions();
   });
-
-  $: console.log(questions);
 </script>
 
 <!-- routify:options index=2 -->

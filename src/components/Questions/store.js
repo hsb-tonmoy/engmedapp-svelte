@@ -8,4 +8,4 @@ export const filters = writable({
   sessions: null,
 });
 
-export const sort = writable();
+export const sort = writable("title");
