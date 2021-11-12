@@ -1,8 +1,6 @@
 <!-- routify:options title="Questions" -->
 <script>
   import { metatags } from "@roxi/routify";
-  metatags.title = "EngMedApp - Questions";
-
   import { onMount } from "svelte";
   import authAxios from "../../components/Auth/authAxios";
   import Filters from "../../components/Questions/Filters.svelte";
@@ -11,6 +9,8 @@
   import Pagination from "svelte-pagination";
   import Spinner from "../../components/Spinner.svelte";
   import NotFound from "../../components/NotFound.svelte";
+  metatags.title = "EngMedApp - Questions";
+  metatags.description = "EngMedApp - Questions";
 
   const API_URL = "https://api.engmedapp.com/";
 
@@ -53,8 +53,6 @@
   onMount(() => {
     fetchQuestions();
   });
-
-  $: console.log(questions);
 </script>
 
 <!-- routify:options index=2 -->

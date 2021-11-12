@@ -1,9 +1,11 @@
 <script>
   import { user } from "../Auth/store.js";
-  import { isActive, url, layout } from "@roxi/routify";
+  import { isActive, url, layout, goto } from "@roxi/routify";
   import { fade } from "svelte/transition";
   let profileDropdown = true;
   let hamburger = true;
+
+  import { filters } from "../Questions/store.js";
 </script>
 
 <!-- Nav Starts -->
@@ -37,6 +39,16 @@
       <div class="hidden lg:flex gap-x-6 justify-around items-center">
         <a
           href="/questions"
+          on:click={() => {
+            $filters = {
+              boards: null,
+              levels: null,
+              papers: null,
+              years: null,
+              sessions: null,
+            };
+            $goto("/questions");
+          }}
           class="text-sm text-ematext hover:underline hover:text-primary font-mulish"
           class:font-bold={$isActive("/questions")}
           class:text-primary={$isActive("/questions")}>Question papers</a

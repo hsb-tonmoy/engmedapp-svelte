@@ -1,6 +1,8 @@
 <script>
   import { metatags } from "@roxi/routify";
+  import { goto } from "@roxi/routify";
   import { convertDate } from "../../../components/utils/convertDate.js";
+  import { filters } from "../../../components/Questions/store.js";
   export let scoped;
   $: question = scoped.question;
 
@@ -20,6 +22,11 @@
 
   metatags.title = `EngMedApp - ${scoped.question.title}`;
   metatags.description = scoped.question.excerpt;
+
+  function onFilter(attr, prop) {
+    $filters[attr] = { name: prop };
+    $goto("/questions");
+  }
 </script>
 
 <svelte:head>
@@ -38,8 +45,40 @@
       <!-- Questions Details -->
       <div class="flex flex-col md:pl-4">
         <span class="breadcrumbs font-mulish text-xs text-ematextgray mb-4"
-          >{question.board.name} > {question.level.name} > {question.paper.name}
-          > {question.year.name} > {question.session.name}</span
+          ><a
+            href="#"
+            on:click={() => {
+              onFilter("boards", question.board.name);
+            }}>{question.board.name}</a
+          >
+          >
+          <a
+            href="#"
+            on:click={() => {
+              onFilter("levels", question.level.name);
+            }}>{question.level.name}</a
+          >
+          >
+          <a
+            href="#"
+            on:click={() => {
+              onFilter("papers", question.paper.name);
+            }}>{question.paper.name}</a
+          >
+          >
+          <a
+            href="#"
+            on:click={() => {
+              onFilter("years", question.year.name);
+            }}>{question.year.name}</a
+          >
+          >
+          <a
+            href="#"
+            on:click={() => {
+              onFilter("sessions", question.session.name);
+            }}>{question.session.name}</a
+          ></span
         >
         <span
           class="question-title font-mulish text-lg md:text-xl text-black font-semibold"
