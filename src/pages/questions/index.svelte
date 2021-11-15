@@ -26,6 +26,8 @@
     $filters.years ? $filters.years.name : ""
   }&session__name__in=${
     $filters.sessions ? encodeURIComponent($filters.sessions.name) : ""
+  }&tags__name__in=${
+    $filters.tags ? encodeURIComponent($filters.tags.name) : ""
   }&ordering=${$sort ? $sort : ""}`;
 
   let questions = [];
@@ -99,7 +101,7 @@
       {#if loading}
         <Spinner />
       {:else if questions.count > 0}
-        <Posts {questions} />
+        <Posts on:filter={handleFilter} {questions} />
         <Pagination
           pageCount={questions.total_pages + 1}
           marginPagesDisplayed={2}

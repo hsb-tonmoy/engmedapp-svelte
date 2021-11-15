@@ -6,6 +6,7 @@ export const filters = writable({
   papers: null,
   years: null,
   sessions: null,
+  tags: null,
 });
 
 export const sort = writable("title");

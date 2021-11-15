@@ -3,6 +3,8 @@
   import { createEventDispatcher } from "svelte";
   import Select from "svelte-select";
   import { filters, sort } from "./store.js";
+  import loadTags from "./tags.js";
+  import Item from "./TagItem.svelte";
 
   const API_URL = "https://api.engmedapp.com/";
 
@@ -13,6 +15,12 @@
   let papers = [];
   let years = [];
   let sessions = [];
+
+  $: console.log($filters);
+
+  const tagIdentifier = "id";
+  const getTagLabel = (option) => option.name;
+  const getSelectionLabel = (option) => option.name;
 
   let sorting = [
     { label: "Date Added: Newest", value: "published" },
@@ -181,6 +189,25 @@
       }}
       on:clear={() => {
         $filters["sessions"] = null;
+      }}
+    />
+  </span>
+  <span class="select-filter">
+    <Select
+      loadOptions={loadTags}
+      {tagIdentifier}
+      {getSelectionLabel}
+      {getTagLabel}
+      {Item}
+      value={$filters.tags ? $filters.tags : null}
+      placeholder="Tags"
+      containerClasses="min-w-25 flex items-center"
+      showChevron={true}
+      on:select={(event) => {
+        $filters["tags"] = event.detail;
+      }}
+      on:clear={() => {
+        $filters["tags"] = null;
       }}
     />
   </span>
