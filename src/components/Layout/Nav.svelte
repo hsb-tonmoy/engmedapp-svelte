@@ -5,7 +5,6 @@
   let profileDropdown = true;
   let hamburger = true;
 
-  import { filters } from "../Questions/store.js";
 </script>
 
 <!-- Nav Starts -->

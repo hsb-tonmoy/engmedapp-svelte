@@ -1,7 +1,7 @@
 <script>
   import { metatags } from "@roxi/routify";
   import { convertDate } from "../../../components/utils/convertDate.js";
-
+  import { fade, scale } from "svelte/transition";
   export let scoped;
   $: question = scoped.question;
 
@@ -25,6 +25,8 @@
   function onFilter(attr, prop) {
     window.location.href = `/questions?${attr}=${encodeURIComponent(prop)}`;
   }
+
+  let authorBox = false;
 </script>
 
 <svelte:head>
@@ -248,12 +250,19 @@
                   <button>Comment</button>
                   <button>Edit</button>
                 </div>
+
                 <div
-                  class="author-box flex flex-col gap-y-2 font-bold font-mulish text-xs"
+                  class="author-box relative flex flex-col gap-y-2 font-bold font-mulish text-xs"
                 >
-                  <div class="flex gap-x-3 items-center">
+                  <div class="flex gap-x-3 justify-center items-center">
                     <img
-                      class="w-11 h-11"
+                      on:mouseover={() => {
+                        authorBox = !authorBox;
+                      }}
+                      on:mouseout={() => {
+                        authorBox = !authorBox;
+                      }}
+                      class="w-11 h-11 rounded-full"
                       src={explanation.author.profile_pic}
                       alt="teacher"
                     />
@@ -283,8 +292,18 @@
                       </span><span class="font-normal" style="color: #274C67"
                         >{user_roles[explanation.author.account_type]}</span
                       >
+                      {#if authorBox}
+                        <div
+                          in:scale={{ duration: 500 }}
+                          out:fade
+                          class="absolute flex rounded bg-white drop-shadow py-2 px-4"
+                        >
+                          Author
+                        </div>
+                      {/if}
                     </div>
                   </div>
+
                   <span class="text-ematextblue font-semibold"
                     >Answered {convertDate(explanation.published)}</span
                   >
