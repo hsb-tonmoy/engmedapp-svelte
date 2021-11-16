@@ -17,15 +17,15 @@
   let loading = true;
 
   $: questions_url = `questions/list?&board__name__in=${
-    $filters.boards ? $filters.boards.name : ""
+    $filters.boards ? $filters.boards.value : ""
   }&level__name__in=${
-    $filters.levels ? $filters.levels.name : ""
+    $filters.levels ? $filters.levels.value : ""
   }&paper__name__in=${
-    $filters.papers ? encodeURIComponent($filters.papers.name) : ""
+    $filters.papers ? encodeURIComponent($filters.papers.value) : ""
   }&year__name__in=${
-    $filters.years ? $filters.years.name : ""
+    $filters.years ? $filters.years.value : ""
   }&session__name__in=${
-    $filters.sessions ? encodeURIComponent($filters.sessions.name) : ""
+    $filters.sessions ? encodeURIComponent($filters.sessions.value) : ""
   }&tags__name__in=${
     $filters.tags ? encodeURIComponent($filters.tags.name) : ""
   }&ordering=${$sort ? $sort : ""}`;

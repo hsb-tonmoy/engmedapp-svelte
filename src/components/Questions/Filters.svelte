@@ -121,7 +121,7 @@
     <Select
       items={boards}
       placeholder="Boards"
-      value={$filters.boards ? $filters.boards.name : null}
+      value={$filters.boards ? $filters.boards.value : null}
       containerClasses="min-w-25 flex items-center"
       showChevron={true}
       on:select={(event) => {
@@ -135,7 +135,7 @@
   <span class="select-filter">
     <Select
       items={levels}
-      value={$filters.levels ? $filters.levels.name : null}
+      value={$filters.levels ? $filters.levels.value : null}
       placeholder="Levels"
       containerClasses="min-w-25 flex items-center"
       showChevron={true}
@@ -150,7 +150,7 @@
   <span class="select-filter">
     <Select
       items={papers}
-      value={$filters.papers ? $filters.papers.name : null}
+      value={$filters.papers ? $filters.papers.value : null}
       placeholder="Papers"
       containerClasses="min-w-25 flex items-center"
       showChevron={true}
@@ -165,7 +165,7 @@
   <span class="select-filter">
     <Select
       items={years}
-      value={$filters.years ? $filters.years.name : null}
+      value={$filters.years ? $filters.years.value : null}
       placeholder="Years"
       containerClasses="min-w-25 flex items-center"
       showChevron={true}
@@ -180,7 +180,7 @@
   <span class="select-filter">
     <Select
       items={sessions}
-      value={$filters.sessions ? $filters.sessions.name : null}
+      value={$filters.sessions ? $filters.sessions.value : null}
       placeholder="Sessions"
       containerClasses="min-w-25 flex items-center"
       showChevron={true}
