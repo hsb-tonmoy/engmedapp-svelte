@@ -16,8 +16,6 @@
   let years = [];
   let sessions = [];
 
-  $: console.log($filters);
-
   const tagIdentifier = "id";
   const getTagLabel = (option) => option.name;
   const getSelectionLabel = (option) => option.name;

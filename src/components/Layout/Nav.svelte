@@ -40,14 +40,7 @@
         <a
           href="/questions"
           on:click={() => {
-            $filters = {
-              boards: null,
-              levels: null,
-              papers: null,
-              years: null,
-              sessions: null,
-            };
-            $goto("/questions");
+            window.location.href = "/questions";
           }}
           class="text-sm text-ematext hover:underline hover:text-primary font-mulish"
           class:font-bold={$isActive("/questions")}

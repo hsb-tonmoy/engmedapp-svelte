@@ -1,6 +1,6 @@
 <!-- routify:options title="Questions" -->
 <script>
-  import { metatags } from "@roxi/routify";
+  import { metatags, params, page } from "@roxi/routify";
   import { onMount } from "svelte";
   import authAxios from "../../components/Auth/authAxios";
   import Filters from "../../components/Questions/Filters.svelte";
@@ -15,6 +15,27 @@
   const API_URL = "https://api.engmedapp.com/";
 
   let loading = true;
+
+  if ($params) {
+    if ($params["board"] && $params["board"] !== "") {
+      $filters.boards = { value: $params["board"] };
+    }
+    if ($params["level"] && $params["level"] !== "") {
+      $filters.levels = { value: $params["level"] };
+    }
+    if ($params["paper"] && $params["paper"] !== "") {
+      $filters.papers = { value: decodeURIComponent($params["paper"]) };
+    }
+    if ($params["year"] && $params["year"] !== "") {
+      $filters.years = { value: $params["year"] };
+    }
+    if ($params["session"] && $params["session"] !== "") {
+      $filters.sessions = { value: decodeURIComponent($params["session"]) };
+    }
+    if ($params["tag"] && $params["tag"] !== "") {
+      $filters.tags = { name: $params["tag"] };
+    }
+  }
 
   $: questions_url = `questions/list?&board__name__in=${
     $filters.boards ? $filters.boards.value : ""
@@ -101,7 +122,7 @@
       {#if loading}
         <Spinner />
       {:else if questions.count > 0}
-        <Posts on:filter={handleFilter} {questions} />
+        <Posts {questions} />
         <Pagination
           pageCount={questions.total_pages + 1}
           marginPagesDisplayed={2}

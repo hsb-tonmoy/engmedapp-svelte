@@ -9,4 +9,4 @@ export const filters = writable({
   tags: null,
 });
 
-export const sort = writable("title");
+export const sort = writable("-published");

@@ -4,11 +4,8 @@
   metatags.title = "EngMedApp - Home";
   metatags.description = "EngMedAp";
 
-  import { filters } from "../components/Questions/store.js";
-
   function onFilter(attr, prop) {
-    $filters[attr] = { name: prop };
-    $goto("/questions");
+    $goto(`/questions?${attr}=${encodeURIComponent(prop)}`);
   }
 </script>
 
@@ -64,42 +61,42 @@
   <div class="flex justify-between mt-12">
     <button
       on:click={() => {
-        onFilter("years", "2021");
+        onFilter("year", "2021");
       }}
       class="bg-primary px-10 text-white duration-300 font-mulish font-bold text-lg rounded-lg h-16"
       >2021</button
     >
     <button
       on:click={() => {
-        onFilter("years", "2020");
+        onFilter("year", "2020");
       }}
       class="ml-1 lg:ml-4 2xl:ml-8 3xl:ml-12 bg-secondary hover:bg-primary px-10 text-primary hover:text-white duration-300 font-mulish font-bold text-lg rounded-lg h-16"
       >2020</button
     >
     <button
       on:click={() => {
-        onFilter("years", "2019");
+        onFilter("year", "2019");
       }}
       class="ml-1 lg:ml-4 2xl:ml-8 3xl:ml-12 bg-secondary hover:bg-primary px-10 text-primary hover:text-white duration-300 font-mulish font-bold text-lg rounded-lg h-16"
       >2019</button
     >
     <button
       on:click={() => {
-        onFilter("years", "2018");
+        onFilter("year", "2018");
       }}
       class="ml-1 lg:ml-4 2xl:ml-8 3xl:ml-12 bg-secondary hover:bg-primary px-10 text-primary hover:text-white duration-300 font-mulish font-bold text-lg rounded-lg h-16"
       >2018</button
     >
     <button
       on:click={() => {
-        onFilter("years", "2017");
+        onFilter("year", "2017");
       }}
       class="ml-1 lg:ml-4 2xl:ml-8 3xl:ml-12 bg-secondary hover:bg-primary px-10 text-primary hover:text-white duration-300 font-mulish font-bold text-lg rounded-lg h-16"
       >2017</button
     >
     <button
       on:click={() => {
-        onFilter("years", "2016");
+        onFilter("year", "2016");
       }}
       class="ml-1 lg:ml-4 2xl:ml-8 3xl:ml-12 bg-secondary hover:bg-primary px-10 text-primary hover:text-white duration-300 font-mulish font-bold text-lg rounded-lg h-16"
       >2016</button
@@ -108,28 +105,28 @@
   <div class="flex flex-wrap justify-between mt-8">
     <button
       on:click={() => {
-        onFilter("sessions", "Jan Feb");
+        onFilter("session", "Jan Feb");
       }}
       class="bg-secondary hover:bg-primary px-3 py-3 text-primary hover:text-white duration-300 font-mulish font-bold text-xs rounded-lg "
       >Jan Feb</button
     >
     <button
       on:click={() => {
-        onFilter("sessions", "May Jun");
+        onFilter("session", "May Jun");
       }}
       class="ml-1 2xl:ml-3 3xl:ml-4 bg-secondary hover:bg-primary px-3 py-3 text-primary hover:text-white duration-300 font-mulish font-bold text-xs rounded-lg"
       >May Jun</button
     >
     <button
       on:click={() => {
-        onFilter("sessions", "Aug Sep");
+        onFilter("session", "Aug Sep");
       }}
       class="ml-1 2xl:ml-3 3xl:ml-4 bg-secondary hover:bg-primary px-3 py-3 text-primary hover:text-white duration-300 font-mulish font-bold text-xs rounded-lg"
       >Aug Sep</button
     >
     <button
       on:click={() => {
-        onFilter("sessions", "Oct Nov");
+        onFilter("session", "Oct Nov");
       }}
       class="ml-1 2xl:ml-3 3xl:ml-4 bg-secondary hover:bg-primary px-3 py-3 text-primary hover:text-white duration-300 font-mulish font-bold text-xs rounded-lg"
       >Oct Nov</button

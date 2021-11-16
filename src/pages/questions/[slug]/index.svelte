@@ -1,8 +1,7 @@
 <script>
   import { metatags } from "@roxi/routify";
-  import { goto } from "@roxi/routify";
   import { convertDate } from "../../../components/utils/convertDate.js";
-  import { filters } from "../../../components/Questions/store.js";
+
   export let scoped;
   $: question = scoped.question;
 
@@ -24,8 +23,7 @@
   metatags.description = scoped.question.excerpt;
 
   function onFilter(attr, prop) {
-    $filters[attr] = { name: prop };
-    $goto("/questions");
+    window.location.href = `/questions?${attr}=${encodeURIComponent(prop)}`;
   }
 </script>
 
@@ -48,35 +46,35 @@
           ><a
             href="#"
             on:click={() => {
-              onFilter("boards", question.board.name);
+              onFilter("board", question.board.name);
             }}>{question.board.name}</a
           >
           >
           <a
             href="#"
             on:click={() => {
-              onFilter("levels", question.level.name);
+              onFilter("level", question.level.name);
             }}>{question.level.name}</a
           >
           >
           <a
             href="#"
             on:click={() => {
-              onFilter("papers", question.paper.name);
+              onFilter("paper", question.paper.name);
             }}>{question.paper.name}</a
           >
           >
           <a
             href="#"
             on:click={() => {
-              onFilter("years", question.year.name);
+              onFilter("year", question.year.name);
             }}>{question.year.name}</a
           >
           >
           <a
             href="#"
             on:click={() => {
-              onFilter("sessions", question.session.name);
+              onFilter("session", question.session.name);
             }}>{question.session.name}</a
           ></span
         >
@@ -98,6 +96,9 @@
             >
             {#each question.tags as tag}
               <button
+                on:click={() => {
+                  onFilter("tag", tag);
+                }}
                 class="px-3 py-1 text-primary text-xs rounded-full"
                 style="background-color: #E9FDFF">{tag}</button
               >
