@@ -27,8 +27,6 @@
   }
 
   let authorBox = false;
-
-  console.log(scoped.question.author);
 </script>
 
 <svelte:head>
@@ -237,7 +235,12 @@
                 2 Downvotes</button
               >
             </div>
-            <div class="flex flex-col w-full">
+            <div
+              on:click|self={() => {
+                authorBox = false;
+              }}
+              class="flex flex-col w-full"
+            >
               <span class="font-mulish text-sm text-black leading-relaxed"
                 >{@html explanation.content}
               </span>
@@ -261,18 +264,24 @@
                       <div
                         in:scale={{ duration: 300 }}
                         out:fade
-                        class="absolute left-20 flex justify-start gap-x-2 w-max rounded-lg bg-white drop-shadow-lg py-2 px-4"
+                        on:click|self={() => {
+                          authorBox = !authorBox;
+                        }}
+                        class="absolute left-20 flex justify-start gap-x-2 w-max rounded-lg bg-white drop-shadow-lg py-4 px-4"
                       >
                         <div class="flex justify-center w-3/12">
-                          <img
-                            class="w-14 h-14 cursor-pointer rounded-full"
-                            src={explanation.author.profile_pic}
-                            alt="teacher-pfp"
-                          />
+                          <a href={"/profile/" + explanation.author.username}>
+                            <img
+                              class="w-14 h-14 cursor-pointer rounded-full"
+                              src={explanation.author.profile_pic}
+                              alt="teacher-pfp"
+                            />
+                          </a>
                         </div>
                         <div class="flex flex-col w-9/12">
-                          <span
-                            class="flex gap-x-1 font-medium text-base mb-4 cursor-pointer"
+                          <a
+                            href={"/profile/" + explanation.author.username}
+                            class="flex gap-x-4 font-medium text-base mb-2 cursor-pointer"
                             style="color: #46789C"
                             >{explanation.author.first_name}
                             {explanation.author.last_name}
@@ -294,14 +303,38 @@
                                 />
                               </svg>
                             {/if}
-                          </span><span class="font-normal text-sm text-black"
-                            >{user_roles[explanation.author.account_type]}</span
-                          >
-                          <a
-                            href={`mailto:${explanation.author.email}`}
-                            class="font-normal text-sm text-black underline"
-                            >{explanation.author.email}</a
-                          >
+                          </a>
+                          <div class="flex flex-col mb-2">
+                            <span class="font-normal text-sm text-black"
+                              >{user_roles[
+                                explanation.author.account_type
+                              ]}</span
+                            >
+                            {#if explanation.author.name_of_institution}
+                              <span class="font-normal text-sm text-black"
+                                >{explanation.author.name_of_institution}</span
+                              >
+                            {/if}
+                          </div>
+                          <div class="flex flex-col font-normal text-sm">
+                            {#if explanation.author.phone_no}
+                              <a
+                                href={`tel:${explanation.author.phone_no}`}
+                                style="color: #46789C"
+                                >{explanation.author.phone_no}</a
+                              >
+                            {/if}
+                            <a
+                              href={`mailto:${explanation.author.email}`}
+                              class="text-black underline"
+                              >{explanation.author.email}</a
+                            >
+                            {#if explanation.author.city && explanation.author.country}
+                              <span class="text-gray-500"
+                                >{`${explanation.author.city}, ${explanation.author.country}`}</span
+                              >
+                            {/if}
+                          </div>
                         </div>
                       </div>
                     {/if}
