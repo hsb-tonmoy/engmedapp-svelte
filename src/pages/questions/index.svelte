@@ -1,6 +1,6 @@
 <!-- routify:options title="Questions" -->
 <script>
-  import { metatags, params, page } from "@roxi/routify";
+  import { metatags, params } from "@roxi/routify";
   import { onMount } from "svelte";
   import authAxios from "../../components/Auth/authAxios";
   import Filters from "../../components/Questions/Filters.svelte";
