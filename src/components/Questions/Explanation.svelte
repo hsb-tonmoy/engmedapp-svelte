@@ -89,6 +89,7 @@
       >{@html explanation.content}
     </span>
     <div
+      on:click|self={() => (authorBox = false)}
       class="flex flex-col gap-y-4 md:gap-y-0 md:flex-row md:items-center md:justify-between mt-4 md:mt-12"
     >
       <div class="flex gap-x-4 text-xs font-mulish font-bold text-ematextblue">
@@ -105,9 +106,9 @@
           {#if authorBox}
             <div
               in:scale={{ duration: 300 }}
-              out:fade
+              out:scale={{ duration: 200 }}
               on:click|self={() => (authorBox = false)}
-              class="absolute left-20 flex justify-start gap-x-2 w-max rounded-lg bg-white drop-shadow-lg py-4 px-4"
+              class="absolute left-20 flex justify-start gap-x-4 w-max rounded-lg bg-white drop-shadow-lg py-4 px-4"
             >
               <div class="flex justify-center w-3/12">
                 <a href={"/profile/" + explanation.author.username}>
@@ -217,6 +218,9 @@
     </div>
   </div>
 </div>
-<div class="exp">
-  <hr class="mt-8 mb-2" style="border-color: #A1A5B1" />
+<div class="exp flex justify-center">
+  <hr
+    class="w-10/12 mt-8 mb-2"
+    style="border-color: rgba(161, 165, 177, 0.3)"
+  />
 </div>
