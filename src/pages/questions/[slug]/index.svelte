@@ -30,11 +30,11 @@
       el: document.querySelector("#editor"),
       initialEditType: "wysiwyg",
       previewStyle: "vertical",
-      height: "200px",
+      height: "auto",
       initialValue: explanation_data,
       events: {
         change: () => {
-          explanation_data = editor.getMarkdown();
+          explanation_data = editor.getHTML();
         },
       },
     });
@@ -215,9 +215,10 @@
                 >Post your answer</button
               >
             {:else}
-              <button
+              <a
+                href="/login"
                 class="px-10 py-4 rounded-sm text-sm text-white bg-primary font-mulish"
-                >Login to post your answer</button
+                >Login to post your answer</a
               >
             {/if}
           </div>

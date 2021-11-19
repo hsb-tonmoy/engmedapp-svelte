@@ -85,9 +85,9 @@
     }}
     class="flex flex-col w-full"
   >
-    <span class="font-mulish text-sm text-black leading-relaxed"
-      >{@html explanation.content}
-    </span>
+    <div class="viewer font-mulish text-sm text-black leading-relaxed">
+      {@html explanation.content}
+    </div>
     <div
       on:click|self={() => (authorBox = false)}
       class="flex flex-col gap-y-4 md:gap-y-0 md:flex-row md:items-center md:justify-between mt-4 md:mt-12"
