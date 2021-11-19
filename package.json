@@ -66,7 +66,8 @@
     "verbose": true
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "@toast-ui/editor": "^3.1.1",
+    "axios": "^0.21.4",
     "patch-package": "^6.4.7",
     "svelte-file-dropzone": "0.0.15",
     "svelte-pagination": "0.0.1"

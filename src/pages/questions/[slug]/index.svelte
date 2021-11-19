@@ -1,7 +1,11 @@
 <script>
   import { metatags } from "@roxi/routify";
+  import Editor from "@toast-ui/editor";
+  import "@toast-ui/editor/dist/toastui-editor.css";
   import { convertDate } from "../../../components/utils/convertDate.js";
   import Explanation from "../../../components/Questions/Explanation.svelte";
+  import { onMount } from "svelte";
+  import { user } from "../../../components/Auth/store.js";
 
   export let scoped;
   $: question = scoped.question;
@@ -18,12 +22,28 @@
   function onFilter(attr, prop) {
     window.location.href = `/questions?${attr}=${encodeURIComponent(prop)}`;
   }
-</script>
 
-<svelte:head>
-  <script
-    src="https://www.wiris.net/demo/plugins/app/WIRISplugins.js?viewer=image"></script>
-</svelte:head>
+  let explanation_data;
+
+  onMount(() => {
+    const editor = new Editor({
+      el: document.querySelector("#editor"),
+      initialEditType: "wysiwyg",
+      previewStyle: "vertical",
+      height: "200px",
+      initialValue: explanation_data,
+      events: {
+        change: () => {
+          explanation_data = editor.getMarkdown();
+        },
+      },
+    });
+  });
+
+  function submitExplanation() {
+    console.log(explanation_data);
+  }
+</script>
 
 <section>
   <!-- Questions Body -->
@@ -173,9 +193,35 @@
             style="border-color: rgba(161, 165, 177, 0.6)"
           />
         {/if}
+
         {#each question.explanations as explanation}
           <Explanation {explanation} />
+          <div class="exp flex justify-center">
+            <hr
+              class="w-full mt-8 mb-2"
+              style="border-color: rgba(161, 165, 177, 0.3)"
+            />
+          </div>
         {/each}
+
+        <div class="explanation-form flex w-full mt-8">
+          <div class="empty" style="width: 12%" />
+          <div class="flex flex-col w-11/12">
+            {#if $user}
+              <div id="editor" />
+              <button
+                on:click={submitExplanation}
+                class="self-end mt-4 px-10 py-4 rounded-sm text-sm text-white bg-primary font-mulish"
+                >Post your answer</button
+              >
+            {:else}
+              <button
+                class="px-10 py-4 rounded-sm text-sm text-white bg-primary font-mulish"
+                >Login to post your answer</button
+              >
+            {/if}
+          </div>
+        </div>
       </div>
     </article>
     <!-- Sidebar -->
@@ -256,7 +302,10 @@
 </section>
 
 <style>
-  .exp > :global(hr:last-of-type) {
+  .viewed-questions > ul > li:last-of-type > hr,
+  .exp:last-of-type > hr,
+  .teachers > hr:last-of-type,
+  article > :global(hr:last-of-type) {
     display: none;
   }
 

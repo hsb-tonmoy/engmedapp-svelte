@@ -1,5 +1,5 @@
 <script>
-  import { fade, scale } from "svelte/transition";
+  import { scale } from "svelte/transition";
   import { convertDate } from "../utils/convertDate.js";
 
   export let explanation;
@@ -217,10 +217,4 @@
       </div>
     </div>
   </div>
-</div>
-<div class="exp flex justify-center">
-  <hr
-    class="w-10/12 mt-8 mb-2"
-    style="border-color: rgba(161, 165, 177, 0.3)"
-  />
 </div>
