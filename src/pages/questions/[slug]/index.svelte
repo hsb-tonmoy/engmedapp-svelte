@@ -34,7 +34,7 @@
       initialValue: explanation_data,
       events: {
         change: () => {
-          explanation_data = editor.getHTML();
+          explanation_data = editor.getMarkdown();
         },
       },
     });

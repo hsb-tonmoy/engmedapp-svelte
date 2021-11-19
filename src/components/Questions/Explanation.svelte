@@ -1,7 +1,9 @@
 <script>
   import { scale } from "svelte/transition";
   import { convertDate } from "../utils/convertDate.js";
-
+  import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
+  import "@toast-ui/editor/dist/toastui-editor-viewer.css";
+  import { onMount } from "svelte";
   export let explanation;
 
   const user_roles = {
@@ -17,6 +19,13 @@
   function toggleAuthorBox() {
     authorBox = !authorBox;
   }
+
+  onMount(() => {
+    const viewer = new Viewer({
+      el: document.querySelector(".viewer"),
+      initialValue: explanation.content,
+    });
+  });
 </script>
 
 <div
@@ -86,7 +95,7 @@
     class="flex flex-col w-full"
   >
     <div class="viewer font-mulish text-sm text-black leading-relaxed">
-      {@html explanation.content}
+      <div class="viewer" />
     </div>
     <div
       on:click|self={() => (authorBox = false)}
