@@ -1,10 +1,24 @@
 <script>
   import { user } from "../Auth/store.js";
-  import { isActive, url, layout, goto } from "@roxi/routify";
+  import { isActive, goto } from "@roxi/routify";
   import { fade } from "svelte/transition";
+  import { filters } from "../Questions/store.js";
   let profileDropdown = true;
   let hamburger = true;
 
+  function goToQuestions() {
+    $filters = {
+      boards: null,
+      levels: null,
+      papers: null,
+      years: null,
+      sessions: null,
+      tags: null,
+    };
+    if ($isActive("/questions/")) {
+      window.location.href = "/questions";
+    }
+  }
 </script>
 
 <!-- Nav Starts -->
@@ -38,9 +52,7 @@
       <div class="hidden lg:flex gap-x-6 justify-around items-center">
         <a
           href="/questions"
-          on:click={() => {
-            window.location.href = "/questions";
-          }}
+          on:click={goToQuestions}
           class="text-sm text-ematext hover:underline hover:text-primary font-mulish"
           class:font-bold={$isActive("/questions")}
           class:text-primary={$isActive("/questions")}>Question papers</a

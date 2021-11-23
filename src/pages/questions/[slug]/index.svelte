@@ -1,10 +1,9 @@
 <script>
-  import { metatags } from "@roxi/routify";
+  import { metatags, goto } from "@roxi/routify";
   import Editor from "@toast-ui/editor";
   import "@toast-ui/editor/dist/toastui-editor.css";
   import { convertDate } from "../../../components/utils/convertDate.js";
   import Explanation from "../../../components/Questions/Explanation.svelte";
-  import { onMount } from "svelte";
   import { user } from "../../../components/Auth/store.js";
   import authAxios from "../../../components/Auth/authAxios.js";
 
@@ -27,7 +26,7 @@
   let explanation_data;
   let explanation_status;
 
-  onMount(() => {
+  function initializeEditor() {
     editor = new Editor({
       el: document.querySelector("#editor"),
       initialEditType: "wysiwyg",
@@ -40,7 +39,7 @@
         },
       },
     });
-  });
+  }
 
   async function submitExplanation() {
     await authAxios
@@ -69,6 +68,13 @@
     <article
       class="flex flex-col w-full xl:w-3/4 bg-white py-8 md:pl-5 xl:pl-7 md:pr-12 xl:pr-16"
     >
+      <!-- Notifications -->
+      <div class="flex items-center py-2 bg-green-500">
+        <span class="text-white text-sm font-mulish px-4"
+          >Your answer has been successfully submitted. It is pending approval
+          by the moderators.</span
+        >
+      </div>
       <!-- Questions Details -->
       <div class="flex flex-col md:pl-4">
         <span class="breadcrumbs font-mulish text-xs text-ematextgray mb-4"
@@ -224,17 +230,17 @@
           <div class="empty" style="width: 12%" />
           <div class="flex flex-col w-11/12">
             {#if $user}
-              <div id="editor" />
+              <div use:initializeEditor id="editor" />
               <button
                 on:click={submitExplanation}
                 class="self-end mt-4 px-10 py-4 rounded-sm text-sm text-white bg-primary font-mulish"
                 >Post your answer</button
               >
             {:else}
-              <a
-                href="/login"
-                class="px-10 py-4 rounded-sm text-sm text-white bg-primary font-mulish"
-                >Login to post your answer</a
+              <button
+                on:click={() => $goto("/login")}
+                class="self-end px-10 py-4 rounded-sm text-sm text-white bg-primary font-mulish"
+                >Login to post your answer</button
               >
             {/if}
           </div>
