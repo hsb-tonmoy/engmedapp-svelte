@@ -24,6 +24,8 @@ async function getNewAccess() {
     if (res.ok) {
       const data = await res.json();
       localStorage.setItem("access", data.access);
+    } else if (!res.ok && res.status === 401) {
+      await logout();
     } else {
       console.log(res.status + res.statusText);
     }
