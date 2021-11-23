@@ -24,8 +24,6 @@ async function getNewAccess() {
     if (res.ok) {
       const data = await res.json();
       localStorage.setItem("access", data.access);
-    } else if (!res.ok && res.status === 401) {
-      await logout();
     } else {
       console.log(res.status + res.statusText);
     }
@@ -64,16 +62,28 @@ void (async function main() {
     localStorage.getItem("user")
   ) {
     let access_token = localStorage.getItem("access");
-    const tokenParts = JSON.parse(atob(access_token.split(".")[1]));
+    let refresh_token = localStorage.getItem("refresh");
+    const accessTokenParts = JSON.parse(atob(access_token.split(".")[1]));
+    const refreshTokenParts = JSON.parse(atob(refresh_token.split(".")[1]));
     const now = Date.now().valueOf() / 1000;
 
-    if (typeof tokenParts.exp !== "undefined" && tokenParts.exp < now) {
+    if (
+      typeof accessTokenParts.exp !== "undefined" &&
+      accessTokenParts.exp < now
+    ) {
       console.log("Token should be expired now");
       await getNewAccess();
       await authenticate();
     } else {
       await authenticate();
       console.log("You're logged back in.");
+    }
+    if (
+      typeof refreshTokenParts.exp !== "undefined" &&
+      refreshTokenParts.exp < now
+    ) {
+      console.log("Refresh token should be expired now");
+      await logout();
     }
   } else {
     localStorage.clear();
