@@ -20,9 +20,11 @@
     authorBox = !authorBox;
   }
 
+  let element;
+
   onMount(() => {
     const viewer = new Viewer({
-      el: document.querySelector(".viewer"),
+      el: element,
       initialValue: explanation.content,
     });
   });
@@ -95,7 +97,7 @@
     class="flex flex-col w-full"
   >
     <div class="viewer font-mulish text-sm text-black leading-relaxed">
-      <div class="viewer" />
+      <div bind:this={element} />
     </div>
     <div
       on:click|self={() => (authorBox = false)}

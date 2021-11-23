@@ -6,6 +6,7 @@
   import Explanation from "../../../components/Questions/Explanation.svelte";
   import { onMount } from "svelte";
   import { user } from "../../../components/Auth/store.js";
+  import authAxios from "../../../components/Auth/authAxios.js";
 
   export let scoped;
   $: question = scoped.question;
@@ -22,11 +23,12 @@
   function onFilter(attr, prop) {
     window.location.href = `/questions?${attr}=${encodeURIComponent(prop)}`;
   }
-
+  let editor;
   let explanation_data;
+  let explanation_status;
 
   onMount(() => {
-    const editor = new Editor({
+    editor = new Editor({
       el: document.querySelector("#editor"),
       initialEditType: "wysiwyg",
       previewStyle: "vertical",
@@ -40,8 +42,22 @@
     });
   });
 
-  function submitExplanation() {
-    console.log(explanation_data);
+  async function submitExplanation() {
+    await authAxios
+      .post("questions/explanations/", {
+        question: scoped.question.id,
+        content: explanation_data,
+        author: $user.id,
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          editor.setMarkdown("");
+          explanation_status = "success";
+          window.scrollTo(0, 0);
+        } else {
+          explanation_status = "error";
+        }
+      });
   }
 </script>
 
