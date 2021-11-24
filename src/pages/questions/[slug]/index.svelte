@@ -6,6 +6,8 @@
   import Explanation from "../../../components/Questions/Explanation.svelte";
   import { user } from "../../../components/Auth/store.js";
   import authAxios from "../../../components/Auth/authAxios.js";
+  import Toastify from "toastify-js";
+  import "toastify-js/src/toastify.css";
 
   export let scoped;
   $: question = scoped.question;
@@ -41,6 +43,29 @@
     });
   }
 
+  function notificationToast(status) {
+    Toastify({
+      text:
+        status === "success"
+          ? "Your answer has been successfully submitted. It is pending approval by the moderators."
+          : "Something went wrong, please try again later",
+      close: false,
+      duration: 10000,
+      gravity: "top",
+      position: "center",
+      offset: {
+        x: 0,
+        y: 60,
+      },
+      style: {
+        background:
+          status === "success"
+            ? "linear-gradient(to right, #40916c, #52b788)"
+            : "linear-gradient(to right, #d90429, #ef233c)",
+      },
+    }).showToast();
+  }
+
   async function submitExplanation() {
     await authAxios
       .post("questions/explanations/", {
@@ -51,10 +76,10 @@
       .then((res) => {
         if (res.status === 201) {
           editor.setMarkdown("");
-          explanation_status = "success";
+          notificationToast("success");
           window.scrollTo(0, 0);
         } else {
-          explanation_status = "error";
+          notificationToast("error");
         }
       });
   }
@@ -68,13 +93,6 @@
     <article
       class="flex flex-col w-full xl:w-3/4 bg-white py-8 md:pl-5 xl:pl-7 md:pr-12 xl:pr-16"
     >
-      <!-- Notifications -->
-      <div class="flex items-center py-2 bg-green-500">
-        <span class="text-white text-sm font-mulish px-4"
-          >Your answer has been successfully submitted. It is pending approval
-          by the moderators.</span
-        >
-      </div>
       <!-- Questions Details -->
       <div class="flex flex-col md:pl-4">
         <span class="breadcrumbs font-mulish text-xs text-ematextgray mb-4"
