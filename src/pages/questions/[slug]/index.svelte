@@ -26,7 +26,25 @@
   }
   let editor;
   let explanation_data;
-  let explanation_status;
+
+  function latexPlugin() {
+    const toHTMLRenderers = {
+      latex(node) {
+        const generator = new latexjs.HtmlGenerator({ hyphenate: false });
+        const { body } = latexjs
+          .parse(node.literal, { generator })
+          .htmlDocument();
+
+        return [
+          { type: "openTag", tagName: "div", outerNewLine: true },
+          { type: "html", content: body.innerHTML },
+          { type: "closeTag", tagName: "div", outerNewLine: true },
+        ];
+      },
+    };
+
+    return { toHTMLRenderers };
+  }
 
   function initializeEditor() {
     editor = new Editor({
@@ -35,6 +53,7 @@
       previewStyle: "vertical",
       height: "auto",
       initialValue: explanation_data,
+      plugins: [latexPlugin],
       events: {
         change: () => {
           explanation_data = editor.getMarkdown();
@@ -84,6 +103,10 @@
       });
   }
 </script>
+
+<svelte:head>
+  <script src="https://cdn.jsdelivr.net/npm/latex.js/dist/latex.js"></script>
+</svelte:head>
 
 <section>
   <!-- Questions Body -->

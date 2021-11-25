@@ -22,10 +22,30 @@
 
   let element;
 
+  function latexPlugin() {
+    const toHTMLRenderers = {
+      latex(node) {
+        const generator = new latexjs.HtmlGenerator({ hyphenate: false });
+        const { body } = latexjs
+          .parse(node.literal, { generator })
+          .htmlDocument();
+
+        return [
+          { type: "openTag", tagName: "div", outerNewLine: true },
+          { type: "html", content: body.innerHTML },
+          { type: "closeTag", tagName: "div", outerNewLine: true },
+        ];
+      },
+    };
+
+    return { toHTMLRenderers };
+  }
+
   onMount(() => {
     const viewer = new Viewer({
       el: element,
       initialValue: explanation.content,
+      plugins: [latexPlugin],
     });
   });
 </script>
