@@ -4,6 +4,10 @@
   import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
   import "@toast-ui/editor/dist/toastui-editor-viewer.css";
   import { onMount } from "svelte";
+  import katex from "katex";
+
+  import "katex/dist/katex.min.css";
+
   export let explanation;
 
   const user_roles = {
@@ -22,30 +26,37 @@
 
   let element;
 
-  function latexPlugin() {
-    const toHTMLRenderers = {
-      latex(node) {
-        const generator = new latexjs.HtmlGenerator({ hyphenate: false });
-        const { body } = latexjs
-          .parse(node.literal, { generator })
-          .htmlDocument();
-
-        return [
-          { type: "openTag", tagName: "div", outerNewLine: true },
-          { type: "html", content: body.innerHTML },
-          { type: "closeTag", tagName: "div", outerNewLine: true },
-        ];
-      },
-    };
-
-    return { toHTMLRenderers };
-  }
-
   onMount(() => {
     const viewer = new Viewer({
       el: element,
       initialValue: explanation.content,
-      plugins: [latexPlugin],
+      customHTMLRenderer: {
+        katex(node) {
+          let html;
+          try {
+            html = katex.renderToString(node.literal, {
+              throwOnError: false,
+              displayMode: false,
+            });
+          } catch (e) {
+            html = `
+        <pre>
+        <code>${e}</code>
+        </pre>
+        `;
+          }
+          return [
+            {
+              type: "openTag",
+              tagName: "div",
+              outerNewLine: true,
+              classNames: ["math-block"],
+            },
+            { type: "html", content: html },
+            { type: "closeTag", tagName: "div", outerNewLine: true },
+          ];
+        },
+      },
     });
   });
 </script>

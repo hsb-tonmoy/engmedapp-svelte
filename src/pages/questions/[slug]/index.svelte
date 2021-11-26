@@ -8,6 +8,8 @@
   import authAxios from "../../../components/Auth/authAxios.js";
   import Toastify from "toastify-js";
   import "toastify-js/src/toastify.css";
+  import katex from "katex";
+  import "katex/dist/katex.min.css";
 
   export let scoped;
   $: question = scoped.question;
@@ -27,25 +29,6 @@
   let editor;
   let explanation_data;
 
-  function latexPlugin() {
-    const toHTMLRenderers = {
-      latex(node) {
-        const generator = new latexjs.HtmlGenerator({ hyphenate: false });
-        const { body } = latexjs
-          .parse(node.literal, { generator })
-          .htmlDocument();
-
-        return [
-          { type: "openTag", tagName: "div", outerNewLine: true },
-          { type: "html", content: body.innerHTML },
-          { type: "closeTag", tagName: "div", outerNewLine: true },
-        ];
-      },
-    };
-
-    return { toHTMLRenderers };
-  }
-
   function initializeEditor() {
     editor = new Editor({
       el: document.querySelector("#editor"),
@@ -53,7 +36,33 @@
       previewStyle: "vertical",
       height: "auto",
       initialValue: explanation_data,
-      plugins: [latexPlugin],
+      customHTMLRenderer: {
+        katex(node) {
+          let html;
+          try {
+            html = katex.renderToString(node.literal, {
+              throwOnError: false,
+              displayMode: false,
+            });
+          } catch (e) {
+            html = `
+        <pre>
+        <code>${e}</code>
+        </pre>
+        `;
+          }
+          return [
+            {
+              type: "openTag",
+              tagName: "div",
+              outerNewLine: true,
+              classNames: ["math-block"],
+            },
+            { type: "html", content: html },
+            { type: "closeTag", tagName: "div", outerNewLine: true },
+          ];
+        },
+      },
       events: {
         change: () => {
           explanation_data = editor.getMarkdown();
@@ -103,10 +112,6 @@
       });
   }
 </script>
-
-<svelte:head>
-  <script src="https://cdn.jsdelivr.net/npm/latex.js/dist/latex.js"></script>
-</svelte:head>
 
 <section>
   <!-- Questions Body -->
