@@ -1,12 +1,14 @@
 <script>
   import { scale } from "svelte/transition";
   import { convertDate } from "../utils/convertDate.js";
-  import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
+  import Editor from "@toast-ui/editor";
+  import "@toast-ui/editor/dist/toastui-editor.css";
   import "@toast-ui/editor/dist/toastui-editor-viewer.css";
   import { onMount } from "svelte";
   import katex from "katex";
-
   import "katex/dist/katex.min.css";
+
+  import { user } from "../../components/Auth/store.js";
 
   export let explanation;
 
@@ -27,7 +29,8 @@
   let element;
 
   onMount(() => {
-    const viewer = new Viewer({
+    const viewer = new Editor.factory({
+      viewer: true,
       el: element,
       initialValue: explanation.content,
       customHTMLRenderer: {
@@ -59,6 +62,10 @@
       },
     });
   });
+
+  function editExplanation() {
+    explanation.edit = true;
+  }
 </script>
 
 <div
@@ -138,7 +145,9 @@
         <button>Share</button>
         <button>Report</button>
         <button>Comment</button>
-        <button>Edit</button>
+        {#if $user && ($user.id === explanation.author.id || $user.account_type === 5)}
+          <button>Edit</button>
+        {/if}
       </div>
 
       <div

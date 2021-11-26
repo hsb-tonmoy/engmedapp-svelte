@@ -1,15 +1,15 @@
 <script>
   import { metatags, goto } from "@roxi/routify";
-  import Editor from "@toast-ui/editor";
-  import "@toast-ui/editor/dist/toastui-editor.css";
   import { convertDate } from "../../../components/utils/convertDate.js";
   import Explanation from "../../../components/Questions/Explanation.svelte";
   import { user } from "../../../components/Auth/store.js";
   import authAxios from "../../../components/Auth/authAxios.js";
   import Toastify from "toastify-js";
   import "toastify-js/src/toastify.css";
-  import katex from "katex";
-  import "katex/dist/katex.min.css";
+
+  import Editor from "../../../components/Editor/Editor.svelte";
+
+  let editor, explanation_data;
 
   export let scoped;
   $: question = scoped.question;
@@ -25,50 +25,6 @@
 
   function onFilter(attr, prop) {
     window.location.href = `/questions?${attr}=${encodeURIComponent(prop)}`;
-  }
-  let editor;
-  let explanation_data;
-
-  function initializeEditor() {
-    editor = new Editor({
-      el: document.querySelector("#editor"),
-      initialEditType: "wysiwyg",
-      previewStyle: "vertical",
-      height: "auto",
-      initialValue: explanation_data,
-      customHTMLRenderer: {
-        katex(node) {
-          let html;
-          try {
-            html = katex.renderToString(node.literal, {
-              throwOnError: false,
-              displayMode: false,
-            });
-          } catch (e) {
-            html = `
-        <pre>
-        <code>${e}</code>
-        </pre>
-        `;
-          }
-          return [
-            {
-              type: "openTag",
-              tagName: "div",
-              outerNewLine: true,
-              classNames: ["math-block"],
-            },
-            { type: "html", content: html },
-            { type: "closeTag", tagName: "div", outerNewLine: true },
-          ];
-        },
-      },
-      events: {
-        change: () => {
-          explanation_data = editor.getMarkdown();
-        },
-      },
-    });
   }
 
   function notificationToast(status) {
@@ -276,7 +232,7 @@
           <div class="empty" style="width: 12%" />
           <div class="flex flex-col w-11/12">
             {#if $user}
-              <div use:initializeEditor id="editor" />
+              <Editor bind:editor bind:editor_data={explanation_data} />
               <button
                 on:click={submitExplanation}
                 class="self-end mt-4 px-10 py-4 rounded-sm text-sm text-white bg-primary font-mulish"
