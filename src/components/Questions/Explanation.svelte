@@ -5,6 +5,8 @@
   import Editor from "../Editor/Editor.svelte";
   import { user } from "../../components/Auth/store.js";
   import authAxios from "../Auth/authAxios.js";
+  import Toastify from "toastify-js";
+  import "toastify-js/src/toastify.css";
 
   export let explanation, question_id;
 
@@ -59,12 +61,16 @@
       .then((res) => {
         if (res.status === 200) {
           notificationToast("success");
-          window.scrollTo(0, 0);
+          explanation.content = explanation_data;
+          editing = false;
         } else {
           notificationToast("error");
         }
       });
   }
+
+  $: console.log(explanation.author.id);
+  $: console.log($user.id);
 </script>
 
 <div
