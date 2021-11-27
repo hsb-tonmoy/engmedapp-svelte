@@ -68,9 +68,6 @@
         }
       });
   }
-
-  $: console.log(explanation.author.id);
-  $: console.log($user.id);
 </script>
 
 <div
