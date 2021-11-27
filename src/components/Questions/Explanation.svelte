@@ -1,16 +1,16 @@
 <script>
   import { scale } from "svelte/transition";
   import { convertDate } from "../utils/convertDate.js";
-  import Editor from "@toast-ui/editor";
-  import "@toast-ui/editor/dist/toastui-editor.css";
-  import "@toast-ui/editor/dist/toastui-editor-viewer.css";
-  import { onMount } from "svelte";
-  import katex from "katex";
-  import "katex/dist/katex.min.css";
-
+  import Viewer from "../Editor/Viewer.svelte";
+  import Editor from "../Editor/Editor.svelte";
   import { user } from "../../components/Auth/store.js";
+  import authAxios from "../Auth/authAxios.js";
 
-  export let explanation;
+  export let explanation, question_id;
+
+  let editing = false,
+    editor,
+    explanation_data;
 
   const user_roles = {
     1: "Student",
@@ -26,45 +26,44 @@
     authorBox = !authorBox;
   }
 
-  let element;
-
-  onMount(() => {
-    const viewer = new Editor.factory({
-      viewer: true,
-      el: element,
-      initialValue: explanation.content,
-      customHTMLRenderer: {
-        katex(node) {
-          let html;
-          try {
-            html = katex.renderToString(node.literal, {
-              throwOnError: false,
-              displayMode: false,
-            });
-          } catch (e) {
-            html = `
-        <pre>
-        <code>${e}</code>
-        </pre>
-        `;
-          }
-          return [
-            {
-              type: "openTag",
-              tagName: "div",
-              outerNewLine: true,
-              classNames: ["math-block"],
-            },
-            { type: "html", content: html },
-            { type: "closeTag", tagName: "div", outerNewLine: true },
-          ];
-        },
+  function notificationToast(status) {
+    Toastify({
+      text:
+        status === "success"
+          ? "Your answer has been updated"
+          : "Something went wrong, please try again later",
+      close: false,
+      duration: 10000,
+      gravity: "top",
+      position: "center",
+      offset: {
+        x: 0,
+        y: 60,
       },
-    });
-  });
+      style: {
+        background:
+          status === "success"
+            ? "linear-gradient(to right, #40916c, #52b788)"
+            : "linear-gradient(to right, #d90429, #ef233c)",
+      },
+    }).showToast();
+  }
 
-  function editExplanation() {
-    explanation.edit = true;
+  async function submitEdit() {
+    await authAxios
+      .put(`questions/explanations/${explanation.id}`, {
+        question: question_id,
+        content: explanation_data,
+        author: explanation.author.id,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          notificationToast("success");
+          window.scrollTo(0, 0);
+        } else {
+          notificationToast("error");
+        }
+      });
   }
 </script>
 
@@ -135,7 +134,20 @@
     class="flex flex-col w-full"
   >
     <div class="viewer font-mulish text-sm text-black leading-relaxed">
-      <div bind:this={element} />
+      {#if !editing}
+        <Viewer initialValue={explanation.content} />
+      {:else}
+        <Editor
+          bind:editor
+          bind:editor_data={explanation_data}
+          initialValue={explanation.content}
+        />
+        <button
+          on:click={submitEdit}
+          class="self-end mt-4 px-10 py-4 rounded-sm text-sm text-white bg-primary font-mulish"
+          >Submit</button
+        >
+      {/if}
     </div>
     <div
       on:click|self={() => (authorBox = false)}
@@ -146,7 +158,11 @@
         <button>Report</button>
         <button>Comment</button>
         {#if $user && ($user.id === explanation.author.id || $user.account_type === 5)}
-          <button>Edit</button>
+          <button
+            on:click={() => {
+              editing = !editing;
+            }}>{editing ? "Cancel Edit" : "Edit"}</button
+          >
         {/if}
       </div>
 

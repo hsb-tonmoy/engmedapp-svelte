@@ -219,7 +219,7 @@
         {/if}
 
         {#each question.explanations as explanation}
-          <Explanation {explanation} />
+          <Explanation {explanation} question_id={question.id} />
           <div class="exp flex justify-center">
             <hr
               class="w-full mt-8 mb-2"
