@@ -14,6 +14,7 @@
       years: null,
       sessions: null,
       tags: null,
+      query: null,
     };
     if ($isActive("/questions/")) {
       window.location.href = "/questions";
