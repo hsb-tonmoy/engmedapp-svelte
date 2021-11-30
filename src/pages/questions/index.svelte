@@ -10,6 +10,7 @@
   import Pagination from "svelte-pagination";
   import Spinner from "../../components/Spinner.svelte";
   import NotFound from "../../components/NotFound.svelte";
+
   metatags.title = "EngMedApp - Questions";
   metatags.description = "EngMedApp - Questions";
 
@@ -91,6 +92,7 @@
     class="flex flex-col justify-center items-center w-full px-2 py-20 bg-secondaryLight"
   >
     <h2
+      id="slogan"
       class="font-mulish text-xl md:text-2xl lg:text-3xl leading-snug text-ematext text-center font-semibold"
     >
       Find question papers with answers <br /> Filter by Boards, Levels, Papers,

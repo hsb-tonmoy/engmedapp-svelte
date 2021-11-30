@@ -1,9 +1,25 @@
 <script>
   let query;
+
+  import hotkeys from "hotkeys-js";
+
+  hotkeys("ctrl+k,/", function (event, handler) {
+    event.preventDefault();
+    const search = document.querySelector("#search");
+    // search.scrollIntoView({
+    //   behavior: "smooth",
+    //   block: "end",
+    //   inline: "nearest",
+    // });
+    window.setTimeout(() => {
+      search.focus();
+    }, 10);
+  });
 </script>
 
 <div class="px-4 md:p-0">
   <form
+    id="search"
     on:submit|preventDefault={() => {
       window.location.href = `/questions?query=${query}`;
     }}

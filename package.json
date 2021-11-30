@@ -69,6 +69,7 @@
     "@toast-ui/editor": "^3.1.1",
     "@toast-ui/editor-plugin-code-syntax-highlight": "^3.0.0",
     "axios": "^0.21.4",
+    "hotkeys-js": "^3.8.7",
     "katex": "^0.15.1",
     "latex.js": "^0.12.4",
     "patch-package": "^6.4.7",
