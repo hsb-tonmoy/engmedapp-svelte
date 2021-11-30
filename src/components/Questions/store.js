@@ -7,6 +7,7 @@ export const filters = writable({
   years: null,
   sessions: null,
   tags: null,
+  query: null,
 });
 
 export const sort = writable("-published");

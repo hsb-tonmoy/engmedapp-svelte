@@ -5,6 +5,7 @@
   import authAxios from "../../components/Auth/authAxios";
   import Filters from "../../components/Questions/Filters.svelte";
   import { filters, sort } from "../../components/Questions/store.js";
+  import Search from "../../components/Layout/Search.svelte";
   import Posts from "../../components/Questions/Posts.svelte";
   import Pagination from "svelte-pagination";
   import Spinner from "../../components/Spinner.svelte";
@@ -35,6 +36,9 @@
     if ($params["tag"] && $params["tag"] !== "") {
       $filters.tags = { name: $params["tag"] };
     }
+    if ($params["query"] && $params["query"] !== "") {
+      $filters.query = $params["query"];
+    }
   }
 
   $: questions_url = `questions/list?&board__name__in=${
@@ -49,6 +53,8 @@
     $filters.sessions ? encodeURIComponent($filters.sessions.value) : ""
   }&tags__name__in=${
     $filters.tags ? encodeURIComponent($filters.tags.name) : ""
+  }&query=${
+    $filters.query ? encodeURIComponent($filters.query) : ""
   }&ordering=${$sort ? $sort : ""}`;
 
   let questions = [];
@@ -90,20 +96,7 @@
       Find question papers with answers <br /> Filter by Boards, Levels, Papers,
       Years and Sessions.
     </h2>
-    <form
-      class="flex flex-col gap-y-2 md:gap-0 md:flex-row md:flex-nowrap items-center mt-10 search-box"
-    >
-      <input
-        type="search"
-        name="search"
-        class="flex flex-grow w-full max-w-full h-14 md:w-96 px-8 text-base bg-secondaryLight border border-primary rounded-l"
-        placeholder="Write your question"
-      />
-      <button
-        class="max-w-full w-full md:w-auto font-mulish bg-primary text-xs text-white text-center sm:px-12 md:px-16 px-8 h-14 rounded-r"
-        type="submit">Search</button
-      >
-    </form>
+    <Search />
   </div>
   <!-- Filter -->
   <div class="flex justify-center">
