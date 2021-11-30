@@ -194,7 +194,9 @@
                 <button>Share</button>
                 <button>Report</button>
                 <button>Comment</button>
-                <button>Edit</button>
+                {#if $user && $user.account_type === 5}
+                  <button>Edit</button>
+                {/if}
               </div>
               <div class="flex flex-col gap-y-2 font-bold font-mulish text-xs">
                 <span

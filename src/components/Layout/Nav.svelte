@@ -1,6 +1,6 @@
 <script>
   import { user } from "../Auth/store.js";
-  import { isActive, goto } from "@roxi/routify";
+  import { isActive, url } from "@roxi/routify";
   import { fade } from "svelte/transition";
   import { filters } from "../Questions/store.js";
   let profileDropdown = true;
@@ -18,6 +18,10 @@
     if ($isActive("/questions/")) {
       window.location.href = "/questions";
     }
+  }
+
+  function saveCurrentLocation() {
+    localStorage.setItem("currentLocation", window.location.href);
   }
 </script>
 
@@ -154,6 +158,7 @@
               >Sign up</a
             ><a
               href="/login"
+              on:click={saveCurrentLocation}
               class="px-10 py-2 rounded text-sm text-white bg-primary font-mulish"
               >Login</a
             >

@@ -8,7 +8,14 @@
   import { params } from "@roxi/routify";
   import { goto } from "@roxi/routify";
 
-  $: if ($user) $goto("/");
+  $: if ($user) {
+    if (localStorage.getItem("currentLocation")) {
+      $goto(localStorage.getItem("currentLocation"));
+      localStorage.removeItem("currentLocation");
+    } else {
+      $goto("/");
+    }
+  }
 </script>
 
 <!-- routify:options index=false -->
