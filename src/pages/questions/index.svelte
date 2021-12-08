@@ -11,12 +11,10 @@
   import Spinner from "../../components/Spinner.svelte";
   import NotFound from "../../components/NotFound.svelte";
 
-  console.log(import.meta.env.VITE_API_URL);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   metatags.title = "EngMedApp - Questions";
   metatags.description = "EngMedApp - Questions";
-
-  const API_URL = "https://api.engmedapp.com/";
 
   let loading = true;
 

@@ -1,4 +1,4 @@
-const API_URL = "https://api.engmedapp.com/questions/";
+const API_URL = import.meta.env.VITE_API_URL + "questions/";
 
 export const fetchBoards = async () => {
   const res = await fetch(API_URL + "board/");

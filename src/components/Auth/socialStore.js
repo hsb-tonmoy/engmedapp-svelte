@@ -1,6 +1,6 @@
 import { authenticating, authenticate } from "./store.js";
 
-const API_URL = "https://api.engmedapp.com/";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export async function getAuthURL(provider, redirect_uri) {
   try {

@@ -6,7 +6,7 @@
   import loadTags from "./tags.js";
   import Item from "./TagItem.svelte";
 
-  const API_URL = "https://api.engmedapp.com/";
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const dispatch = createEventDispatcher();
 

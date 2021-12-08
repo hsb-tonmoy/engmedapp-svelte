@@ -5,7 +5,7 @@
 
   import Nav from "../../../../../components/Layout/Nav.svelte";
 
-  const API_URL = "https://api.engmedapp.com/";
+  const API_URL = import.meta.env.VITE_API_URL;
 
   let uid = $params.uid;
   let token = $params.token;
