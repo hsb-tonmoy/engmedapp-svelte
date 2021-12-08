@@ -6,14 +6,11 @@
   hotkeys("ctrl+k,/", function (event, handler) {
     event.preventDefault();
     const search = document.querySelector("#search");
-    // search.scrollIntoView({
-    //   behavior: "smooth",
-    //   block: "end",
-    //   inline: "nearest",
-    // });
-    window.setTimeout(() => {
-      search.focus();
-    }, 10);
+    search.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+      inline: "nearest",
+    });
   });
 </script>
 

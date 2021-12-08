@@ -18,6 +18,7 @@
     };
     if ($isActive("/questions/")) {
       window.location.href = "/questions";
+      location.reload();
     }
   }
 
