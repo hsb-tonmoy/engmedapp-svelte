@@ -20,6 +20,9 @@ module.exports = {
   resolve: {
     dedupe: ["@roxi/routify"],
   },
+  define: {
+    "process.env": process.env,
+  },
   plugins: [
     svelte({
       preprocess: [
