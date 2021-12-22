@@ -1,7 +1,7 @@
 <script>
   import { metatags } from "@roxi/routify";
   import { goto } from "@roxi/routify";
-  import Search from "../components/Layout/Search.svelte";
+  import Search from "../components/Layout/QuestionSearch.svelte";
   metatags.title = "EngMedApp - Home";
   metatags.description = "EngMedAp";
 

@@ -5,7 +5,7 @@
   import authAxios from "../../components/Auth/authAxios";
   import Filters from "../../components/Questions/Filters.svelte";
   import { filters, sort } from "../../components/Questions/store.js";
-  import Search from "../../components/Layout/Search.svelte";
+  import Search from "../../components/Layout/QuestionSearch.svelte";
   import Posts from "../../components/Questions/Posts.svelte";
   import Pagination from "svelte-pagination";
   import Spinner from "../../components/Spinner.svelte";

@@ -1,6 +1,6 @@
 <script>
   import { user } from "../Auth/store.js";
-  import { isActive, url } from "@roxi/routify";
+  import { isActive } from "@roxi/routify";
   import { fade } from "svelte/transition";
   import { filters } from "../Questions/store.js";
   let profileDropdown = true;
@@ -35,8 +35,8 @@
     }
   }}
 >
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between lg:justify-around h-16">
+  <div class="w-full mx-auto px-4 sm:px-6 lg:px-[8.5rem]">
+    <div class="flex items-center justify-between h-16">
       <div class="flex items-center">
         <div class="flex-shrink-0">
           <a href="/">
@@ -65,7 +65,8 @@
         <a
           href="/teachers"
           class="text-sm text-ematext hover:underline hover:text-primary font-mulish"
-          >Teacher's database</a
+          class:font-bold={$isActive("/teachers")}
+          class:text-primary={$isActive("/teachers")}>Teacher's database</a
         >
         {#if $user}
           <div class="logged-in flex items-center">
@@ -223,7 +224,12 @@
       class:font-bold={$isActive("/questions")}
       class:text-primary={$isActive("/questions")}>Question papers</a
     >
-    <a href="/teachers" class="hover:text-primary py-2">Teacher's database</a>
+    <a
+      href="/teachers"
+      class="hover:text-primary py-2"
+      class:font-bold={$isActive("/teachers")}
+      class:text-primary={$isActive("/teachers")}>Teacher's database</a
+    >
     <hr class="w-full" style="border-color: #F3F4F6" />
     <div class="user-section flex flex-wrap justify-between">
       {#if $user}
