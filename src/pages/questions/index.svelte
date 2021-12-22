@@ -42,17 +42,13 @@
     }
   }
 
-  $: questions_url = `questions/list?&board__name__in=${
+  $: questions_url = `questions/list?&board__name=${
     $filters.boards ? $filters.boards.value : ""
-  }&level__name__in=${
-    $filters.levels ? $filters.levels.value : ""
-  }&paper__name__in=${
+  }&level__name=${$filters.levels ? $filters.levels.value : ""}&paper__name=${
     $filters.papers ? encodeURIComponent($filters.papers.value) : ""
-  }&year__name__in=${
-    $filters.years ? $filters.years.value : ""
-  }&session__name__in=${
+  }&year__name=${$filters.years ? $filters.years.value : ""}&session__name=${
     $filters.sessions ? encodeURIComponent($filters.sessions.value) : ""
-  }&tags__name__in=${
+  }&tags__name=${
     $filters.tags ? encodeURIComponent($filters.tags.name) : ""
   }&query=${
     $filters.query ? encodeURIComponent($filters.query) : ""

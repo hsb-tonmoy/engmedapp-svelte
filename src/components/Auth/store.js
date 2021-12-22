@@ -233,3 +233,7 @@ export async function getCredentials() {
     console.log(err);
   }
 }
+
+export function saveCurrentLocation() {
+  localStorage.setItem("currentLocation", window.location.href);
+}

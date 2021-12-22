@@ -1,6 +1,6 @@
 <script>
-  import { user } from "../Auth/store.js";
-  import { isActive } from "@roxi/routify";
+  import { user, saveCurrentLocation } from "../Auth/store.js";
+  import { isActive, url } from "@roxi/routify";
   import { fade } from "svelte/transition";
   import { filters } from "../Questions/store.js";
   let profileDropdown = true;
@@ -18,11 +18,8 @@
     };
     if ($isActive("/questions/")) {
       window.location.href = "/questions";
+      location.reload();
     }
-  }
-
-  function saveCurrentLocation() {
-    localStorage.setItem("currentLocation", window.location.href);
   }
 </script>
 

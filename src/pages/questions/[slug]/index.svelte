@@ -2,7 +2,7 @@
   import { metatags, goto } from "@roxi/routify";
   import { convertDate } from "../../../components/utils/convertDate.js";
   import Explanation from "../../../components/Questions/Explanation.svelte";
-  import { user } from "../../../components/Auth/store.js";
+  import { user, saveCurrentLocation } from "../../../components/Auth/store.js";
   import authAxios from "../../../components/Auth/authAxios.js";
   import Toastify from "toastify-js";
   import "toastify-js/src/toastify.css";
@@ -241,10 +241,11 @@
                 >Post your answer</button
               >
             {:else}
-              <button
-                on:click={() => $goto("/login")}
+              <a
+                href="/login"
+                on:click={saveCurrentLocation}
                 class="self-end px-10 py-4 rounded-sm text-sm text-white bg-primary font-mulish"
-                >Login to post your answer</button
+                >Login to post your answer</a
               >
             {/if}
           </div>
