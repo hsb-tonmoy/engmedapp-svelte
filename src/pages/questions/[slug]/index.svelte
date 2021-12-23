@@ -34,7 +34,7 @@
           ? "Your answer has been successfully submitted. It is pending approval by the moderators."
           : "Something went wrong, please try again later",
       close: false,
-      duration: 10000,
+      duration: 5000,
       gravity: "top",
       position: "center",
       offset: {

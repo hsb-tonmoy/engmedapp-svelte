@@ -35,7 +35,7 @@
           ? "Your answer has been updated"
           : "Something went wrong, please try again later",
       close: false,
-      duration: 10000,
+      duration: 5000,
       gravity: "top",
       position: "center",
       offset: {
@@ -63,8 +63,22 @@
           notificationToast("success");
           explanation.content = explanation_data;
           editing = false;
+        } else if (res.status === 400) {
+          editing = false;
         } else {
           notificationToast("error");
+        }
+      });
+  }
+
+  async function deleteExplanation() {
+    await authAxios
+      .delete(`questions/explanations/${explanation.id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          console.log("Deleted");
+        } else {
+          console.log(res);
         }
       });
   }
@@ -145,6 +159,7 @@
           bind:editor_data={explanation_data}
           initialValue={explanation.content}
         />
+
         <button
           on:click={submitEdit}
           class="self-end mt-4 px-10 py-4 rounded-sm text-sm text-white bg-primary font-mulish"
@@ -166,6 +181,9 @@
               editing = !editing;
             }}>{editing ? "Cancel Edit" : "Edit"}</button
           >
+        {/if}
+        {#if $user && $user.account_type === 5}
+          <button on:click={deleteExplanation}>Delete</button>
         {/if}
       </div>
 

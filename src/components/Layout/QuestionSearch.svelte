@@ -12,14 +12,18 @@
       inline: "nearest",
     });
   });
+
+  function onSearch() {
+    if (query && query !== "") {
+      window.location.href = `/questions?query=${query}`;
+    }
+  }
 </script>
 
 <div class="px-4 md:p-0">
   <form
     id="search"
-    on:submit|preventDefault={() => {
-      window.location.href = `/questions?query=${query}`;
-    }}
+    on:submit|preventDefault={onSearch}
     class="flex flex-row flex-nowrap items-center mt-10 search-box"
   >
     <svg
