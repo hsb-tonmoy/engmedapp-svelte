@@ -1,67 +1,57 @@
 <script>
   import Grid from "gridjs-svelte";
   import { html } from "gridjs";
+
   let grid;
 
-  const data = [
+  export let query;
+
+  export let data;
+
+  $: data_queried = data;
+
+  $: if (query && query !== "") {
+    data_queried = data.filter((teacher) => {
+      return teacher.name.includes(query);
+    });
+  } else if (query === "") {
+    data_queried = data;
+  }
+
+  const columns = [
     {
-      photo: html(
-        '<img src="https://engmedapp.s3.amazonaws.com/media/profiles/avatar.png" />'
-      ),
-      name: "Andrey Popov",
-      affiliation: "Freelancer",
-      subjects: "Algebra",
-      location: "Dhaka, Bangladesh",
-      timezone: "GMT+6",
+      id: "profile_pic",
+      name: "Profile Pic",
+      hidden: true,
     },
     {
-      name: "Jennifer Joey",
-      affiliation: "Govt. Lab School",
-      subjects: "Literature",
-      location: "Dhaka, Bangladesh",
-      timezone: "GMT+6",
+      id: "slug",
+      name: "Slug",
+      hidden: true,
     },
     {
-      name: "John Doe",
-      affiliation: "Freelancer",
-      subjects: "Mathematics D",
-      location: "Dhaka, Bangladesh",
-      timezone: "GMT+6",
+      id: "name",
+      name: "Name",
+      formatter: (cell, row) =>
+        html(
+          `<span class="flex items-center gap-x-1"><img src="${row.cells[0].data}" />${cell}</span>`
+        ),
     },
     {
-      name: "Zandhro Vhylendo",
-      affiliation: "Dhanmondi Boys",
-      subjects: "English",
-      location: "Dhaka, Bangladesh",
-      timezone: "GMT+6",
+      id: "institute",
+      name: "Affiliation",
     },
     {
-      name: "Jessica Perker",
-      affiliation: "Viqarunnisa Noon High School",
-      subjects: "Physics",
-      location: "Dhaka, Bangladesh",
-      timezone: "GMT+6",
+      id: "subjects_taught",
+      name: "Subjects",
     },
     {
-      name: "Imet Chub",
-      affiliation: "Scholastica",
-      subjects: "Chemistry",
-      location: "Dhaka, Bangladesh",
-      timezone: "GMT+6",
+      id: "location",
+      name: "Location",
     },
     {
-      name: "Abu Musa",
-      affiliation: "Maple Leaf",
-      subjects: "Biology",
-      location: "Dhaka, Bangladesh",
-      timezone: "GMT+6",
-    },
-    {
-      name: "Rakesh Khan",
-      affiliation: "Green Dale",
-      subjects: "History",
-      location: "Dhaka, Bangladesh",
-      timezone: "GMT+6",
+      id: "time_zone",
+      name: "Timezone",
     },
   ];
 
@@ -74,11 +64,17 @@
   };
 </script>
 
-<Grid sort={true} {className} bind:instance={grid} {data} />
+<Grid
+  sort={true}
+  {className}
+  bind:instance={grid}
+  {columns}
+  data={data_queried}
+/>
 
 <style global lang="postcss">
   .teachers-container {
-    @apply w-full bg-[#FAFCFF] px-4 sm:px-6 lg:px-[7.5rem] text-left;
+    @apply w-full pb-10 bg-[#FAFCFF] px-4 sm:px-6 lg:px-[7.5rem] text-left;
   }
   .teachers-table {
     @apply w-full;
@@ -88,7 +84,7 @@
   }
 
   .teachers-th {
-    @apply pb-0 pt-6 px-4 font-lato font-bold text-base text-black capitalize;
+    @apply pb-0 pt-6 px-4 font-lato font-bold text-base text-black capitalize cursor-pointer;
     border-bottom: 1px solid #ccd9e9;
   }
 
@@ -96,6 +92,10 @@
     @apply px-4 py-4 font-mulish font-medium text-sm text-[#16355C];
     border-bottom: 1px solid rgba(204, 217, 233, 0.6);
     min-width: 100px !important;
+  }
+
+  .teachers-td:nth-of-type(1) {
+    width: 30px !important;
   }
 
   .gridjs-tr:hover {

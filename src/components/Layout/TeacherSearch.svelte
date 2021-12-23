@@ -1,5 +1,5 @@
 <script>
-  let query;
+  export let query;
 
   import hotkeys from "hotkeys-js";
 
