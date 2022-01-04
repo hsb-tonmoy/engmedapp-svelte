@@ -17,5 +17,7 @@
 </script>
 
 {#if teacher}
-  <slot scoped={{ teacher }}>Loading...</slot>
+  <div class="bg-[#f6f6f6] px-4 sm:px-6 lg:px-[8.5rem] py-24">
+    <slot scoped={{ teacher }}>Loading...</slot>
+  </div>
 {/if}

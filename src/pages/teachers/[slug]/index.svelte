@@ -29,18 +29,15 @@
   };
 </script>
 
-<main class="bg-[#f6f6f6]">
-  <div
-    class="flex flex-col justify-center items-center w-11/12 xl:w-3/4 pt-6"
-    style="margin-left: auto; margin-right: auto"
-  >
+<main>
+  <div class="flex flex-col items-center ">
     <div
-      class="flex flex-col md:flex-row justify-center items-center gap-y-4 md:gap-x-6 font-mulish"
+      class="flex flex-col md:flex-row items-center w-full  md:gap-x-6 font-mulish"
     >
-      <div class="profile_pic w-full w-2/4 md:w-1/5">
+      <div class="profile_pic w-2/4 md:w-1/5">
         <img
           class="rounded-full md:rounded-md"
-          src="https://engmedapp.s3.amazonaws.com/media/teachers/72340850_Mamoon.png"
+          src={teacher.profile_pic}
           alt=""
         />
       </div>
@@ -115,41 +112,6 @@
                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
               />
             </svg>city, state, country</span
-          >
-        </div>
-      </div>
-      <div class="flex flex-col justify-center w-full md:w-30p">
-        <div class="stats flex gap-x-2 lg:gap-x-4">
-          <div
-            class="flex flex-col items-center bg-secondaryLight text-primary text-xs rounded-sm p-2 lg:p-3"
-          >
-            <span class="text-ematext font-bold text-base lg:text-lg">6</span> Answers
-          </div>
-          <div
-            class="flex flex-col items-center bg-secondaryLight text-primary text-xs rounded-sm p-2 lg:p-3"
-          >
-            <span class="text-ematext font-bold text-base lg:text-lg">4</span> Questions
-          </div>
-          <div
-            class="flex flex-col items-center bg-secondaryLight text-primary text-xs rounded-sm p-2 lg:p-3"
-          >
-            <span class="text-ematext font-bold text-base lg:text-lg">38K</span>
-            Reached
-          </div>
-        </div>
-        <div class="stats2 flex flex-col gap-y-1 mt-4 text-sm">
-          <span cass="font-semibold text-ematext"
-            >Member for {dateDiffer({
-              from: "2020/05/21",
-              to: Date.now(),
-            })}
-          </span>
-          <span class="text-primary font-semibold">16 profile views</span>
-          <span class="text-ematextgray font-semibold"
-            >Last seen {dateDiffer({
-              from: "2021/05/21",
-              to: Date.now(),
-            })} ago</span
           >
         </div>
       </div>

@@ -34,7 +34,7 @@
       name: "Name",
       formatter: (cell, row) =>
         html(
-          `<span class="flex items-center gap-x-1"><img src="${row.cells[0].data}" />${cell}</span>`
+          `<a href="/teachers/${row.cells[1].data}"><span class="flex items-center gap-x-1"><img src="${row.cells[0].data}" />${cell}</span></a>`
         ),
     },
     {
