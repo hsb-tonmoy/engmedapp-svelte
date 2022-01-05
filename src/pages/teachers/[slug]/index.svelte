@@ -29,21 +29,19 @@
   };
 </script>
 
-<main>
-  <div class="flex flex-col items-center ">
+<main class="mx-auto">
+  <div class="flex flex-col justify-center items-center w-5/6">
     <div
       class="flex flex-col md:flex-row items-center w-full  md:gap-x-6 font-mulish"
     >
-      <div class="profile_pic w-2/4 md:w-1/5">
+      <div class="profile_pic flex justify-end w-2/4 md:w-1/5">
         <img
           class="rounded-full md:rounded-md"
           src={teacher.profile_pic}
           alt=""
         />
       </div>
-      <div
-        class="flex flex-col justify-between w-full md:w-2/4 p-6 rounded-md bg-white"
-      >
+      <div class="flex flex-col justify-between w-full p-6 rounded-md bg-white">
         <div class="info flex flex-col">
           <div
             class="flex justify-between items-center gap-x-6 lg:gap-x-10 xl:gap-x-20"
@@ -116,6 +114,13 @@
         </div>
       </div>
     </div>
+    <section class="flex p-4 gap-x-2 mt-14 bg-white w-full">
+      <button
+        class="border border-primary bg-primary px-3 py-1 rounded text-white text-xs"
+        >About Teacher</button
+      >
+      <button>Templates</button>
+    </section>
     <hr class="my-8 w-full md:w-11/12" style="border-color: #CCD9E9" />
   </div>
 </main>
