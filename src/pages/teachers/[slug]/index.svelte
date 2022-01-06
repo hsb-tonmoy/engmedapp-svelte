@@ -29,12 +29,12 @@
   };
 </script>
 
-<main class="mx-auto">
-  <div class="flex flex-col justify-center items-center w-5/6">
+<main class="flex justify-center">
+  <div class="flex flex-col justify-center items-center w-full lg:w-5/6">
     <div
       class="flex flex-col md:flex-row items-center w-full  md:gap-x-6 font-mulish"
     >
-      <div class="profile_pic flex justify-end w-2/4 md:w-1/5">
+      <div class="profile_pic flex w-2/4 md:w-[15%]">
         <img
           class="rounded-full md:rounded-md"
           src={teacher.profile_pic}
@@ -51,10 +51,9 @@
                 {teacher.first_name}
                 {teacher.last_name}
               </h2>
-              <span class="text-black text-xs font-poppins">@username</span>
               <span
                 class="self-start px-3 py-1 rounded-full text-white text-xs mt-2"
-                style="background-color: #3AC9D1">{user_roles[1]}</span
+                style="background-color: #3AC9D1">{teacher.institute}</span
               >
             </div>
             <div class="edit flex gap-x-2">
@@ -114,13 +113,72 @@
         </div>
       </div>
     </div>
-    <section class="flex p-4 gap-x-2 mt-14 bg-white w-full">
+    <section
+      class="flex items-center rounded-md px-6 py-4 gap-x-3 mt-14 bg-white w-full font-mulish"
+    >
       <button
-        class="border border-primary bg-primary px-3 py-1 rounded text-white text-xs"
+        class="border border-primary bg-primary px-8 lg:px-11 py-2 lg:py-3 rounded text-white text-xs lg:text-sm"
         >About Teacher</button
       >
-      <button>Templates</button>
+      <button
+        class="border border-[#F6F6F6] bg-[#F6F6F6] px-9 lg:px-11 py-2 lg:py-3 rounded text-ematext text-xs lg:text-sm"
+        >Templates</button
+      >
+    </section>
+    <section
+      class="flex items-center rounded-md px-6 lg:px-10 py-4 lg:py-8 gap-x-3 mt-4 bg-white w-full font-mulish font-medium text-ematext text-sm lg:text-base"
+    >
+      <table class="table-fixed">
+        <tr>
+          <td
+            class="title md:w-80 font-bold text-base lg:text-lg text-primary pb-6 lg:pb-8"
+            >Experience</td
+          >
+          <td />
+        </tr>
+        <tr>
+          <td>Subjects taught:</td>
+          <td>{teacher.subjects_taught}</td>
+        </tr>
+        <tr>
+          <td>Years of experience:</td>
+          <td>{teacher.years_experience} Years</td>
+        </tr>
+        <tr>
+          <td>Number of students taught:</td>
+          <td>{teacher.students_taught}</td>
+        </tr>
+        <tr>
+          <td
+            class="title md:w-80 font-bold text-base lg:text-lg text-primary pb-6 lg:pb-8"
+            >Education</td
+          >
+          <td />
+        </tr>
+        <tr>
+          <td>Qualification:</td>
+          <td>{teacher.qualification}</td>
+        </tr>
+        <tr>
+          <td>Highest degree:</td>
+          <td>{teacher.highest_degree}</td>
+        </tr>
+      </table>
     </section>
     <hr class="my-8 w-full md:w-11/12" style="border-color: #CCD9E9" />
   </div>
 </main>
+
+<style lang="postcss">
+  td:not(.title) {
+    @apply pb-6;
+  }
+
+  .title {
+    padding-top: 3.75rem;
+  }
+
+  td {
+    vertical-align: baseline;
+  }
+</style>
