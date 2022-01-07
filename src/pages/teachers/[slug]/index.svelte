@@ -3,9 +3,22 @@
 
   import { user } from "../../../components/Auth/store.js";
 
-  import { birthday } from "../../../components/svg/teachers.js";
+  import {
+    birthday,
+    gender,
+    location,
+    clock,
+    phone,
+    mail,
+    website,
+    facebook,
+    twitter,
+    instagram,
+    whatsapp,
+    linkedin,
+  } from "../../../components/svg/teachers.js";
 
-  import dateDiffer from "date-differ";
+  import TeacherData from "../../../components/Teachers/TeacherData.svelte";
 
   export let scoped;
 
@@ -13,19 +26,24 @@
 
   metatags.title = `EngMedApp - ${scoped.teacher.first_name} ${scoped.teacher.last_name}`;
 
-  const user_roles = {
-    1: "Student",
-    2: "Teacher",
-    3: "Content Creator",
-    4: "Manager",
-    5: "Admin",
-  };
+  let tab = 1;
 
   const genders = {
     1: "Male",
     2: "Female",
     3: "Other",
     4: "Prefer Not to Answer",
+  };
+
+  const date_of_birth = () => {
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+
+    const date = new Date(scoped.teacher.date_of_birth);
+    return date.toLocaleDateString("en-US", options);
   };
 </script>
 
@@ -56,60 +74,62 @@
                 style="background-color: #3AC9D1">{teacher.institute}</span
               >
             </div>
-            <div class="edit flex gap-x-2">
+            <div class="edit flex gap-x-4">
+              <span class="text-ematext"> {@html facebook} </span>
+              <span class="text-ematext"> {@html twitter} </span>
+              <span class="text-ematext"> {@html instagram} </span>
+              <span class="text-ematext"> {@html linkedin} </span>
+              <span class="text-ematext"> {@html whatsapp} </span>
+            </div>
+          </div>
+          <div class="flex">
+            <div class="flex flex-col w-2/4">
               <span
-                class="border border-primary bg-opacity-0 px-3 py-1 rounded text-ematext text-xs"
-                >Imet</span
+                class="flex items-center gap-x-1 mt-8 text-ematextgray font-medium text-sm"
+                >{@html birthday}
+                {date_of_birth()}</span
               >
-
-              <button
-                class="border border-primary bg-primary px-3 py-1 rounded text-white text-xs"
-                >Edit</button
+              <span
+                class="flex items-center gap-x-1 mt-2 text-ematextgray font-medium text-sm"
+                >{@html gender} {genders[1]}</span
+              >
+              <span
+                class="flex items-center gap-x-1 mt-2 text-ematextgray font-medium text-sm"
+                >{@html location} {teacher.location}</span
+              >
+              <span
+                class="flex items-center gap-x-1 mt-2 text-ematextgray font-medium text-sm"
+                >{@html clock} {teacher.time_zone}</span
+              >
+            </div>
+            <div class="flex flex-col justify-center items-end w-2/4">
+              <span
+                class="flex items-center gap-x-1 mt-8 text-ematextgray font-medium text-sm"
+                >{@html phone}
+                <a class="hover:text-ematext" href="tel:{teacher.phone_no}"
+                  >{teacher.phone_no}</a
+                ></span
+              >
+              <span
+                class="flex items-center gap-x-1 mt-2 text-ematextgray font-medium text-sm"
+                >{@html mail}
+                <a
+                  class="hover:text-ematext"
+                  href="mailto:{teacher.email_address}"
+                  >{teacher.email_address}</a
+                ></span
+              >
+              <span
+                class="flex items-center gap-x-1 mt-2 text-ematextgray font-medium text-sm"
+                >{@html website}
+                <a
+                  class="hover:text-ematext"
+                  target="_blank"
+                  href={teacher.website}>{teacher.website}</a
+                ></span
               >
             </div>
           </div>
-          <span
-            class="flex items-center gap-x-1 mt-8 text-ematextgray font-medium text-sm"
-            >{@html birthday} date of birth</span
-          >
-          <span
-            class="flex items-center gap-x-1 mt-2 text-ematextgray font-medium text-sm"
-            ><svg
-              class="h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>{genders[1]}</span
-          >
-          <span
-            class="flex items-center gap-x-1 mt-2 text-ematextgray font-medium text-sm"
-            ><svg
-              class="h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-              />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>city, state, country</span
-          >
         </div>
       </div>
     </div>
@@ -117,68 +137,34 @@
       class="flex items-center rounded-md px-6 py-4 gap-x-3 mt-14 bg-white w-full font-mulish"
     >
       <button
-        class="border border-primary bg-primary px-8 lg:px-11 py-2 lg:py-3 rounded text-white text-xs lg:text-sm"
+        on:click={() => {
+          tab = 1;
+        }}
+        class:active={tab === 1}
+        class="border border-[#F6F6F6] bg-[#F6F6F6] text-ematext px-8 lg:px-11 py-2 lg:py-3 rounded text-xs lg:text-sm"
         >About Teacher</button
       >
       <button
-        class="border border-[#F6F6F6] bg-[#F6F6F6] px-9 lg:px-11 py-2 lg:py-3 rounded text-ematext text-xs lg:text-sm"
-        >Templates</button
+        on:click={() => {
+          tab = 2;
+        }}
+        class:active={tab === 2}
+        class="border border-[#F6F6F6] bg-[#F6F6F6] px-9 lg:px-11 py-2 lg:py-3 rounded text-xs lg:text-sm"
+        >Flyers</button
       >
     </section>
     <section
       class="flex items-center rounded-md px-6 lg:px-10 py-4 lg:py-8 gap-x-3 mt-4 bg-white w-full font-mulish font-medium text-ematext text-sm lg:text-base"
     >
-      <table class="table-fixed">
-        <tr>
-          <td
-            class="title md:w-80 font-bold text-base lg:text-lg text-primary pb-6 lg:pb-8"
-            >Experience</td
-          >
-          <td />
-        </tr>
-        <tr>
-          <td>Subjects taught:</td>
-          <td>{teacher.subjects_taught}</td>
-        </tr>
-        <tr>
-          <td>Years of experience:</td>
-          <td>{teacher.years_experience} Years</td>
-        </tr>
-        <tr>
-          <td>Number of students taught:</td>
-          <td>{teacher.students_taught}</td>
-        </tr>
-        <tr>
-          <td
-            class="title md:w-80 font-bold text-base lg:text-lg text-primary pb-6 lg:pb-8"
-            >Education</td
-          >
-          <td />
-        </tr>
-        <tr>
-          <td>Qualification:</td>
-          <td>{teacher.qualification}</td>
-        </tr>
-        <tr>
-          <td>Highest degree:</td>
-          <td>{teacher.highest_degree}</td>
-        </tr>
-      </table>
+      {#if tab === 1}
+        <TeacherData {teacher} />
+      {/if}
     </section>
-    <hr class="my-8 w-full md:w-11/12" style="border-color: #CCD9E9" />
   </div>
 </main>
 
 <style lang="postcss">
-  td:not(.title) {
-    @apply pb-6;
-  }
-
-  .title {
-    padding-top: 3.75rem;
-  }
-
-  td {
-    vertical-align: baseline;
+  :global(.active) {
+    @apply border-primary bg-primary text-white;
   }
 </style>
