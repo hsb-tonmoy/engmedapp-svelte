@@ -75,11 +75,21 @@
               >
             </div>
             <div class="edit flex gap-x-4">
-              <span class="text-ematext"> {@html facebook} </span>
-              <span class="text-ematext"> {@html twitter} </span>
-              <span class="text-ematext"> {@html instagram} </span>
-              <span class="text-ematext"> {@html linkedin} </span>
-              <span class="text-ematext"> {@html whatsapp} </span>
+              {#if teacher.social_media.facebook}
+                <span class="text-ematext"> {@html facebook} </span>
+              {/if}
+              {#if teacher.social_media.twitter}
+                <span class="text-ematext"> {@html twitter} </span>
+              {/if}
+              {#if teacher.social_media.instagram}
+                <span class="text-ematext"> {@html instagram} </span>
+              {/if}
+              {#if teacher.social_media.linkedin}
+                <span class="text-ematext"> {@html linkedin} </span>
+              {/if}
+              {#if teacher.social_media.whatsapp}
+                <span class="text-ematext"> {@html whatsapp} </span>
+              {/if}
             </div>
           </div>
           <div class="flex">
@@ -103,31 +113,37 @@
               >
             </div>
             <div class="flex flex-col justify-center items-end w-2/4">
-              <span
-                class="flex items-center gap-x-1 mt-8 text-ematextgray font-medium text-sm"
-                >{@html phone}
-                <a class="hover:text-ematext" href="tel:{teacher.phone_no}"
-                  >{teacher.phone_no}</a
-                ></span
-              >
-              <span
-                class="flex items-center gap-x-1 mt-2 text-ematextgray font-medium text-sm"
-                >{@html mail}
-                <a
-                  class="hover:text-ematext"
-                  href="mailto:{teacher.email_address}"
-                  >{teacher.email_address}</a
-                ></span
-              >
-              <span
-                class="flex items-center gap-x-1 mt-2 text-ematextgray font-medium text-sm"
-                >{@html website}
-                <a
-                  class="hover:text-ematext"
-                  target="_blank"
-                  href={teacher.website}>{teacher.website}</a
-                ></span
-              >
+              {#if teacher.phone_no}
+                <span
+                  class="flex items-center gap-x-1 mt-8 text-ematextgray font-medium text-sm"
+                  >{@html phone}
+                  <a class="hover:text-ematext" href="tel:{teacher.phone_no}"
+                    >{teacher.phone_no}</a
+                  ></span
+                >
+              {/if}
+              {#if teacher.email_address}
+                <span
+                  class="flex items-center gap-x-1 mt-2 text-ematextgray font-medium text-sm"
+                  >{@html mail}
+                  <a
+                    class="hover:text-ematext"
+                    href="mailto:{teacher.email_address}"
+                    >{teacher.email_address}</a
+                  ></span
+                >
+              {/if}
+              {#if teacher.website}
+                <span
+                  class="flex items-center gap-x-1 mt-2 text-ematextgray font-medium text-sm"
+                  >{@html website}
+                  <a
+                    class="hover:text-ematext"
+                    target="_blank"
+                    href={teacher.website}>{teacher.website}</a
+                  ></span
+                >
+              {/if}
             </div>
           </div>
         </div>
