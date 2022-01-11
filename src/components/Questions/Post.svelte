@@ -1,4 +1,5 @@
 <script>
+  import { bookmark } from "../svg/questions.js";
   export let question;
 
   function onFilter(attr, prop) {
@@ -6,47 +7,50 @@
   }
 </script>
 
-<span class="breadcrumbs font-mulish text-xs text-ematextgray mb-4"
-  ><a
-    href="#"
-    class="hover:text-black"
-    on:click={() => {
-      onFilter("board", question.board.name);
-    }}>{question.board.name}</a
+<div class="flex justify-between">
+  <span class="breadcrumbs font-mulish text-xs text-ematextgray mb-4"
+    ><a
+      href="#"
+      class="hover:text-black"
+      on:click={() => {
+        onFilter("board", question.board.name);
+      }}>{question.board.name}</a
+    >
+    >
+    <a
+      href="#"
+      class="hover:text-black"
+      on:click={() => {
+        onFilter("level", question.level.name);
+      }}>{question.level.name}</a
+    >
+    >
+    <a
+      href="#"
+      class="hover:text-black"
+      on:click={() => {
+        onFilter("paper", question.paper.name);
+      }}>{question.paper.name}</a
+    >
+    >
+    <a
+      href="#"
+      class="hover:text-black"
+      on:click={() => {
+        onFilter("year", question.year.name);
+      }}>{question.year.name}</a
+    >
+    >
+    <a
+      href="#"
+      class="hover:text-black"
+      on:click={() => {
+        onFilter("session", question.session.name);
+      }}>{question.session.name}</a
+    ></span
   >
-  >
-  <a
-    href="#"
-    class="hover:text-black"
-    on:click={() => {
-      onFilter("level", question.level.name);
-    }}>{question.level.name}</a
-  >
-  >
-  <a
-    href="#"
-    class="hover:text-black"
-    on:click={() => {
-      onFilter("paper", question.paper.name);
-    }}>{question.paper.name}</a
-  >
-  >
-  <a
-    href="#"
-    class="hover:text-black"
-    on:click={() => {
-      onFilter("year", question.year.name);
-    }}>{question.year.name}</a
-  >
-  >
-  <a
-    href="#"
-    class="hover:text-black"
-    on:click={() => {
-      onFilter("session", question.session.name);
-    }}>{question.session.name}</a
-  ></span
->
+  <span class="bookmark text-ematext">{@html bookmark}</span>
+</div>
 <span
   class="question-title font-mulish text-base md:text-lg text-black font-medium"
   ><a href="/questions/{question.slug}">{question.title}</a>
