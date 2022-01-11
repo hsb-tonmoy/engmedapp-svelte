@@ -7,7 +7,7 @@
   let question;
   async function fetchquestion(slug) {
     try {
-      const response = await fetch(`${API_URL}questions/question/${slug}`);
+      const response = await fetch(`${API_URL}questions/questions/${slug}`);
       question = await response.json();
     } catch (err) {
       console.log(err);

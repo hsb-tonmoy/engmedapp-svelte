@@ -42,7 +42,7 @@
     }
   }
 
-  $: questions_url = `questions/list?&board__name=${
+  $: questions_url = `questions/questions/?&board__name=${
     $filters.boards ? $filters.boards.value : ""
   }&level__name=${$filters.levels ? $filters.levels.value : ""}&paper__name=${
     $filters.papers ? encodeURIComponent($filters.papers.value) : ""

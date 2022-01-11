@@ -2,10 +2,12 @@
   import { metatags } from "@roxi/routify";
 
   import { user } from "../../../components/Auth/store.js";
-
+  import Spinner from "../../../components/Spinner.svelte";
   import dateDiffer from "date-differ";
 
   export let scoped;
+
+  let tab = 1;
 
   $: profile = scoped.profile;
 
@@ -137,12 +139,14 @@
         <div
           class="flex flex-col items-center bg-secondaryLight text-primary text-xs rounded-sm p-2 lg:p-3"
         >
-          <span class="text-ematext font-bold text-base lg:text-lg">6</span> Answers
+          <span class="text-ematext font-bold text-base lg:text-lg"
+            >{profile.user.explanations_count}</span
+          > Answers
         </div>
         <div
           class="flex flex-col items-center bg-secondaryLight text-primary text-xs rounded-sm p-2 lg:p-3"
         >
-          <span class="text-ematext font-bold text-base lg:text-lg">4</span> Questions
+          <span class="text-ematext font-bold text-base lg:text-lg">4</span> Comments
         </div>
         <div
           class="flex flex-col items-center bg-secondaryLight text-primary text-xs rounded-sm p-2 lg:p-3"
@@ -175,14 +179,18 @@
       {profile.user_rep} Reputations
     </div>
     <div class="flex xl:w-2/4 justify-start gap-x-2">
-      <button class="bg-primary rounded py-3 px-5 text-white text-xs"
+      <button
+        on:click={() => (tab = 1)}
+        class="bg-primary rounded py-3 px-5 text-white text-xs"
         >My explanations</button
       >
       <button
+        on:click={() => (tab = 2)}
         class="rounded py-3 px-5 text-black text-xs"
         style="background-color: #F9F9F9">My bookmarks</button
       >
       <button
+        on:click={() => (tab = 3)}
         class="rounded py-3 px-5 text-black text-xs"
         style="background-color: #F9F9F9">About me</button
       >
@@ -216,57 +224,64 @@
         >
       </div>
       <div class="border rounded-md py-5 px-6" style="border-color: #CCD9E9">
-        <article class="flex flex-col">
-          <div class="flex">
-            <div class="flex flex-col w-11/12">
-              <span
-                class="breadcrumbs font-mulish text-xs text-ematextgray mb-4"
-                >Edexcel > O > Computer Science > 2010 > February</span
-              >
-              <div
-                class="question-title flex justify-between font-mulish text-base md:text-md text-black font-medium"
-              >
-                <a href="/questions/"
-                  >Question 1: The net horizontal force on a box F as a function
-                  of the horizontal position x is shown below.
-                </a>
-              </div>
-              <div class="question-details mt-4 ml-3 pr-5">
+        {#if tab === 1}
+          {#await questions}
+            <Spinner />
+          {:then questions}
+            {#each questions.results as question, index (index)}
+              <article class="flex flex-col">
+                <div class="flex">
+                  <div class="flex flex-col w-11/12">
+                    <span
+                      class="breadcrumbs font-mulish text-xs text-ematextgray mb-4"
+                      >{question.board.name} > {question.level.name} > {question
+                        .paper.name} > {question.year.name} > {question.session
+                        .name}</span
+                    >
+                    <div
+                      class="question-title flex justify-between font-mulish text-base md:text-md text-black font-medium"
+                    >
+                      <a href={`/questions/${question.slug}`}
+                        >{question.title}
+                      </a>
+                    </div>
+                    <div class="question-details mt-4 ml-3 pr-5">
+                      <span class="font-mulish text-sm text-black">
+                        {question.excerpt}
+                      </span>
+                    </div>
+                    <hr class="my-4" style="border-color: #CCD9E9" />
+                  </div>
+                  <div class="flex justify-end items-start w-1/12">
+                    <button class="text-white bg-primary p-1"
+                      ><svg
+                        class="h-3 w-3"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg></button
+                    >
+                  </div>
+                </div>
+                <h4 class="font-mulish text-black font-bold mb-3">Answer</h4>
                 <span class="font-mulish text-sm text-black">
-                  What is the work done on the box from x = 0m to 2.0m? Round
-                  answer to two significant digits. What is the work done on the
-                  box from x = 0m to 2.0m? Round answer to two significant
-                  digits.
+                  Lorem ipsunnm dognlor svfbit amet, consectetur adipiscing
+                  elit. Ut cras interdum elit cursus. Hac snged feugiat maecenas
+                  ultricies. Fermentum metus, sed vitae c sdphanlor svfbit
+                  scretra convallis. Quam mattis dapibus vitae vivamus non
+                  volutpat est tellus.
                 </span>
-              </div>
-              <hr class="my-4" style="border-color: #CCD9E9" />
-            </div>
-            <div class="flex justify-end items-start w-1/12">
-              <button class="text-white bg-primary p-1"
-                ><svg
-                  class="h-3 w-3"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg></button
-              >
-            </div>
-          </div>
-          <h4 class="font-mulish text-black font-bold mb-3">Answer</h4>
-          <span class="font-mulish text-sm text-black">
-            Lorem ipsunnm dognlor svfbit amet, consectetur adipiscing elit. Ut
-            cras interdum elit cursus. Hac snged feugiat maecenas ultricies.
-            Fermentum metus, sed vitae c sdphanlor svfbit scretra convallis.
-            Quam mattis dapibus vitae vivamus non volutpat est tellus.
-          </span>
-        </article>
+              </article>
+            {/each}
+          {/await}
+        {/if}
       </div>
     </div>
   </div>
