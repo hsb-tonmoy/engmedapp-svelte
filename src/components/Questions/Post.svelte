@@ -1,9 +1,47 @@
 <script>
-  import { bookmark } from "../svg/questions.js";
+  import { bookmark, bookmarked } from "../svg/questions.js";
+  import { user } from "../Auth/store.js";
+  import authAxios from "../Auth/authAxios.js";
+
   export let question;
 
   function onFilter(attr, prop) {
     window.location.href = `/questions?${attr}=${encodeURIComponent(prop)}`;
+  }
+
+  let isBookmarked;
+
+  $: if (question.is_bookmarked && question.is_bookmarked === 1) {
+    isBookmarked = true;
+  } else if (!question.is_bookmarked || question.is_bookmarked === 0) {
+    isBookmarked = false;
+  }
+
+  async function handleBookmark() {
+    if ($user) {
+      let bookmark = isBookmarked ? 0 : 1;
+      await authAxios
+        .put(`questions/questions/${question.slug}?bookmark=${bookmark}`, {
+          board: question.board.id,
+          level: question.level.id,
+          paper: question.paper.id,
+          year: question.year.id,
+          session: question.session.id,
+          status: question.status,
+          author: question.author.id,
+          slug: question.slug,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            isBookmarked = !isBookmarked;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (!$user) {
+      window.location.href = "/login";
+    }
   }
 </script>
 
@@ -49,7 +87,15 @@
       }}>{question.session.name}</a
     ></span
   >
-  <span class="bookmark text-ematext">{@html bookmark}</span>
+  {#if isBookmarked}
+    <span on:click={handleBookmark} class="bookmark cursor-pointer text-ematext"
+      >{@html bookmarked}</span
+    >
+  {:else}
+    <span on:click={handleBookmark} class="bookmark cursor-pointer text-ematext"
+      >{@html bookmark}</span
+    >
+  {/if}
 </div>
 <span
   class="question-title font-mulish text-base md:text-lg text-black font-medium"

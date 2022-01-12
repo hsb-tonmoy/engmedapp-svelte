@@ -28,6 +28,6 @@
   $: console.log(questions);
 </script>
 
-{#each questions as question, index (index)}
+{#each questions.results as question, index (index)}
   <Post {question} />
 {/each}
