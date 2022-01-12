@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import authAxios from "../Auth/authAxios";
 
   import Post from "./Post.svelte";
 
@@ -17,15 +18,16 @@
       .then((res) => {
         questions = res.data;
       })
-      .catch((err) => console.log(err))
-      .finally(() => (loading = false));
+      .catch((err) => console.log(err));
   };
 
-  onMount(() => {
-    fetchQuestions();
+  onMount(async () => {
+    await fetchQuestions();
   });
+
+  $: console.log(questions);
 </script>
 
-{#each questions.results as question, index (index)}
+{#each questions as question, index (index)}
   <Post {question} />
 {/each}
