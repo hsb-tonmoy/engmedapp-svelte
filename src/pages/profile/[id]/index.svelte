@@ -223,7 +223,8 @@
           style="background-color: #F9F9F9">Session</button
         >
       </div>
-      <div class="border rounded-md py-5 px-6" style="border-color: #CCD9E9">
+
+      <div class="">
         {#if tab === 1}
           <Posts username={profile.user.username} />
         {/if}

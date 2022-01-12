@@ -2,7 +2,7 @@
   export let question;
 </script>
 
-<article class="flex flex-col">
+<article class="flex flex-col mb-16">
   <div class="flex">
     <div class="flex flex-col w-11/12">
       <span class="breadcrumbs font-mulish text-xs text-ematextgray mb-4"
