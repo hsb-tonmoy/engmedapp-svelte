@@ -8,9 +8,6 @@
   let id = $params.id;
 
   let profile;
-  let questions = [];
-
-  $: questions_url = `questions/questions/?explanations__author__username=${scoped.profile.user.username}`;
 
   async function fetchprofile(id) {
     await authAxios
@@ -21,22 +18,9 @@
       .catch((err) => console.log(err));
   }
 
-  const fetchQuestions = async (page = 1) => {
-    await authAxios
-      .get(API_URL + questions_url + `&page=${page}`)
-      .then((res) => {
-        questions = res.data;
-      })
-      .catch((err) => console.log(err))
-      .finally(() => (loading = false));
-  };
-
-  $: if (id) {
-    fetchprofile(id);
-    fetchQuestions();
-  }
+  $: if (id) fetchprofile(id);
 </script>
 
 {#if profile}
-  <slot scoped={{ profile, questions }}>Loading...</slot>
+  <slot scoped={{ profile }}>Loading...</slot>
 {/if}
