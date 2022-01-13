@@ -201,29 +201,6 @@
   >
     <div class="w-1/5 hidden xl:flex" />
     <div class="flex flex-col gap-y-2 w-full xl:w-4/5 md:ml-6">
-      <div class="flex justify-center md:justify-end gap-x-2">
-        <button
-          class="text-xs text-primary rounded px-3 py-2"
-          style="background-color: #F9F9F9">Board</button
-        >
-        <button
-          class="text-xs text-primary rounded px-3 py-2"
-          style="background-color: #F9F9F9">Level</button
-        >
-        <button
-          class="text-xs text-primary rounded px-3 py-2"
-          style="background-color: #F9F9F9">Paper</button
-        >
-        <button
-          class="text-xs text-primary rounded px-3 py-2"
-          style="background-color: #F9F9F9">Year</button
-        >
-        <button
-          class="text-xs text-primary rounded px-3 py-2"
-          style="background-color: #F9F9F9">Session</button
-        >
-      </div>
-
       <div class="">
         {#if tab === 1}
           <Posts username={profile.user.username} />
