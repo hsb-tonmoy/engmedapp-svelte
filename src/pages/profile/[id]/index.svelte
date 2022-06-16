@@ -181,16 +181,18 @@
     <div class="flex xl:w-2/4 justify-start gap-x-2">
       <button
         on:click={() => (tab = 1)}
-        class="bg-primary rounded py-3 px-5 text-white text-xs"
-        >My explanations</button
+        class:active={tab === 1}
+        class="rounded py-3 px-5 text-black text-xs">My answers</button
       >
       <button
         on:click={() => (tab = 2)}
+        class:active={tab === 2}
         class="rounded py-3 px-5 text-black text-xs"
         style="background-color: #F9F9F9">My bookmarks</button
       >
       <button
         on:click={() => (tab = 3)}
+        class:active={tab === 3}
         class="rounded py-3 px-5 text-black text-xs"
         style="background-color: #F9F9F9">About me</button
       >
@@ -201,11 +203,21 @@
   >
     <div class="w-1/5 hidden xl:flex" />
     <div class="flex flex-col gap-y-2 w-full xl:w-4/5 md:ml-6">
-      <div class="">
-        {#if tab === 1}
+      {#if tab === 1}
+        <section class="answers">
           <Posts username={profile.user.username} />
-        {/if}
-      </div>
+        </section>
+      {:else if tab === 2}
+        <section class="bookmarks">
+          <Posts bookmark="true" username={profile.user.username} />
+        </section>
+      {/if}
     </div>
   </div>
 </section>
+
+<style lang="postcss">
+  :global(.active) {
+    @apply bg-primary text-white;
+  }
+</style>

@@ -9,13 +9,17 @@
 
   const API_URL = import.meta.env.VITE_API_URL;
 
-  export let username;
+  export let username, bookmark;
 
   let loading = true;
 
   $: questions = { results: [] };
 
   $: questions_url = `questions/questions/?explanations__author__username=${username}`;
+
+  $: if (bookmark) {
+    questions_url = `questions/questions/?bookmark=${username}`;
+  }
 
   const fetchQuestions = async (page = 1) => {
     await authAxios
