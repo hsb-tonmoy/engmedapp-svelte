@@ -56,7 +56,7 @@
     "You can delete the field and this comment, if you use neither."
   ],
   "appConfig": {
-    "port": 5000,
+    "port": 3000,
     "assetsDir": "static",
     "template": "static/__app.html",
     "distDir": "dist",
